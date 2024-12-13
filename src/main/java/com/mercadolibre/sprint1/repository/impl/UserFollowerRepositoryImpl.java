@@ -51,4 +51,9 @@ public class UserFollowerRepositoryImpl implements IRepository<UserFollower> {
 	public boolean delete(UserFollower entity) {
 		return false;
 	}
+
+	@Override
+	public int getLastID() {
+		return 0;
+	}
 }

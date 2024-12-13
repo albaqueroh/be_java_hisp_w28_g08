@@ -32,8 +32,9 @@ public class PostRepositoryImpl implements IRepository<Post> {
 		}
 	}
 
-	public int getPostSize(){
-		return posts.size();
+	public int getLastID(){
+		if(posts.isEmpty()) return 0;
+		return posts.getLast().getId();
 	}
 
 	@Override

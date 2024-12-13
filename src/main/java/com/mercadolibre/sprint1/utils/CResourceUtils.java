@@ -13,8 +13,4 @@ public class CResourceUtils {
 					.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
 					.registerModule(new JavaTimeModule());;
 
-	public static LocalDate formatToLocalDate(String date){
-		DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-		return LocalDate.parse(date, inputFormatter);
-	}
 }

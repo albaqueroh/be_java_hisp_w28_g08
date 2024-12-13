@@ -60,4 +60,10 @@ public class UserRepositoryImpl implements IRepository<User> {
 	public boolean delete(User entity) {
 		return users.remove(entity);
 	}
+
+	@Override
+	public int getLastID() {
+		if(users.isEmpty()) return 0;
+		return users.getLast().getId();
+	}
 }
