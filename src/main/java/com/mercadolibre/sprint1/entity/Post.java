@@ -1,5 +1,6 @@
 package com.mercadolibre.sprint1.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ public class Post {
 	private Product product;
 	private int category;
 	private double price;
+	@JsonProperty("has_promo")
 	private boolean hasPromo;
 	private double discount;
 

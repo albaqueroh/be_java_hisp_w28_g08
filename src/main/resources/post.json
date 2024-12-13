@@ -13,7 +13,7 @@
     },
     "category": 1,
     "price": 699.99,
-    "hasPromo": true,
+    "has_promo": true,
     "discount": 10.0
   },
   {
@@ -30,7 +30,7 @@
     },
     "category": 2,
     "price": 999.99,
-    "hasPromo": false,
+    "has_promo": false,
     "discount": 0.0
   },
   {
@@ -47,7 +47,7 @@
     },
     "category": 3,
     "price": 120.0,
-    "hasPromo": true,
+    "has_promo": true,
     "discount": 15.0
   },
   {
@@ -64,7 +64,7 @@
     },
     "category": 4,
     "price": 250.0,
-    "hasPromo": false,
+    "has_promo": false,
     "discount": 0.0
   },
   {
@@ -81,7 +81,7 @@
     },
     "category": 5,
     "price": 75.0,
-    "hasPromo": true,
+    "has_promo": true,
     "discount": 5.0
   },
   {
@@ -98,7 +98,7 @@
     },
     "category": 6,
     "price": 150.0,
-    "hasPromo": true,
+    "has_promo": true,
     "discount": 20.0
   },
   {
@@ -115,7 +115,7 @@
     },
     "category": 7,
     "price": 299.99,
-    "hasPromo": false,
+    "has_promo": false,
     "discount": 0.0
   },
   {
@@ -132,7 +132,7 @@
     },
     "category": 8,
     "price": 180.0,
-    "hasPromo": true,
+    "has_promo": true,
     "discount": 10.0
   },
   {
@@ -149,7 +149,7 @@
     },
     "category": 9,
     "price": 499.99,
-    "hasPromo": false,
+    "has_promo": false,
     "discount": 0.0
   },
   {
@@ -166,7 +166,7 @@
     },
     "category": 10,
     "price": 89.99,
-    "hasPromo": true,
+    "has_promo": true,
     "discount": 5.0
   }
 ]
