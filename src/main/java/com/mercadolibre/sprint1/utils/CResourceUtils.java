@@ -6,6 +6,8 @@ import org.springframework.util.ResourceUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class CResourceUtils {
@@ -18,4 +20,8 @@ public class CResourceUtils {
 		return objectMapper.readValue(file, new TypeReference<List<T>>(){});
 	}
 
+	public static LocalDate formatToLocalDate(String date){
+		DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		return LocalDate.parse(date, inputFormatter);
+	}
 }
