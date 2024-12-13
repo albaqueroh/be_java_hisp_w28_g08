@@ -6,10 +6,9 @@ import com.mercadolibre.sprint1.entity.Product;
 import com.mercadolibre.sprint1.repository.impl.PostRepositoryImpl;
 import com.mercadolibre.sprint1.service.IProductService;
 import com.mercadolibre.sprint1.utils.CResourceUtils;
+import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-
-
+@Service
 public class ProductServiceImpl implements IProductService {
 
     PostRepositoryImpl repository;

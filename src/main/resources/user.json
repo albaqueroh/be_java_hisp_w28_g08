@@ -2,51 +2,51 @@
   {
     "id": 1,
     "name": "John Doe",
-    "isSeller": true
+    "seller": true
   },
   {
     "id": 2,
     "name": "Jane Smith",
-    "isSeller": false
+    "seller": false
   },
   {
     "id": 3,
     "name": "Alice Johnson",
-    "isSeller": true
+    "seller": true
   },
   {
     "id": 4,
     "name": "Bob Brown",
-    "isSeller": false
+    "seller": false
   },
   {
     "id": 5,
     "name": "Charlie Davis",
-    "isSeller": true
+    "seller": true
   },
   {
     "id": 6,
     "name": "Diana Evans",
-    "isSeller": false
+    "seller": false
   },
   {
     "id": 7,
     "name": "Frank Wilson",
-    "isSeller": true
+    "seller": true
   },
   {
     "id": 8,
     "name": "Grace Hall",
-    "isSeller": false
+    "seller": false
   },
   {
     "id": 9,
     "name": "Henry Martinez",
-    "isSeller": true
+    "seller": true
   },
   {
     "id": 10,
     "name": "Ivy Clark",
-    "isSeller": false
+    "seller": false
   }
 ]
