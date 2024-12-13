@@ -1,0 +1,42 @@
+[
+  {
+    "userFollowed": 1,
+    "userFollower": 2
+  },
+  {
+    "userFollowed": 3,
+    "userFollower": 4
+  },
+  {
+    "userFollowed": 5,
+    "userFollower": 6
+  },
+  {
+    "userFollowed": 7,
+    "userFollower": 8
+  },
+  {
+    "userFollowed": 9,
+    "userFollower": 10
+  },
+  {
+    "userFollowed": 1,
+    "userFollower": 4
+  },
+  {
+    "userFollowed": 3,
+    "userFollower": 6
+  },
+  {
+    "userFollowed": 5,
+    "userFollower": 8
+  },
+  {
+    "userFollowed": 7,
+    "userFollower": 10
+  },
+  {
+    "userFollowed": 9,
+    "userFollower": 2
+  }
+]
