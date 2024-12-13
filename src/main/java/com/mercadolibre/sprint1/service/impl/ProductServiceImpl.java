@@ -1,6 +1,7 @@
 package com.mercadolibre.sprint1.service.impl;
 
 import com.mercadolibre.sprint1.dto.NewPostDto;
+import com.mercadolibre.sprint1.dto.ProductDto;
 import com.mercadolibre.sprint1.entity.Post;
 import com.mercadolibre.sprint1.entity.Product;
 import com.mercadolibre.sprint1.repository.impl.PostRepositoryImpl;
@@ -19,11 +20,19 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public String newPost(NewPostDto newPostDto) {
+        ProductDto product = newPostDto.getProduct();
         Post post = new Post(
-                newPostDto.getUserId(),
+                repository.getPostSize()+1,
                 CResourceUtils.formatToLocalDate(newPostDto.getDate()),
                 newPostDto.getUserId(),
-                CResourceUtils.MAPPER.convertValue(newPostDto.getProduct(), Product.class),
+                new Product(
+                        product.getId(),
+                        product.getName(),
+                        product.getType(),
+                        product.getBrand(),
+                        product.getColor(),
+                        product.getNotes()
+                ),
                 newPostDto.getCategory(),
                 newPostDto.getPrice(),
                 false, 0

@@ -32,6 +32,10 @@ public class PostRepositoryImpl implements IRepository<Post> {
 		}
 	}
 
+	public int getPostSize(){
+		return posts.size();
+	}
+
 	@Override
 	public List<Post> findAll() {
 		return posts;
