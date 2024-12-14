@@ -20,9 +20,4 @@ public class CResourceUtils {
 		return objectMapper.readValue(file, new TypeReference<List<T>>(){});
 	}
 
-	public static LocalDate formatToLocalDate(String date){
-		DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-		return LocalDate.parse(date, inputFormatter);
-	}
-
 }

@@ -15,7 +15,7 @@ public class PostRepositoryImpl implements IRepository<Post> {
 
 	private List<Post> posts = new ArrayList<>();
 
-	public PostRepositoryImpl() {
+	/*public PostRepositoryImpl() {
 		loadData();
 	}
 
@@ -25,7 +25,7 @@ public class PostRepositoryImpl implements IRepository<Post> {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-	}
+	}*/
 
 	@Override
 	public List<Post> findAll() {
@@ -34,6 +34,7 @@ public class PostRepositoryImpl implements IRepository<Post> {
 
 	@Override
 	public Post save(Post entity) {
+		entity.setId(posts.size()+1);
 		posts.add(entity);
 		return entity;
 	}

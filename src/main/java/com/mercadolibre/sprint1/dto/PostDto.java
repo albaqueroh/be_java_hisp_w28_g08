@@ -18,7 +18,7 @@ public class PostDto {
 	@JsonProperty("user_id")
 	private int userId;
 
-	private String date;
+	private LocalDate date;
 
 	private ProductDto product;
 

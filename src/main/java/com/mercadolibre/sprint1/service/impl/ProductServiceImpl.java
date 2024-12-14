@@ -1,6 +1,11 @@
 package com.mercadolibre.sprint1.service.impl;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mercadolibre.sprint1.dto.CreatePromoPostDto;
+import com.mercadolibre.sprint1.dto.ProductDto;
 import com.mercadolibre.sprint1.entity.Post;
 import com.mercadolibre.sprint1.entity.Product;
 import com.mercadolibre.sprint1.exception.BadRequestException;
@@ -16,19 +21,15 @@ public class ProductServiceImpl implements IProductService {
     @Autowired
     PostRepositoryImpl repository;
     @Override
-    public CreatePromoPostDto createPromoPost(CreatePromoPostDto postPromo) {
+    public String createPromoPost(CreatePromoPostDto postPromo) {
+        CResourceUtils.MAPPER.registerModule(new JavaTimeModule());
+        CResourceUtils.MAPPER.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+
         if(postPromo != null){
-            Post savedPost = repository.save(new Post(
-                    (repository.findAll().get(-1).getId()+1),
-                    CResourceUtils.formatToLocalDate(postPromo.getDate()),
-                    postPromo.getUserId(),
-                    CResourceUtils.MAPPER.convertValue(postPromo.getProduct(), Product.class),
-                    postPromo.getCategory(),
-                    postPromo.getPrice(),
-                    postPromo.isHasPromo(),
-                    postPromo.getDiscount()
-            ));
-            return CResourceUtils.MAPPER.convertValue(savedPost, CreatePromoPostDto.class);
+            Post savedPost = repository.save(CResourceUtils.MAPPER.convertValue(postPromo, Post.class));
+            System.out.println(savedPost);
+
+            return "Post guardado";
         }else {
             throw new BadRequestException("El objeto enviado no es correcto");
         }

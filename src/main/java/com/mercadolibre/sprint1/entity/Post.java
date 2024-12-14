@@ -1,5 +1,6 @@
 package com.mercadolibre.sprint1.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 public class Post {
 
 	private int id;
+	@JsonFormat(pattern = "dd-MM-yyyy")
 	private LocalDate date;
 	private int userId;
 	private Product product;
