@@ -24,5 +24,4 @@ public class Post {
 	@JsonProperty("has_promo")
 	private boolean hasPromo;
 	private double discount;
-
 }

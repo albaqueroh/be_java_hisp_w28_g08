@@ -6,10 +6,11 @@ import com.mercadolibre.sprint1.dto.NewPostDto;
 import com.mercadolibre.sprint1.entity.Post;
 import com.mercadolibre.sprint1.exception.BadRequestException;
 import com.mercadolibre.sprint1.repository.IRepository;
-import com.mercadolibre.sprint1.service.IProductService;
 import com.mercadolibre.sprint1.utils.CResourceUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.mercadolibre.sprint1.service.IProductService;
 
 @Service
 public class ProductServiceImpl implements IProductService {
@@ -28,5 +29,20 @@ public class ProductServiceImpl implements IProductService {
             throw new BadRequestException("El objeto enviado no es correcto");
         }
         return "todo OK";
+    }
+
+    @Override
+    public String createPromoPost(CreatePromoPostDto postPromo) {
+        CResourceUtils.MAPPER.registerModule(new JavaTimeModule());
+        CResourceUtils.MAPPER.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+
+        if(postPromo != null){
+            Post savedPost = repository.save(CResourceUtils.MAPPER.convertValue(postPromo, Post.class));
+
+            return "Post guardado";
+        }else {
+            throw new BadRequestException("El objeto enviado no es correcto");
+        }
+
     }
 }

@@ -13,7 +13,7 @@ public class Product {
 	@JsonProperty("product_id")
 	private int id;
 	@JsonProperty("product_name")
-	private String name;
+	private String productName;
 	private String type;
 	private String brand;
 	private String color;
