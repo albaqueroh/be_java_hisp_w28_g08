@@ -2,9 +2,7 @@ package com.mercadolibre.sprint1.service.impl;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.mercadolibre.sprint1.dto.CreatePromoPostDto;
-import com.mercadolibre.sprint1.dto.NewPostDto;
-import com.mercadolibre.sprint1.dto.PostDto;
+import com.mercadolibre.sprint1.dto.*;
 import com.mercadolibre.sprint1.entity.Post;
 import com.mercadolibre.sprint1.entity.User;
 import com.mercadolibre.sprint1.entity.UserFollower;
