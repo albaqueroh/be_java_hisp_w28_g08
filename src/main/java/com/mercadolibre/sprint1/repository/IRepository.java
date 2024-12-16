@@ -11,5 +11,4 @@ public interface IRepository<T> {
 	boolean delete(int id);
 
 	boolean delete(T entity);
-
 }
