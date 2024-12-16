@@ -37,6 +37,7 @@ public class PostRepositoryImpl implements IRepository<Post> {
 
 	@Override
 	public Post save(Post entity) {
+		entity.setId(posts.size()+1);
 		posts.add(entity);
 		return entity;
 	}

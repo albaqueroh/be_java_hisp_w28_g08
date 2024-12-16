@@ -26,9 +26,4 @@ public class PostDto {
 
 	private double price;
 
-	@JsonProperty("has_promo")
-	private boolean hasPromo;
-
-	private double discount;
-
 }
