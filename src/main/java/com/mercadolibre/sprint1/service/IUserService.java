@@ -6,4 +6,6 @@ public interface IUserService {
 
     FollowersListByUserDto findAllFollowersByUser(int userId);
 
+    boolean followUser (int userId, int userIdToFollow);
+
 }

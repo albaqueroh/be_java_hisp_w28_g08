@@ -1,6 +1,9 @@
 package com.mercadolibre.sprint1.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import com.mercadolibre.sprint1.dto.UserDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +21,6 @@ public class FollowersListByUserDto {
 	@JsonProperty("user_name")
 	private String name;
 
-    private List<?> followers;
+    private List<UserDto> followers;
 
 }
