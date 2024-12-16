@@ -11,6 +11,6 @@ public class User {
 
 	private int id;
 	private String name;
-	private boolean isSeller;
+	private boolean seller;
 
 }

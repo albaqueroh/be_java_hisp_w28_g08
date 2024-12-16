@@ -1,52 +1,52 @@
 [
   {
     "id": 1,
-    "product_name": "John Doe",
-    "isSeller": true
+    "name": "John Doe",
+    "seller": true
   },
   {
     "id": 2,
-    "product_name": "Jane Smith",
-    "isSeller": false
+    "name": "Jane Smith",
+    "seller": false
   },
   {
     "id": 3,
-    "product_name": "Alice Johnson",
-    "isSeller": true
+    "name": "Alice Johnson",
+    "seller": true
   },
   {
     "id": 4,
-    "product_name": "Bob Brown",
-    "isSeller": false
+    "name": "Bob Brown",
+    "seller": false
   },
   {
     "id": 5,
-    "product_name": "Charlie Davis",
-    "isSeller": true
+    "name": "Charlie Davis",
+    "seller": true
   },
   {
     "id": 6,
-    "product_name": "Diana Evans",
-    "isSeller": false
+    "name": "Diana Evans",
+    "seller": false
   },
   {
     "id": 7,
-    "product_name": "Frank Wilson",
-    "isSeller": true
+    "name": "Frank Wilson",
+    "seller": true
   },
   {
     "id": 8,
-    "product_name": "Grace Hall",
-    "isSeller": false
+    "name": "Grace Hall",
+    "seller": false
   },
   {
     "id": 9,
-    "product_name": "Henry Martinez",
-    "isSeller": true
+    "name": "Henry Martinez",
+    "seller": true
   },
   {
     "id": 10,
-    "product_name": "Ivy Clark",
-    "isSeller": false
+    "name": "Ivy Clark",
+    "seller": false
   }
 ]
