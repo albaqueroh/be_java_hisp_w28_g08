@@ -62,10 +62,4 @@ public class PostRepositoryImpl implements IRepository<Post> {
 	public boolean delete(Post entity) {
 		return posts.remove(entity);
 	}
-
-	public List<Post> findById(int id){
-		return posts.stream()
-				.filter(entry -> entry.getUserId() == id)
-				.collect(Collectors.toList());
-	}
 }
