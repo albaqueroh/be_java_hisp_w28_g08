@@ -1,22 +1,20 @@
 package com.mercadolibre.sprint1.service.impl;
 
-
 import java.util.List;
 
 import com.mercadolibre.sprint1.entity.UserFollower;
 import com.mercadolibre.sprint1.exception.BadRequestException;
-import com.mercadolibre.sprint1.repository.impl.UserFollowerRepositoryImpl;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.mercadolibre.sprint1.dto.UserDto;
+
 import com.mercadolibre.sprint1.dto.response.FollowersListByUserDto;
 import com.mercadolibre.sprint1.entity.User;
 import com.mercadolibre.sprint1.exception.NotFoundException;
 import com.mercadolibre.sprint1.repository.impl.UserFollowerRepositoryImpl;
 import com.mercadolibre.sprint1.repository.impl.UserRepositoryImpl;
 import com.mercadolibre.sprint1.service.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements IUserService {

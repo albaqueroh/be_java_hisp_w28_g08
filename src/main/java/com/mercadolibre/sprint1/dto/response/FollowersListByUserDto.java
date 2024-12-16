@@ -1,13 +1,14 @@
 package com.mercadolibre.sprint1.dto.response;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import com.mercadolibre.sprint1.dto.UserDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
