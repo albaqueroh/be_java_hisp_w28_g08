@@ -1,6 +1,11 @@
 package com.mercadolibre.sprint1.service.impl;
 
+
 import java.util.List;
+
+import com.mercadolibre.sprint1.entity.UserFollower;
+import com.mercadolibre.sprint1.exception.BadRequestException;
+import com.mercadolibre.sprint1.repository.impl.UserFollowerRepositoryImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +43,19 @@ public class UserServiceImpl implements IUserService {
         res.setFollowers(followers);
 
         return res;
+    }
+
+    @Override
+    public boolean followUser(int userId, int userIdToFollow) {
+        User findSeller = findUserById(userIdToFollow);
+        if(findSeller.isSeller()){
+            UserFollower userFollower = new UserFollower();
+            userFollower.setUserFollowed(userIdToFollow);
+            userFollower.setUserFollower(userId);
+            userFollowerRepositoryImpl.save(userFollower);
+            return true;
+        }
+        throw new BadRequestException("El usuario no es un vendedor. " + userIdToFollow);
     }
 
     private User findUserById(int userId) {
