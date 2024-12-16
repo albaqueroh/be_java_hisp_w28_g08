@@ -37,7 +37,7 @@ public class UserServiceImpl implements IUserService {
             userFollowerRepositoryImpl.save(userFollower);
             return true;
         }
-        throw new BadRequestException("El usuario no es un vendedor. " + userIdToFollow);
+        throw new BadRequestException("El usuario " + userIdToFollow + " no es un vendedor.");
     }
 
     private User findUserById(int userId) {
