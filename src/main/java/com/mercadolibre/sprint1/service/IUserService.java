@@ -4,7 +4,7 @@ import com.mercadolibre.sprint1.dto.response.FollowersListByUserDto;
 
 public interface IUserService {
 
-    FollowersListByUserDto findAllFollowersByUser(int userId);
+    FollowersListByUserDto findAllFollowersByUser(int userId, String order);
 
     boolean followUser (int userId, int userIdToFollow);
 
