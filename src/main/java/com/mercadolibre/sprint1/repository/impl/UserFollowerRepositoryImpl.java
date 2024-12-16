@@ -4,13 +4,13 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.mercadolibre.sprint1.entity.UserFollower;
 import com.mercadolibre.sprint1.repository.IRepository;
 import com.mercadolibre.sprint1.utils.CResourceUtils;
-
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class UserFollowerRepositoryImpl implements IRepository<UserFollower> {
@@ -50,5 +50,11 @@ public class UserFollowerRepositoryImpl implements IRepository<UserFollower> {
 	@Override
 	public boolean delete(UserFollower entity) {
 		return false;
+	}
+
+	public List<UserFollower> findById(int id){
+		return usersFollowers.stream()
+				.filter(entry -> entry.getUserFollower() == id)
+				.collect(Collectors.toList());
 	}
 }
