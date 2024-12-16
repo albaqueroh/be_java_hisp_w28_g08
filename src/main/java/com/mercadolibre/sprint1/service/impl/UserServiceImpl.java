@@ -56,7 +56,8 @@ public class UserServiceImpl implements IUserService {
         throw new BadRequestException("El usuario no es un vendedor. " + userIdToFollow);
     }
 
-    private User findUserById(int userId) {
+    @Override
+    public User findUserById(int userId) {
         return userRepositoryImpl.findAll()
                 .stream()
                 .filter(u -> u.getId() == userId)
