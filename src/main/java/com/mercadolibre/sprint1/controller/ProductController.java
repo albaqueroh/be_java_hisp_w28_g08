@@ -1,5 +1,6 @@
 package com.mercadolibre.sprint1.controller;
 
+import com.mercadolibre.sprint1.dto.CreatePromoPostDto;
 import com.mercadolibre.sprint1.dto.NewPostDto;
 import com.mercadolibre.sprint1.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
