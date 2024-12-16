@@ -1,26 +1,23 @@
 package com.mercadolibre.sprint1.service.impl;
 
-import com.mercadolibre.sprint1.dto.PostDto;
-import com.mercadolibre.sprint1.dto.ProductsFollowedDtoResponse;
-import com.mercadolibre.sprint1.dto.UserFollowerDto;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.mercadolibre.sprint1.dto.*;
 import com.mercadolibre.sprint1.entity.Post;
 import com.mercadolibre.sprint1.entity.User;
 import com.mercadolibre.sprint1.entity.UserFollower;
+import com.mercadolibre.sprint1.exception.BadRequestException;
 import com.mercadolibre.sprint1.repository.IRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.mercadolibre.sprint1.repository.impl.PostRepositoryImpl;
 import org.springframework.stereotype.Service;
+import com.mercadolibre.sprint1.service.IProductService;
+import com.mercadolibre.sprint1.utils.CResourceUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.mercadolibre.sprint1.dto.CreatePromoPostDto;
-import com.mercadolibre.sprint1.exception.BadRequestException;
-import com.mercadolibre.sprint1.service.IProductService;
-import com.mercadolibre.sprint1.utils.CResourceUtils;
 
 import static com.mercadolibre.sprint1.utils.CResourceUtils.MAPPER;
 
@@ -31,8 +28,6 @@ public class ProductServiceImpl implements IProductService {
     private IRepository<Post> postRepository;
     @Autowired
     private IRepository<UserFollower> userFollowerRepository;
-    @Autowired
-    private IRepository<User> userRepository;
 
     @Override
     public ProductsFollowedDtoResponse productsOfPeopleFollowed(int id) {
@@ -79,12 +74,25 @@ public class ProductServiceImpl implements IProductService {
         CResourceUtils.MAPPER.registerModule(new JavaTimeModule());
         CResourceUtils.MAPPER.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
-        if (postPromo != null) {
+        if(postPromo != null){
             Post savedPost = postRepository.save(CResourceUtils.MAPPER.convertValue(postPromo, Post.class));
 
             return "Post guardado";
         } else {
             throw new BadRequestException("El objeto enviado no es correcto");
         }
+    }
+
+    @Override
+    public String newPost(NewPostDto newPostDto) {
+        CResourceUtils.MAPPER.registerModule(new JavaTimeModule());
+        CResourceUtils.MAPPER.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+
+        try{
+            postRepository.save(CResourceUtils.MAPPER.convertValue(newPostDto, Post.class));
+        }catch (Exception e){
+            throw new BadRequestException("El objeto enviado no es correcto");
+        }
+        return "todo OK";
     }
 }

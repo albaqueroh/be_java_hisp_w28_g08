@@ -24,10 +24,10 @@ public class PostRepositoryImpl implements IRepository<Post> {
 	}
 
 	private void loadData() {
-		try{
+		try {
 			File file = ResourceUtils.getFile("classpath:post.json");
-			posts = CResourceUtils.MAPPER.readValue(file, new TypeReference<List<Post>>(){});
-		}catch (Exception e){
+			posts = CResourceUtils.MAPPER.readValue(file, new TypeReference<>() {});
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
