@@ -36,6 +36,8 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public ProductsFollowedDtoResponse productsOfPeopleFollowed(int id) {
+        CResourceUtils.MAPPER.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+
         LocalDate fechaActual = LocalDate.now();
         LocalDate fechaHaceDosSemanas = fechaActual.minusWeeks(2);
         List<Integer> idUsuarios = new ArrayList<>();
@@ -49,12 +51,17 @@ public class ProductServiceImpl implements IProductService {
         for (Integer usuarios: idUsuarios){
             posts.addAll(filterPostsByUserIds(usuarios));
         }
+
         List<PostDto> postDto = posts.stream()
                 .filter(entry ->
                         (entry.getDate().isAfter(fechaHaceDosSemanas) || entry.getDate().isEqual(fechaHaceDosSemanas)) &&
                                 (entry.getDate().isBefore(fechaActual) || entry.getDate().isEqual(fechaActual)))
                 .sorted((post1, post2) -> post2.getDate().compareTo(post1.getDate()))
-                .map(entry -> MAPPER.convertValue(entry, PostDto.class))
+                .map(entry -> {
+                    PostDto dto = MAPPER.convertValue(entry, PostDto.class);
+                    dto.setId(entry.getId());
+                    return dto;
+                })
                 .toList();
 
         ProductsFollowedDtoResponse productsFollowedDtoResponse = new ProductsFollowedDtoResponse(id, postDto);
