@@ -25,16 +25,11 @@ public class PostRepositoryImpl implements IRepository<Post> {
 	private void loadData() {
 		try {
 			File file = ResourceUtils.getFile("classpath:post.json");
-			posts = CResourceUtils.MAPPER.readValue(file, new TypeReference<List<Post>>() {
+			posts = CResourceUtils.MAPPER.readValue(file, new TypeReference<>() {
 			});
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	public int getLastID(){
-		if(posts.isEmpty()) return 0;
-		return posts.getLast().getId();
 	}
 
 	@Override
@@ -44,6 +39,7 @@ public class PostRepositoryImpl implements IRepository<Post> {
 
 	@Override
 	public Post save(Post entity) {
+		entity.setId(posts.size()+1);
 		posts.add(entity);
 		return entity;
 	}

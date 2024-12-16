@@ -12,6 +12,4 @@ public interface IRepository<T> {
 
 	boolean delete(T entity);
 
-	int getLastID();
-
 }

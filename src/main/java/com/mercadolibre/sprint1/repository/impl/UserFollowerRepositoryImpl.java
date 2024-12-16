@@ -52,8 +52,4 @@ public class UserFollowerRepositoryImpl implements IRepository<UserFollower> {
 		return false;
 	}
 
-	@Override
-	public int getLastID() {
-		return 0;
-	}
 }
