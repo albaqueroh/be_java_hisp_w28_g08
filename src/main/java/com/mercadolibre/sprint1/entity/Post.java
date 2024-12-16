@@ -16,6 +16,7 @@ public class Post {
 	private int id;
 	@JsonFormat(pattern = "dd-MM-yyyy")
 	private LocalDate date;
+	@JsonProperty("user_id")
 	private int userId;
 	private Product product;
 	private int category;

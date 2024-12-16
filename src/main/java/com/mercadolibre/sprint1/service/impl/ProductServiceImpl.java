@@ -27,7 +27,6 @@ public class ProductServiceImpl implements IProductService {
 
         if(postPromo != null){
             Post savedPost = repository.save(CResourceUtils.MAPPER.convertValue(postPromo, Post.class));
-            System.out.println(savedPost);
 
             return "Post guardado";
         }else {
