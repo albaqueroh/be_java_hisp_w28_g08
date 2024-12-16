@@ -11,21 +11,14 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostDto {
+public class NewPostDto {
 
-	@JsonProperty("post_id")
-	private int id;
-
-	@JsonProperty("user_id")
-	private int userId;
-
-	@JsonFormat(pattern = "dd-MM-yyyy")
-	private LocalDate date;
-
-	private ProductDto product;
-
-	private int category;
-
-	private double price;
+    @JsonProperty("user_id")
+    private int userId;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private LocalDate date;
+    private ProductDto product;
+    private int category;
+    private double price;
 
 }

@@ -53,4 +53,5 @@ public class UserFollowerRepositoryImpl implements IRepository<UserFollower> {
 		Optional<UserFollower> optional = usersFollowers.stream().filter(u -> u.getUserFollower() == userId && u.getUserFollowed() == sellerId).findFirst();
 		return optional;
 	}
+
 }

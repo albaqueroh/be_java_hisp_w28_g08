@@ -58,4 +58,5 @@ public class UserRepositoryImpl implements IRepository<User> {
 	public boolean delete(User entity) {
 		return users.remove(entity);
 	}
+
 }
