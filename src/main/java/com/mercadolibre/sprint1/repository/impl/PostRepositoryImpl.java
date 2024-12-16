@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.mercadolibre.sprint1.entity.Post;
 import com.mercadolibre.sprint1.repository.IRepository;
 import com.mercadolibre.sprint1.utils.CResourceUtils;
-
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
 
@@ -23,11 +22,10 @@ public class PostRepositoryImpl implements IRepository<Post> {
 	}
 
 	private void loadData() {
-		try {
+		try{
 			File file = ResourceUtils.getFile("classpath:post.json");
-			posts = CResourceUtils.MAPPER.readValue(file, new TypeReference<List<Post>>() {
-			});
-		} catch (Exception e) {
+			posts = CResourceUtils.MAPPER.readValue(file, new TypeReference<List<Post>>(){});
+		}catch (Exception e){
 			throw new RuntimeException(e);
 		}
 	}
