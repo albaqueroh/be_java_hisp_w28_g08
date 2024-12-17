@@ -10,8 +10,12 @@ public interface IUserService {
 
     boolean followUser (int userId, int userIdToFollow);
 
+
+    User findUserById (int userId);
+
     FollowedListByUserDto findUsersFollowedByUser(int id, String order);
   
     User findUserById(int userId);
+
 
 }

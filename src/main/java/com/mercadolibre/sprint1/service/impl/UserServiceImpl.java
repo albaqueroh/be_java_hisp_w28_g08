@@ -87,6 +87,7 @@ public class UserServiceImpl implements IUserService {
                 .findFirst()
                 .orElseThrow(() -> new NotFoundException("No existe el usuario " + userId));
     }
+  
     private List<UserDto> orderUserDtoList(List<UserDto> userDtoList, String order){
             return userDtoList.stream().sorted((f1, f2) -> {
                 if (order.equalsIgnoreCase(String.valueOf(Order.NAME_ASC))) {
