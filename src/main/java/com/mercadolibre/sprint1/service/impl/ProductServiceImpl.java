@@ -3,12 +3,14 @@ package com.mercadolibre.sprint1.service.impl;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mercadolibre.sprint1.dto.*;
+import com.mercadolibre.sprint1.dto.response.CountProductsPromoDto;
 import com.mercadolibre.sprint1.entity.Post;
 import com.mercadolibre.sprint1.entity.UserFollower;
 import com.mercadolibre.sprint1.exception.BadRequestException;
 import com.mercadolibre.sprint1.repository.IRepository;
 import org.springframework.stereotype.Service;
 import com.mercadolibre.sprint1.service.IProductService;
+import com.mercadolibre.sprint1.service.IUserService;
 import com.mercadolibre.sprint1.utils.CResourceUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -25,8 +27,12 @@ public class ProductServiceImpl implements IProductService {
 
     @Autowired
     private IRepository<Post> postRepository;
+
     @Autowired
     private IRepository<UserFollower> userFollowerRepository;
+
+    @Autowired
+    private IUserService userService;
 
     @Override
     public ProductsFollowedDtoResponse productsOfPeopleFollowed(int id, String order) {
@@ -46,7 +52,7 @@ public class ProductServiceImpl implements IProductService {
                 .toList();
 
         List<Post> posts = new ArrayList<>();
-        for (Integer usuarios: idUsuarios){
+        for (Integer usuarios : idUsuarios) {
             posts.addAll(filterPostsByUserIds(usuarios));
         }
 
@@ -76,7 +82,7 @@ public class ProductServiceImpl implements IProductService {
         CResourceUtils.MAPPER.registerModule(new JavaTimeModule());
         CResourceUtils.MAPPER.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
-        if(postPromo != null){
+        if (postPromo != null) {
             Post savedPost = postRepository.save(CResourceUtils.MAPPER.convertValue(postPromo, Post.class));
 
             return "Post guardado";
@@ -90,11 +96,22 @@ public class ProductServiceImpl implements IProductService {
         CResourceUtils.MAPPER.registerModule(new JavaTimeModule());
         CResourceUtils.MAPPER.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
-        try{
+        try {
             postRepository.save(CResourceUtils.MAPPER.convertValue(newPostDto, Post.class));
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new BadRequestException("El objeto enviado no es correcto");
         }
         return "todo OK";
+    }
+
+    @Override
+    public CountProductsPromoDto findPromoProductsBySeller(int userId) {
+        User user = userService.findUserById(userId);
+        long promoProducts = postRepository.findAll()
+                .stream()
+                .filter(p -> p.getUserId() == userId && p.isHasPromo())
+                .count();
+
+        return new CountProductsPromoDto(user.getId(), user.getName(), promoProducts);
     }
 }
