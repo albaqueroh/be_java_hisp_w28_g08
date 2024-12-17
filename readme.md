@@ -168,3 +168,5 @@ Respuesta esperada:
 - Nicolás Albarracín Piñeros
 
 ## 6. Cierre y agradecimientos
+
+Para cerrar este sprint 1, el equipo 8 agradece a los mentores por compartir su conocimiento y experiencia de manera profesional y dinámica, permitiendo el aprendizaje continuo en lo que relata a Java y Spring Framework. Además, entre compañeros nos agradecemos por la colaboración y entusiasmo que hubo en el desarrollo de este sprint, dónde se siguieron fortaleciendo los conocimientos y lazos sociales.
