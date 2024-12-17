@@ -1,8 +1,10 @@
 package com.mercadolibre.sprint1.service.impl;
 
-import java.util.List;
+import java.util.*;
 
 import com.mercadolibre.sprint1.dto.response.FollowedListByUserDto;
+import com.mercadolibre.sprint1.dto.response.UserPromosAverageDto;
+import com.mercadolibre.sprint1.entity.Post;
 import com.mercadolibre.sprint1.entity.UserFollower;
 import com.mercadolibre.sprint1.exception.BadRequestException;
 
@@ -11,6 +13,8 @@ import com.mercadolibre.sprint1.dto.UserDto;
 import com.mercadolibre.sprint1.dto.response.FollowersListByUserDto;
 import com.mercadolibre.sprint1.entity.User;
 import com.mercadolibre.sprint1.exception.NotFoundException;
+import com.mercadolibre.sprint1.exception.PromoSellersNotFoundException;
+import com.mercadolibre.sprint1.repository.IRepository;
 import com.mercadolibre.sprint1.repository.impl.UserFollowerRepositoryImpl;
 import com.mercadolibre.sprint1.repository.impl.UserRepositoryImpl;
 import com.mercadolibre.sprint1.service.IUserService;
@@ -23,6 +27,9 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private UserRepositoryImpl userRepositoryImpl;
+
+    @Autowired
+    private IRepository<Post> postRepository;
 
     @Autowired
     private UserFollowerRepositoryImpl userFollowerRepositoryImpl;
@@ -87,6 +94,34 @@ public class UserServiceImpl implements IUserService {
                 .findFirst()
                 .orElseThrow(() -> new NotFoundException("No existe el usuario " + userId));
     }
+
+    @Override
+    public List<UserPromosAverageDto> findUserPromoAverage() {
+        Map<Integer, UserPromosAverageDto> promosAverages = new HashMap<>();
+        List<Post> posts = postRepository.findAll();
+        if(posts.isEmpty()) throw new PromoSellersNotFoundException("No se encontraron vendedores con promociones activas");
+        for(Post post : posts){
+            if(post.getDiscount() <= 0) continue;
+            try{
+                User user = findUserById(post.getUserId());
+                UserPromosAverageDto userPromoDto = promosAverages.get(post.getUserId());
+                if(userPromoDto == null){
+                    promosAverages.put(post.getUserId(), new UserPromosAverageDto(user.getId(), user.getName(), post.getDiscount(), 1));
+                }else{
+                    userPromoDto.setPromoAverage(userPromoDto.getPromoAverage() + post.getDiscount());
+                    userPromoDto.setCantPost(userPromoDto.getCantPost() + 1);
+                }
+            }catch (NotFoundException e){}
+        }
+
+        if(promosAverages.isEmpty()) throw new PromoSellersNotFoundException("No se encontraron vendedores con promociones activas");
+        List<UserPromosAverageDto> userAveragesData = new ArrayList<>(promosAverages.values());
+        for(UserPromosAverageDto uad : userAveragesData){
+            uad.setPromoAverage(uad.getPromoAverage()/uad.getCantPost());
+        }
+        return userAveragesData;
+    }
+
     private List<UserDto> orderUserDtoList(List<UserDto> userDtoList, String order){
             return userDtoList.stream().sorted((f1, f2) -> {
                 if (order.equalsIgnoreCase(String.valueOf(Order.NAME_ASC))) {
