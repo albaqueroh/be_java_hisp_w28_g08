@@ -4,11 +4,14 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mercadolibre.sprint1.dto.*;
 import com.mercadolibre.sprint1.entity.Post;
+import com.mercadolibre.sprint1.entity.Product;
 import com.mercadolibre.sprint1.entity.User;
 import com.mercadolibre.sprint1.entity.UserFollower;
 import com.mercadolibre.sprint1.exception.BadRequestException;
+import com.mercadolibre.sprint1.exception.NotFoundException;
 import com.mercadolibre.sprint1.repository.IRepository;
 import com.mercadolibre.sprint1.repository.impl.PostRepositoryImpl;
+import com.mercadolibre.sprint1.service.IUserService;
 import org.springframework.stereotype.Service;
 import com.mercadolibre.sprint1.service.IProductService;
 import com.mercadolibre.sprint1.utils.CResourceUtils;
@@ -28,6 +31,10 @@ public class ProductServiceImpl implements IProductService {
     private IRepository<Post> postRepository;
     @Autowired
     private IRepository<UserFollower> userFollowerRepository;
+    @Autowired
+    private UserServiceImpl userServiceImpl;
+    @Autowired
+    private IUserService userService;
 
     @Override
     public ProductsFollowedDtoResponse productsOfPeopleFollowed(int id) {
@@ -94,5 +101,30 @@ public class ProductServiceImpl implements IProductService {
             throw new BadRequestException("El objeto enviado no es correcto");
         }
         return "todo OK";
+    }
+
+    @Override
+    public PostPromoListDto listProductsPromo(int userId) {
+        User findSeller = userService.findUserById(userId);
+
+        if (findSeller.isSeller()) {
+            List<PostPromoDto> promoPosts = postRepository.findAll()
+                    .stream()
+                    .filter(u -> u.isHasPromo() == true && u.getUserId() == userId)
+                    .map(postList -> {
+                        PostPromoDto postPromoDto = MAPPER.convertValue(postList, PostPromoDto.class);
+                        postPromoDto.setId(postList.getId());
+                        return postPromoDto;
+                    })
+                    .collect(Collectors.toList());
+
+            PostPromoListDto postPromoListDto = new PostPromoListDto();
+            postPromoListDto.setUserId(userId);
+            postPromoListDto.setName(findSeller.getName());
+            postPromoListDto.setPosts(promoPosts);
+
+            return postPromoListDto;
+        }
+        throw new NotFoundException("El usuario no es un vendedor");
     }
 }
