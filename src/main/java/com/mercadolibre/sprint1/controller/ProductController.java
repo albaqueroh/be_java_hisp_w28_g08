@@ -32,9 +32,13 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(service.createPromoPost(promoPost));
     }
 
+    @GetMapping("/promo-post/list")
+    public ResponseEntity<?> allProductsPromo(@RequestParam("user_id") int userId){
+        return ResponseEntity.status(HttpStatus.OK).body(service.listProductsPromo(userId));
+    }
+
     @GetMapping("/promo-post/count")
     public ResponseEntity<?> findPromoProductsBySeller(@RequestParam("user_id") int userId) {
         return ResponseEntity.status(HttpStatus.OK).body(service.findPromoProductsBySeller(userId));
     }
-
 }
