@@ -1,24 +1,6 @@
 package com.mercadolibre.sprint1.service.impl;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.mercadolibre.sprint1.dto.*;
-import com.mercadolibre.sprint1.dto.response.CountProductsPromoDto;
-import com.mercadolibre.sprint1.entity.Post;
-import com.mercadolibre.sprint1.entity.Product;
-import com.mercadolibre.sprint1.entity.User;
-import com.mercadolibre.sprint1.entity.UserFollower;
-import com.mercadolibre.sprint1.exception.BadRequestException;
-import com.mercadolibre.sprint1.exception.NotFoundException;
-import com.mercadolibre.sprint1.repository.IRepository;
-
-import com.mercadolibre.sprint1.repository.impl.PostRepositoryImpl;
-
-import org.springframework.stereotype.Service;
-import com.mercadolibre.sprint1.service.IProductService;
-import com.mercadolibre.sprint1.service.IUserService;
-import com.mercadolibre.sprint1.utils.CResourceUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import static com.mercadolibre.sprint1.utils.CResourceUtils.MAPPER;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -26,7 +8,28 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.mercadolibre.sprint1.utils.CResourceUtils.MAPPER;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.mercadolibre.sprint1.dto.CreatePromoPostDto;
+import com.mercadolibre.sprint1.dto.NewPostDto;
+import com.mercadolibre.sprint1.dto.PostDto;
+import com.mercadolibre.sprint1.dto.PostPromoDto;
+import com.mercadolibre.sprint1.dto.PostPromoListDto;
+import com.mercadolibre.sprint1.dto.ProductsFollowedDtoResponse;
+import com.mercadolibre.sprint1.dto.UserFollowerDto;
+import com.mercadolibre.sprint1.dto.response.CountProductsPromoDto;
+import com.mercadolibre.sprint1.entity.Post;
+import com.mercadolibre.sprint1.entity.User;
+import com.mercadolibre.sprint1.entity.UserFollower;
+import com.mercadolibre.sprint1.exception.BadRequestException;
+import com.mercadolibre.sprint1.exception.NotFoundException;
+import com.mercadolibre.sprint1.repository.IRepository;
+import com.mercadolibre.sprint1.service.IProductService;
+import com.mercadolibre.sprint1.service.IUserService;
+import com.mercadolibre.sprint1.utils.CResourceUtils;
 
 @Service
 public class ProductServiceImpl implements IProductService {
@@ -37,25 +40,20 @@ public class ProductServiceImpl implements IProductService {
     @Autowired
     private IRepository<UserFollower> userFollowerRepository;
     @Autowired
-    private UserServiceImpl userServiceImpl;
-    @Autowired
-    private IUserService userService;
-
-    @Autowired
     private IUserService userService;
 
     @Override
     public ProductsFollowedDtoResponse productsOfPeopleFollowed(int id, String order) {
         CResourceUtils.MAPPER.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
-        Comparator<Post> orden= Comparator.comparing(Post::getDate);
+        Comparator<Post> orden = Comparator.comparing(Post::getDate);
         if (order != null && order.equalsIgnoreCase("date_desc")) {
             orden = Comparator.comparing(Post::getDate).reversed();
         }
 
         LocalDate fechaActual = LocalDate.now();
         LocalDate fechaHaceDosSemanas = fechaActual.minusWeeks(2);
-        List<Integer> idUsuarios =  userFollowerRepository.findAll().stream()
+        List<Integer> idUsuarios = userFollowerRepository.findAll().stream()
                 .filter(entry -> entry.getUserFollower() == id)
                 .map(entry -> MAPPER.convertValue(entry, UserFollowerDto.class))
                 .map(UserFollowerDto::getUserFollowed)
@@ -67,9 +65,9 @@ public class ProductServiceImpl implements IProductService {
         }
 
         List<PostDto> postDto = posts.stream()
-                .filter(entry ->
-                        (entry.getDate().isAfter(fechaHaceDosSemanas) || entry.getDate().isEqual(fechaHaceDosSemanas)) &&
-                                (entry.getDate().isBefore(fechaActual) || entry.getDate().isEqual(fechaActual)))
+                .filter(entry -> (entry.getDate().isAfter(fechaHaceDosSemanas)
+                        || entry.getDate().isEqual(fechaHaceDosSemanas)) &&
+                        (entry.getDate().isBefore(fechaActual) || entry.getDate().isEqual(fechaActual)))
                 .sorted(orden)
                 .map(entry -> {
                     PostDto dto = MAPPER.convertValue(entry, PostDto.class);
@@ -93,8 +91,7 @@ public class ProductServiceImpl implements IProductService {
         CResourceUtils.MAPPER.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
         if (postPromo != null) {
-            Post savedPost = postRepository.save(CResourceUtils.MAPPER.convertValue(postPromo, Post.class));
-
+            postRepository.save(CResourceUtils.MAPPER.convertValue(postPromo, Post.class));
             return "Post guardado";
         } else {
             throw new BadRequestException("El objeto enviado no es correcto");
@@ -136,8 +133,19 @@ public class ProductServiceImpl implements IProductService {
 
             return postPromoListDto;
         }
-      
+
         throw new NotFoundException("El usuario no es un vendedor");
+    }
+
+    @Override
+    public CountProductsPromoDto findPromoProductsBySeller(int userId) {
+        User user = userService.findUserById(userId);
+        long promoProducts = postRepository.findAll()
+                .stream()
+                .filter(p -> p.getUserId() == userId && p.isHasPromo())
+                .count();
+
+        return new CountProductsPromoDto(user.getId(), user.getName(), promoProducts);
     }
 
 }
