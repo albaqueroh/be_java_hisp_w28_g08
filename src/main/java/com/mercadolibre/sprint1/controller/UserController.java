@@ -32,8 +32,8 @@ public class UserController {
 	}
 
 	@GetMapping("/{userid}/followed/list")
-	public ResponseEntity<?> findUsersFollowedByUser(@PathVariable int userid) {
-		return ResponseEntity.ok(userService.findUsersFollowedByUser(userid));
+	public ResponseEntity<?> findUsersFollowedByUser(@PathVariable int userid, @RequestParam(required = false) String order) {
+		return ResponseEntity.ok(userService.findUsersFollowedByUser(userid,order));
 	}
 
 }

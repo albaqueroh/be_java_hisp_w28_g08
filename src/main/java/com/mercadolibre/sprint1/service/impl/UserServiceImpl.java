@@ -60,7 +60,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public FollowedListByUserDto findUsersFollowedByUser(int id) {
+    public FollowedListByUserDto findUsersFollowedByUser(int id, String order) {
         User user = findUserById(id);
         List<UserDto> followed = userFollowerRepositoryImpl.findAll()
                 .stream()
@@ -68,7 +68,9 @@ public class UserServiceImpl implements IUserService {
                 .map(f -> findUserById(f.getUserFollowed()))
                 .map(u -> new UserDto(u.getId(), u.getName()))
                 .toList();
-
+        if(order != null){
+            followed = orderUserDtoList(followed,order);
+        }
         FollowedListByUserDto res = new FollowedListByUserDto();
         res.setId(user.getId());
         res.setName(user.getName());
