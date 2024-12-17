@@ -75,7 +75,8 @@ public class UserServiceImpl implements IUserService {
         return res;
     }
 
-    private User findUserById(int userId) {
+    @Override
+    public User findUserById(int userId) {
         return userRepositoryImpl.findAll()
                 .stream()
                 .filter(u -> u.getId() == userId)
