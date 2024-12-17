@@ -2,7 +2,10 @@ package com.mercadolibre.sprint1.service;
 
 import com.mercadolibre.sprint1.dto.response.FollowedListByUserDto;
 import com.mercadolibre.sprint1.dto.response.FollowersListByUserDto;
+import com.mercadolibre.sprint1.dto.response.UserPromosAverageDto;
 import com.mercadolibre.sprint1.entity.User;
+
+import java.util.List;
 
 public interface IUserService {
 
@@ -17,5 +20,6 @@ public interface IUserService {
   
     User findUserById(int userId);
 
+    List<UserPromosAverageDto> findUserPromoAverage();
 
 }

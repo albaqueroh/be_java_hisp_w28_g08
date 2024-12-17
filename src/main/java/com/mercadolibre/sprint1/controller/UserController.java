@@ -30,7 +30,6 @@ public class UserController {
         return new ResponseEntity<>(userFollowerService.unfollow(userId,sellerId), HttpStatus.OK);
     }
 
-
 	@PostMapping("/{userId}/follow/{userIdToFollow}")
 	public ResponseEntity<?> followUser(@PathVariable int userId, @PathVariable int userIdToFollow){
 		return ResponseEntity.ok(userService.followUser(userId,userIdToFollow));
@@ -41,4 +40,8 @@ public class UserController {
 		return ResponseEntity.ok(userService.findUsersFollowedByUser(userid,order));
 	}
 
+	@GetMapping("/average-promos")
+	public ResponseEntity<?> findUserPromoAverage(){
+		return ResponseEntity.ok(userService.findUserPromoAverage());
+	}
 }
