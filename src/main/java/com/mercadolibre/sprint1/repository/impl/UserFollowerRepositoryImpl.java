@@ -1,13 +1,16 @@
 package com.mercadolibre.sprint1.repository.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.mercadolibre.sprint1.entity.UserFollower;
 import com.mercadolibre.sprint1.repository.IRepository;
 import com.mercadolibre.sprint1.utils.CResourceUtils;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.ResourceUtils;
 
-import java.io.IOException;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class UserFollowerRepositoryImpl implements IRepository<UserFollower> {
@@ -17,11 +20,11 @@ public class UserFollowerRepositoryImpl implements IRepository<UserFollower> {
 	public UserFollowerRepositoryImpl() {
 		loadData();
 	}
-
 	private void loadData() {
-		try {
-			usersFollowers = CResourceUtils.loadDataFromJson("userFollower.json");
-		} catch (IOException e) {
+		try{
+			File file = ResourceUtils.getFile("classpath:userFollower.json");
+			usersFollowers = CResourceUtils.MAPPER.readValue(file, new TypeReference<List<UserFollower>>(){});
+		}catch (Exception e){
 			throw new RuntimeException(e);
 		}
 	}
@@ -32,7 +35,7 @@ public class UserFollowerRepositoryImpl implements IRepository<UserFollower> {
 	}
 
 	@Override
-	public UserFollower save(UserFollower entity) {
+	public UserFollower save(UserFollower entity){
 		usersFollowers.add(entity);
 		return entity;
 	}
@@ -44,6 +47,11 @@ public class UserFollowerRepositoryImpl implements IRepository<UserFollower> {
 
 	@Override
 	public boolean delete(UserFollower entity) {
-		return false;
+		return usersFollowers.remove(entity);
 	}
+	public Optional<UserFollower> findByFollowerIdAndFollowedId(int userId, int sellerId){
+		Optional<UserFollower> optional = usersFollowers.stream().filter(u -> u.getUserFollower() == userId && u.getUserFollowed() == sellerId).findFirst();
+		return optional;
+	}
+
 }

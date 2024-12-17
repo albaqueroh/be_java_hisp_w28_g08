@@ -1,11 +1,13 @@
 package com.mercadolibre.sprint1.repository.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.mercadolibre.sprint1.entity.User;
 import com.mercadolibre.sprint1.repository.IRepository;
 import com.mercadolibre.sprint1.utils.CResourceUtils;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.ResourceUtils;
 
-import java.io.IOException;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,9 +22,10 @@ public class UserRepositoryImpl implements IRepository<User> {
 	}
 
 	private void loadData() {
-		try {
-			users = CResourceUtils.loadDataFromJson("user.json");
-		} catch (IOException e) {
+		try{
+			File file = ResourceUtils.getFile("classpath:user.json");
+			users = CResourceUtils.MAPPER.readValue(file, new TypeReference<List<User>>(){});
+		}catch (Exception e){
 			throw new RuntimeException(e);
 		}
 	}
@@ -55,4 +58,5 @@ public class UserRepositoryImpl implements IRepository<User> {
 	public boolean delete(User entity) {
 		return users.remove(entity);
 	}
+
 }
