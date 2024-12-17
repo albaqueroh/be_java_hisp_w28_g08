@@ -4,6 +4,7 @@ import com.mercadolibre.sprint1.dto.response.FollowersCountDto;
 import com.mercadolibre.sprint1.dto.response.UnfollowResponseDto;
 import com.mercadolibre.sprint1.entity.UserFollower;
 import com.mercadolibre.sprint1.exception.BadRequestException;
+import com.mercadolibre.sprint1.exception.NotFoundException;
 import com.mercadolibre.sprint1.repository.impl.UserFollowerRepositoryImpl;
 import com.mercadolibre.sprint1.repository.impl.UserRepositoryImpl;
 import com.mercadolibre.sprint1.service.IUserFollowerService;
@@ -24,7 +25,7 @@ public class UserFollowerServiceImpl implements IUserFollowerService {
     public UnfollowResponseDto unfollow(int userId, int sellerId) {
         Optional<UserFollower> optionalUserFollower = userFollowerRepository.findByFollowerIdAndFollowedId(userId,sellerId);
         if(!optionalUserFollower.isPresent()){
-            return new UnfollowResponseDto("No estas siguiendo al usuario "+sellerId);
+            throw new NotFoundException("No estas siguiendo al usuario "+sellerId);
         }
         userFollowerRepository.delete(optionalUserFollower.get());
         return new UnfollowResponseDto("Se ha dejado de seguir al usuario "+sellerId);

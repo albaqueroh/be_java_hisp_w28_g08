@@ -20,4 +20,9 @@ public class CustomExceptionHandler {
 		return new ResponseEntity<>(new ExceptionDto((e.getMessage())), HttpStatus.NOT_FOUND);
 	}
 
+	@ExceptionHandler(PromoSellersNotFoundException.class)
+	public ResponseEntity<?> promoSellersNotFound(PromoSellersNotFoundException e) {
+		return new ResponseEntity<>(new ExceptionDto((e.getMessage())), HttpStatus.NO_CONTENT);
+	}
+
 }
