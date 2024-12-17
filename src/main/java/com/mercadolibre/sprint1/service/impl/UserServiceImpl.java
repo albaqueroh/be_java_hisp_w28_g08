@@ -2,6 +2,7 @@ package com.mercadolibre.sprint1.service.impl;
 
 import java.util.List;
 
+import com.mercadolibre.sprint1.dto.response.FollowedListByUserDto;
 import com.mercadolibre.sprint1.entity.UserFollower;
 import com.mercadolibre.sprint1.exception.BadRequestException;
 
@@ -56,6 +57,24 @@ public class UserServiceImpl implements IUserService {
             return true;
         }
         throw new BadRequestException("El usuario no es un vendedor. " + userIdToFollow);
+    }
+
+    @Override
+    public FollowedListByUserDto findUsersFollowedByUser(int id) {
+        User user = findUserById(id);
+        List<UserDto> followed = userFollowerRepositoryImpl.findAll()
+                .stream()
+                .filter(f -> f.getUserFollower() == id)
+                .map(f -> findUserById(f.getUserFollowed()))
+                .map(u -> new UserDto(u.getId(), u.getName()))
+                .toList();
+
+        FollowedListByUserDto res = new FollowedListByUserDto();
+        res.setId(user.getId());
+        res.setName(user.getName());
+        res.setFollowed(followed);
+
+        return res;
     }
 
     private User findUserById(int userId) {
