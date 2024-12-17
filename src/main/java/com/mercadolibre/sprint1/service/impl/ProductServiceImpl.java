@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,17 +36,21 @@ public class ProductServiceImpl implements IProductService {
     private IUserService userService;
 
     @Override
-    public ProductsFollowedDtoResponse productsOfPeopleFollowed(int id) {
+    public ProductsFollowedDtoResponse productsOfPeopleFollowed(int id, String order) {
         CResourceUtils.MAPPER.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+
+        Comparator<Post> orden= Comparator.comparing(Post::getDate);
+        if (order != null && order.equalsIgnoreCase("date_desc")) {
+            orden = Comparator.comparing(Post::getDate).reversed();
+        }
 
         LocalDate fechaActual = LocalDate.now();
         LocalDate fechaHaceDosSemanas = fechaActual.minusWeeks(2);
-        List<Integer> idUsuarios = new ArrayList<>();
-        idUsuarios = userFollowerRepository.findAll().stream()
+        List<Integer> idUsuarios =  userFollowerRepository.findAll().stream()
                 .filter(entry -> entry.getUserFollower() == id)
                 .map(entry -> MAPPER.convertValue(entry, UserFollowerDto.class))
                 .map(UserFollowerDto::getUserFollowed)
-                .collect(Collectors.toList());
+                .toList();
 
         List<Post> posts = new ArrayList<>();
         for (Integer usuarios : idUsuarios) {
@@ -53,10 +58,10 @@ public class ProductServiceImpl implements IProductService {
         }
 
         List<PostDto> postDto = posts.stream()
-                .filter(entry -> (entry.getDate().isAfter(fechaHaceDosSemanas)
-                        || entry.getDate().isEqual(fechaHaceDosSemanas)) &&
-                        (entry.getDate().isBefore(fechaActual) || entry.getDate().isEqual(fechaActual)))
-                .sorted((post1, post2) -> post2.getDate().compareTo(post1.getDate()))
+                .filter(entry ->
+                        (entry.getDate().isAfter(fechaHaceDosSemanas) || entry.getDate().isEqual(fechaHaceDosSemanas)) &&
+                                (entry.getDate().isBefore(fechaActual) || entry.getDate().isEqual(fechaActual)))
+                .sorted(orden)
                 .map(entry -> {
                     PostDto dto = MAPPER.convertValue(entry, PostDto.class);
                     dto.setId(entry.getId());
@@ -64,8 +69,7 @@ public class ProductServiceImpl implements IProductService {
                 })
                 .toList();
 
-        ProductsFollowedDtoResponse productsFollowedDtoResponse = new ProductsFollowedDtoResponse(id, postDto);
-        return productsFollowedDtoResponse;
+        return new ProductsFollowedDtoResponse(id, postDto);
     }
 
     private List<Post> filterPostsByUserIds(Integer userIds) {
