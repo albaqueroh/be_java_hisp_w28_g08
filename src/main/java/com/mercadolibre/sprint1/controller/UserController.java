@@ -20,6 +20,11 @@ public class UserController {
 		return ResponseEntity.ok(userService.findAllFollowersByUser(userId, order));
 	}
 
+	@GetMapping("/{userId}/followers/count")
+	public ResponseEntity<?> followersCountById(@PathVariable int userId){
+		return ResponseEntity.ok(userFollowerService.followersCount(userId));
+	}
+
     @PostMapping("/{userId}/unfollow/{userIdToUnfollow}")
     public ResponseEntity<?> unfollow(@PathVariable("userId") int userId, @PathVariable("userIdToUnfollow") int sellerId){
         return new ResponseEntity<>(userFollowerService.unfollow(userId,sellerId), HttpStatus.OK);

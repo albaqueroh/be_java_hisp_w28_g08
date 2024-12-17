@@ -2,6 +2,7 @@ package com.mercadolibre.sprint1.service;
 
 import com.mercadolibre.sprint1.dto.response.FollowedListByUserDto;
 import com.mercadolibre.sprint1.dto.response.FollowersListByUserDto;
+import com.mercadolibre.sprint1.entity.User;
 
 public interface IUserService {
 
@@ -10,5 +11,9 @@ public interface IUserService {
     boolean followUser (int userId, int userIdToFollow);
 
     FollowedListByUserDto findUsersFollowedByUser(int id, String order);
+  
+    User findUserById(int userId);
+  
+    FollowedListByUserDto findUsersFollowedByUser(int id);
 
 }
