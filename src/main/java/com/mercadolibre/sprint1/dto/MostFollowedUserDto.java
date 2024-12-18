@@ -21,5 +21,5 @@ public class MostFollowedUserDto {
     @JsonProperty("number_of_followers")
     private int numberFollowers;
 
-    private List<PostDto> posts;
+    private List<MostFollowersPostDto> posts;
 }

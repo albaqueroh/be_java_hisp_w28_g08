@@ -152,9 +152,9 @@ public class UserServiceImpl implements IUserService {
                 .filter(post -> post.getUserId() == mostFollowedUserId)
                 .collect(Collectors.toList());
 
-        List<PostDto> activePosts = posts.stream()
+        List<MostFollowersPostDto> activePosts = posts.stream()
                 .filter(post -> post.getDate().isBefore(LocalDate.now()) || post.getDate().isEqual(LocalDate.now()))
-                .map(post -> new PostDto(
+                .map(post -> new MostFollowersPostDto(
                         post.getId(),
                         post.getUserId(),
                         post.getDate(),
