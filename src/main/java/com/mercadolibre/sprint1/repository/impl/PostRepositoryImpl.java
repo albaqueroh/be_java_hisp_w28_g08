@@ -19,9 +19,9 @@ public class PostRepositoryImpl implements IRepository<Post> {
 
 	private List<Post> posts = new ArrayList<>();
 
-	public PostRepositoryImpl() {
-		loadData();
-	}
+//	public PostRepositoryImpl() {
+//		loadData();
+//	}
 
 	private void loadData() {
 		try {

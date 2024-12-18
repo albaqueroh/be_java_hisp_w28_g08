@@ -13,6 +13,7 @@ import com.mercadolibre.sprint1.exception.BadRequestException;
 
 import com.mercadolibre.sprint1.dto.response.FollowersListByUserDto;
 import com.mercadolibre.sprint1.entity.User;
+import com.mercadolibre.sprint1.exception.NoContentException;
 import com.mercadolibre.sprint1.exception.NotFoundException;
 import com.mercadolibre.sprint1.exception.PromoSellersNotFoundException;
 import com.mercadolibre.sprint1.repository.IRepository;
@@ -165,7 +166,7 @@ public class UserServiceImpl implements IUserService {
                 .collect(Collectors.toList());
 
         if (activePosts.isEmpty()) {
-            throw new NotFoundException("El usuario más seguido no tiene publicaciones activas.");
+            throw new NoContentException("El usuario más seguido no tiene publicaciones activas.");
         }
 
         return new MostFollowedUserDto(mostFollowedUser.getId(), mostFollowedUser.getName(), mostFollowers, activePosts);

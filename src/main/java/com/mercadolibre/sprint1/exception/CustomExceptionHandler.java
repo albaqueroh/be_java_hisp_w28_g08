@@ -25,4 +25,9 @@ public class CustomExceptionHandler {
 		return new ResponseEntity<>(new ExceptionDto((e.getMessage())), HttpStatus.NO_CONTENT);
 	}
 
+	@ExceptionHandler(NoContentException.class)
+	public ResponseEntity<?> handleNoContentException(NoContentException e) {
+		return new ResponseEntity<>(new ExceptionDto((e.getMessage())), HttpStatus.NO_CONTENT);
+	}
+
 }
