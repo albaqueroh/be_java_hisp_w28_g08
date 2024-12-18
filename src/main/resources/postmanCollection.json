@@ -69,19 +69,15 @@
 					},
 					"status": "OK",
 					"code": 200,
-					"_postman_previewlanguage": "json",
+					"_postman_previewlanguage": "plain",
 					"header": [
 						{
-							"key": "Content-Type",
-							"value": "application/json"
-						},
-						{
-							"key": "Transfer-Encoding",
-							"value": "chunked"
+							"key": "Content-Length",
+							"value": "0"
 						},
 						{
 							"key": "Date",
-							"value": "Wed, 18 Dec 2024 14:15:58 GMT"
+							"value": "Wed, 18 Dec 2024 18:31:38 GMT"
 						},
 						{
 							"key": "Keep-Alive",
@@ -93,7 +89,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "true"
+					"body": null
 				},
 				{
 					"name": "400 - El usuario no es vendedor",
@@ -768,7 +764,7 @@
 						},
 						{
 							"key": "Date",
-							"value": "Wed, 18 Dec 2024 14:21:24 GMT"
+							"value": "Wed, 18 Dec 2024 18:39:41 GMT"
 						},
 						{
 							"key": "Keep-Alive",
@@ -780,7 +776,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"posts\": [\n        {\n            \"id\": 9,\n            \"date\": \"09-12-2024\",\n            \"product\": {\n                \"type\": \"Electronics\",\n                \"brand\": \"BrandI\",\n                \"color\": \"White\",\n                \"notes\": \"Next-gen gaming experience\",\n                \"product_id\": 109,\n                \"product_name\": \"Gaming Console\"\n            },\n            \"category\": 9,\n            \"price\": 499.99,\n            \"user_id\": 9\n        },\n        {\n            \"id\": 11,\n            \"date\": \"18-12-2024\",\n            \"product\": {\n                \"type\": \"Gamer\",\n                \"brand\": \"Racer\",\n                \"color\": \"Red & Black\",\n                \"notes\": \"Special Edition\",\n                \"product_id\": 1,\n                \"product_name\": \"Silla Gamer\"\n            },\n            \"category\": 100,\n            \"price\": 1500.5,\n            \"user_id\": 1\n        }\n    ],\n    \"user_id\": 2\n}"
+					"body": "{\n    \"posts\": [\n        {\n            \"date\": \"09-12-2024\",\n            \"product\": {\n                \"type\": \"Electronics\",\n                \"brand\": \"BrandI\",\n                \"color\": \"White\",\n                \"notes\": \"Next-gen gaming experience\",\n                \"product_id\": 109,\n                \"product_name\": \"Gaming Console\"\n            },\n            \"category\": 9,\n            \"price\": 499.99,\n            \"post_id\": 9,\n            \"user_id\": 9\n        }\n    ],\n    \"user_id\": 2\n}"
 				}
 			]
 		},
