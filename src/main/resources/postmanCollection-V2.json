@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "ef7a9b62-cc7b-4dfa-9001-79cc6bbf85f9",
-		"name": "Sprint 1 - Grupo 8",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
-		"_exporter_id": "40375463"
+		"_postman_id": "c82df5e1-e737-4901-b3c5-c3e4caa4bde3",
+		"name": "Sprint 1 - Grupo 8 v2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39943998"
 	},
 	"item": [
 		{
@@ -31,7 +31,7 @@
 						},
 						{
 							"key": "userIdToFollow",
-							"value": "11"
+							"value": "5"
 						}
 					]
 				}
@@ -230,7 +230,7 @@
 					"variable": [
 						{
 							"key": "userId",
-							"value": "11"
+							"value": "1"
 						}
 					]
 				}
@@ -630,7 +630,18 @@
 						}
 					}
 				},
-				"url": "http://localhost:8080/products/post"
+				"url": {
+					"raw": "http://localhost:8080/products/post",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"post"
+					]
+				}
 			},
 			"response": [
 				{
@@ -647,7 +658,18 @@
 								}
 							}
 						},
-						"url": "http://localhost:8080/products/post"
+						"url": {
+							"raw": "http://localhost:8080/products/post",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"post"
+							]
+						}
 					},
 					"status": "OK",
 					"code": 200,
@@ -691,7 +713,18 @@
 								}
 							}
 						},
-						"url": "http://localhost:8080/products/post"
+						"url": {
+							"raw": "http://localhost:8080/products/post",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"post"
+							]
+						}
 					},
 					"status": "OK",
 					"code": 200,
@@ -793,7 +826,7 @@
 						},
 						{
 							"key": "Date",
-							"value": "Wed, 18 Dec 2024 14:21:24 GMT"
+							"value": "Wed, 18 Dec 2024 20:50:27 GMT"
 						},
 						{
 							"key": "Keep-Alive",
@@ -805,7 +838,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"posts\": [\n        {\n            \"id\": 9,\n            \"date\": \"09-12-2024\",\n            \"product\": {\n                \"type\": \"Electronics\",\n                \"brand\": \"BrandI\",\n                \"color\": \"White\",\n                \"notes\": \"Next-gen gaming experience\",\n                \"product_id\": 109,\n                \"product_name\": \"Gaming Console\"\n            },\n            \"category\": 9,\n            \"price\": 499.99,\n            \"user_id\": 9\n        },\n        {\n            \"id\": 11,\n            \"date\": \"18-12-2024\",\n            \"product\": {\n                \"type\": \"Gamer\",\n                \"brand\": \"Racer\",\n                \"color\": \"Red & Black\",\n                \"notes\": \"Special Edition\",\n                \"product_id\": 1,\n                \"product_name\": \"Silla Gamer\"\n            },\n            \"category\": 100,\n            \"price\": 1500.5,\n            \"user_id\": 1\n        }\n    ],\n    \"user_id\": 2\n}"
+					"body": "{\n    \"posts\": [\n        {\n            \"date\": \"09-12-2024\",\n            \"product\": {\n                \"type\": \"Electronics\",\n                \"brand\": \"BrandI\",\n                \"color\": \"White\",\n                \"notes\": \"Next-gen gaming experience\",\n                \"product_id\": 109,\n                \"product_name\": \"Gaming Console\"\n            },\n            \"category\": 9,\n            \"price\": 499.99,\n            \"post_id\": 9,\n            \"user_id\": 9\n        }\n    ],\n    \"user_id\": 2\n}"
 				}
 			]
 		},
@@ -1338,7 +1371,18 @@
 						}
 					}
 				},
-				"url": "http://localhost:8080/products/promo-post"
+				"url": {
+					"raw": "http://localhost:8080/products/promo-post",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"promo-post"
+					]
+				}
 			},
 			"response": [
 				{
@@ -1355,7 +1399,18 @@
 								}
 							}
 						},
-						"url": "http://localhost:8080/products/promo-post"
+						"url": {
+							"raw": "http://localhost:8080/products/promo-post",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"promo-post"
+							]
+						}
 					},
 					"status": "OK",
 					"code": 200,
@@ -1399,35 +1454,42 @@
 								}
 							}
 						},
-						"url": "http://localhost:8080/products/promo-post"
+						"url": {
+							"raw": "http://localhost:8080/products/promo-post",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"promo-post"
+							]
+						}
 					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "plain",
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
 					"header": [
 						{
 							"key": "Content-Type",
-							"value": "text/plain;charset=UTF-8"
+							"value": "application/json"
 						},
 						{
-							"key": "Content-Length",
-							"value": "13"
+							"key": "Transfer-Encoding",
+							"value": "chunked"
 						},
 						{
 							"key": "Date",
-							"value": "Wed, 18 Dec 2024 14:25:48 GMT"
-						},
-						{
-							"key": "Keep-Alive",
-							"value": "timeout=60"
+							"value": "Wed, 18 Dec 2024 19:18:45 GMT"
 						},
 						{
 							"key": "Connection",
-							"value": "keep-alive"
+							"value": "close"
 						}
 					],
 					"cookie": [],
-					"body": "Post guardado"
+					"body": "{\n    \"message\": \"El objeto enviado no es correcto o está incompleto\"\n}"
 				}
 			]
 		},
@@ -1704,7 +1766,18 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8080/users/average-promos"
+				"url": {
+					"raw": "http://localhost:8080/users/average-promos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"average-promos"
+					]
+				}
 			},
 			"response": [
 				{
@@ -1712,7 +1785,18 @@
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8080/users/average-promos"
+						"url": {
+							"raw": "http://localhost:8080/users/average-promos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"average-promos"
+							]
+						}
 					},
 					"status": "OK",
 					"code": 200,
@@ -1747,7 +1831,18 @@
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8080/users/average-promos"
+						"url": {
+							"raw": "http://localhost:8080/users/average-promos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"average-promos"
+							]
+						}
 					},
 					"status": "No Content",
 					"code": 204,
@@ -1780,7 +1875,19 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8080/users/most-followed/posts"
+				"url": {
+					"raw": "http://localhost:8080/users/most-followed/posts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"most-followed",
+						"posts"
+					]
+				}
 			},
 			"response": [
 				{
@@ -1788,7 +1895,19 @@
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8080/users/most-followed/posts"
+						"url": {
+							"raw": "http://localhost:8080/users/most-followed/posts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"most-followed",
+								"posts"
+							]
+						}
 					},
 					"status": "OK",
 					"code": 200,
@@ -1823,7 +1942,19 @@
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8080/users/most-followed/posts"
+						"url": {
+							"raw": "http://localhost:8080/users/most-followed/posts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"most-followed",
+								"posts"
+							]
+						}
 					},
 					"status": "No Content",
 					"code": 204,

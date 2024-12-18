@@ -43,6 +43,10 @@ Para realizar las pruebas correspondientes a cada uno de los requerimientos, se 
     <img src="./src/main/resources/postman2.png">
 </center>
 
+### 2.5 Enlace a repositorio grupal
+
+https://github.com/albaqueroh/be_java_hisp_w28_g08/tree/develop
+
 ## 3. Definición de requerimientos de endpoints y responsables 🗂️
 
 A continuación, se presenta un detalle de los requerimientos implementados, junto con su responsable correspondiente.
