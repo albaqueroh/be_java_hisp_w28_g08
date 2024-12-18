@@ -46,6 +46,7 @@ Para realizar las pruebas correspondientes a cada uno de los requerimientos, se 
 ### 2.5 Enlace a repositorio grupal
 
 https://github.com/albaqueroh/be_java_hisp_w28_g08/tree/develop
+https://github.com/users/albaqueroh/projects/1/views/1
 
 ## 3. Definición de requerimientos de endpoints y responsables 🗂️
 
