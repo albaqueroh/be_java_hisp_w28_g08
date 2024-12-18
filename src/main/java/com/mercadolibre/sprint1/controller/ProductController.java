@@ -5,9 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.mercadolibre.sprint1.dto.CreatePromoPostDto;
-import com.mercadolibre.sprint1.dto.NewPostDto;
-import com.mercadolibre.sprint1.dto.ProductsFollowedDtoResponse;
+import com.mercadolibre.sprint1.dto.request.CreatePromoPostDto;
+import com.mercadolibre.sprint1.dto.request.NewPostDto;
+import com.mercadolibre.sprint1.dto.response.ProductsFollowedDtoResponse;
 import com.mercadolibre.sprint1.service.IProductService;
 
 @RestController

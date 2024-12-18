@@ -1,9 +1,9 @@
 package com.mercadolibre.sprint1.service;
 
-import com.mercadolibre.sprint1.dto.CreatePromoPostDto;
-import com.mercadolibre.sprint1.dto.NewPostDto;
-import com.mercadolibre.sprint1.dto.PostPromoListDto;
-import com.mercadolibre.sprint1.dto.ProductsFollowedDtoResponse;
+import com.mercadolibre.sprint1.dto.request.CreatePromoPostDto;
+import com.mercadolibre.sprint1.dto.request.NewPostDto;
+import com.mercadolibre.sprint1.dto.response.PostPromoListDto;
+import com.mercadolibre.sprint1.dto.response.ProductsFollowedDtoResponse;
 import com.mercadolibre.sprint1.dto.response.CountProductsPromoDto;
 
 public interface IProductService {

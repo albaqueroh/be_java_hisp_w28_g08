@@ -7,8 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.plaf.PanelUI;
-
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -17,7 +15,6 @@ public class UserController {
 
 	@Autowired
 	private IUserFollowerService userFollowerService;
-
 
 	/**
 	 * US0001: Poder realizar la acción de “Follow” (seguir) a un determinado vendedor
@@ -93,7 +90,7 @@ public class UserController {
 	 * Status code 204 No Content
 	 */
 	@GetMapping("/most-followed/posts")
-	public ResponseEntity<?> userMostFollwed(){
-		return ResponseEntity.ok(userService.findMostFllowedUser());
+	public ResponseEntity<?> userMostFollowed(){
+		return ResponseEntity.ok(userService.findMostFollowedUser());
 	}
 }
