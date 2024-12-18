@@ -166,7 +166,6 @@ public class UserServiceImpl implements IUserService {
                 .collect(Collectors.toList());
 
         if (activePosts.isEmpty()) {
-            System.out.println("ta o no ta");
             throw new NoContentException("El usuario más seguido no tiene publicaciones activas.");
         }
 
