@@ -90,10 +90,11 @@ public class ProductServiceImpl implements IProductService {
         CResourceUtils.MAPPER.registerModule(new JavaTimeModule());
         CResourceUtils.MAPPER.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
-        if (postPromo != null) {
+        if(!CResourceUtils.validateRequestBody(postPromo)) throw new BadRequestException("El objeto enviado no es correcto o está incompleto");
+        try {
             postRepository.save(CResourceUtils.MAPPER.convertValue(postPromo, Post.class));
             return "Post guardado";
-        } else {
+        } catch (Exception e) {
             throw new BadRequestException("El objeto enviado no es correcto");
         }
     }
@@ -103,6 +104,7 @@ public class ProductServiceImpl implements IProductService {
         CResourceUtils.MAPPER.registerModule(new JavaTimeModule());
         CResourceUtils.MAPPER.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
+        if(!CResourceUtils.validateRequestBody(newPostDto)) throw new BadRequestException("El objeto enviado no es correcto o está incompleto");
         try {
             postRepository.save(CResourceUtils.MAPPER.convertValue(newPostDto, Post.class));
         } catch (Exception e) {
