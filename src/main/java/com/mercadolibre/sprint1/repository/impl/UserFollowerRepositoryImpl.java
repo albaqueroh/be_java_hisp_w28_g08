@@ -23,7 +23,7 @@ public class UserFollowerRepositoryImpl implements IRepository<UserFollower> {
 	private void loadData() {
 		try{
 			File file = ResourceUtils.getFile("classpath:userFollower.json");
-			usersFollowers = CResourceUtils.MAPPER.readValue(file, new TypeReference<List<UserFollower>>(){});
+			usersFollowers = CResourceUtils.MAPPER.readValue(file, new TypeReference<>(){});
 		}catch (Exception e){
 			throw new RuntimeException(e);
 		}
@@ -50,8 +50,7 @@ public class UserFollowerRepositoryImpl implements IRepository<UserFollower> {
 		return usersFollowers.remove(entity);
 	}
 	public Optional<UserFollower> findByFollowerIdAndFollowedId(int userId, int sellerId){
-		Optional<UserFollower> optional = usersFollowers.stream().filter(u -> u.getUserFollower() == userId && u.getUserFollowed() == sellerId).findFirst();
-		return optional;
+		return usersFollowers.stream().filter(u -> u.getUserFollower() == userId && u.getUserFollowed() == sellerId).findFirst();
 	}
 
 }

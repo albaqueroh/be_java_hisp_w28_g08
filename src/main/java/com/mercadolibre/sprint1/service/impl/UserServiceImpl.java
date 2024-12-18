@@ -6,7 +6,9 @@ import java.util.stream.Collectors;
 
 import com.mercadolibre.sprint1.dto.*;
 import com.mercadolibre.sprint1.dto.response.FollowedListByUserDto;
+import com.mercadolibre.sprint1.dto.response.MostFollowedUserDto;
 import com.mercadolibre.sprint1.dto.response.UserPromosAverageDto;
+import com.mercadolibre.sprint1.dto.util.MostFollowersPostDto;
 import com.mercadolibre.sprint1.entity.Post;
 import com.mercadolibre.sprint1.entity.UserFollower;
 import com.mercadolibre.sprint1.exception.BadRequestException;
@@ -136,7 +138,7 @@ public class UserServiceImpl implements IUserService {
             }).toList();
     }
 
-    public MostFollowedUserDto findMostFllowedUser(){
+    public MostFollowedUserDto findMostFollowedUser(){
 
         Map<Integer, Long> followerCounts = userFollowerRepositoryImpl.findAll().stream()
                 .collect(Collectors.groupingBy(UserFollower::getUserFollowed, Collectors.counting()));
@@ -151,7 +153,7 @@ public class UserServiceImpl implements IUserService {
 
         List<Post> posts = postRepository.findAll().stream()
                 .filter(post -> post.getUserId() == mostFollowedUserId)
-                .collect(Collectors.toList());
+                .toList();
 
         List<MostFollowersPostDto> activePosts = posts.stream()
                 .filter(post -> post.getDate().isBefore(LocalDate.now()) || post.getDate().isEqual(LocalDate.now()))

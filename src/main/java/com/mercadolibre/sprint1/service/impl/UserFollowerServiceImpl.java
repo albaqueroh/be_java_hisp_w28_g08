@@ -24,7 +24,7 @@ public class UserFollowerServiceImpl implements IUserFollowerService {
     @Override
     public UnfollowResponseDto unfollow(int userId, int sellerId) {
         Optional<UserFollower> optionalUserFollower = userFollowerRepository.findByFollowerIdAndFollowedId(userId,sellerId);
-        if(!optionalUserFollower.isPresent()){
+        if(optionalUserFollower.isEmpty()){
             throw new NotFoundException("No estas siguiendo al usuario "+sellerId);
         }
         userFollowerRepository.delete(optionalUserFollower.get());
@@ -35,12 +35,11 @@ public class UserFollowerServiceImpl implements IUserFollowerService {
     public FollowersCountDto followersCount(int userId) {
 
         if(userRepository.findAll().stream().filter(user -> user.getId() == userId).toList().size() != 0) {
-            FollowersCountDto followersCountDto = new FollowersCountDto(
+            return new FollowersCountDto(
                     userId,
                     userRepository.findAll().stream().filter(user -> user.getId() == userId).findFirst().get().getName(),
                     userFollowerRepository.findAll().stream().filter(user -> user.getUserFollowed() == userId).toList().size()
             );
-            return followersCountDto;
         }else {
             throw new BadRequestException("Ha ocurrido un error");
         }
