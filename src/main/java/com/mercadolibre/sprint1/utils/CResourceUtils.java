@@ -1,19 +1,35 @@
 package com.mercadolibre.sprint1.utils;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.util.ResourceUtils;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
+import java.lang.reflect.Field;
 
 public class CResourceUtils {
 
-	public static <T> List<T> loadDataFromJson(String filename) throws IOException {
-		File file = ResourceUtils.getFile("classpath:" + filename);
-		ObjectMapper objectMapper = new ObjectMapper();
-		return objectMapper.readValue(file, new TypeReference<List<T>>(){});
-	}
+	public static final ObjectMapper MAPPER = new ObjectMapper()
+			.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
+			.registerModule(new JavaTimeModule())
+			.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
+	public static boolean validateRequestBody(Object object){
+		if(object == null) return false;
+
+		Field[] fields = object.getClass().getDeclaredFields();
+
+		for(Field field:fields){
+			field.setAccessible(true);
+			try{
+				if (field.get(object) == null){
+					return false;
+				}
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+		return true;
+	}
 }

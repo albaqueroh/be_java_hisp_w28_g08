@@ -1,11 +1,13 @@
 package com.mercadolibre.sprint1.repository.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.mercadolibre.sprint1.entity.Post;
 import com.mercadolibre.sprint1.repository.IRepository;
 import com.mercadolibre.sprint1.utils.CResourceUtils;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.ResourceUtils;
 
-import java.io.IOException;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,8 +23,9 @@ public class PostRepositoryImpl implements IRepository<Post> {
 
 	private void loadData() {
 		try {
-			posts = CResourceUtils.loadDataFromJson("post.json");
-		} catch (IOException e) {
+			File file = ResourceUtils.getFile("classpath:post.json");
+			posts = CResourceUtils.MAPPER.readValue(file, new TypeReference<>() {});
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -34,6 +37,7 @@ public class PostRepositoryImpl implements IRepository<Post> {
 
 	@Override
 	public Post save(Post entity) {
+		entity.setId(posts.size()+1);
 		posts.add(entity);
 		return entity;
 	}
