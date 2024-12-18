@@ -11,8 +11,9 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostDto {
-	
+public class MostFollowersPostDto {
+
+	@JsonProperty("post_id")
 	private int id;
 
 	@JsonProperty("user_id")

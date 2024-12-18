@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.plaf.PanelUI;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -43,6 +45,12 @@ public class UserController {
 
 	@GetMapping("/average-promos")
 	public ResponseEntity<?> findUserPromoAverage(){
+
 		return ResponseEntity.ok(userService.findUserPromoAverage());
+	}
+
+	@GetMapping("/most-followed/posts")
+	public ResponseEntity<?> userMostFollwed(){
+		return ResponseEntity.ok(userService.findMostFllowedUser());
 	}
 }
