@@ -1,6 +1,7 @@
-package com.mercadolibre.sprint1.dto;
+package com.mercadolibre.sprint1.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mercadolibre.sprint1.dto.util.PostPromoDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

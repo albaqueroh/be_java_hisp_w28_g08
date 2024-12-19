@@ -24,7 +24,7 @@ public class UserRepositoryImpl implements IRepository<User> {
 	private void loadData() {
 		try{
 			File file = ResourceUtils.getFile("classpath:user.json");
-			users = CResourceUtils.MAPPER.readValue(file, new TypeReference<List<User>>(){});
+			users = CResourceUtils.MAPPER.readValue(file, new TypeReference<>(){});
 		}catch (Exception e){
 			throw new RuntimeException(e);
 		}

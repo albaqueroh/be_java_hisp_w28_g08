@@ -1,5 +1,6 @@
 package com.mercadolibre.sprint1.service;
 
+import com.mercadolibre.sprint1.dto.response.MostFollowedUserDto;
 import com.mercadolibre.sprint1.dto.response.FollowedListByUserDto;
 import com.mercadolibre.sprint1.dto.response.FollowersListByUserDto;
 import com.mercadolibre.sprint1.dto.response.UserPromosAverageDto;
@@ -18,5 +19,7 @@ public interface IUserService {
     FollowedListByUserDto findUsersFollowedByUser(int id, String order);
 
     List<UserPromosAverageDto> findUserPromoAverage();
+
+    MostFollowedUserDto findMostFollowedUser();
 
 }

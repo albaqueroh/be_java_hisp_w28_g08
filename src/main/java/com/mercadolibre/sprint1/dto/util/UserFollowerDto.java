@@ -1,4 +1,4 @@
-package com.mercadolibre.sprint1.dto;
+package com.mercadolibre.sprint1.dto.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

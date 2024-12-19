@@ -2,7 +2,6 @@ package com.mercadolibre.sprint1.repository.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.mercadolibre.sprint1.entity.Post;
-import com.mercadolibre.sprint1.entity.UserFollower;
 import com.mercadolibre.sprint1.repository.IRepository;
 import com.mercadolibre.sprint1.utils.CResourceUtils;
 import org.springframework.stereotype.Repository;
@@ -12,7 +11,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Repository
 public class PostRepositoryImpl implements IRepository<Post> {

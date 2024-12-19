@@ -1,17 +1,21 @@
 package com.mercadolibre.sprint1.service.impl;
 
+import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
+import com.mercadolibre.sprint1.dto.*;
 import com.mercadolibre.sprint1.dto.response.FollowedListByUserDto;
+import com.mercadolibre.sprint1.dto.response.MostFollowedUserDto;
 import com.mercadolibre.sprint1.dto.response.UserPromosAverageDto;
+import com.mercadolibre.sprint1.dto.util.MostFollowersPostDto;
 import com.mercadolibre.sprint1.entity.Post;
 import com.mercadolibre.sprint1.entity.UserFollower;
 import com.mercadolibre.sprint1.exception.BadRequestException;
 
-import com.mercadolibre.sprint1.dto.UserDto;
-
 import com.mercadolibre.sprint1.dto.response.FollowersListByUserDto;
 import com.mercadolibre.sprint1.entity.User;
+import com.mercadolibre.sprint1.exception.NoContentException;
 import com.mercadolibre.sprint1.exception.NotFoundException;
 import com.mercadolibre.sprint1.exception.PromoSellersNotFoundException;
 import com.mercadolibre.sprint1.repository.IRepository;
@@ -132,6 +136,42 @@ public class UserServiceImpl implements IUserService {
                     throw new BadRequestException("El orden requerido no es valido.");
                 }
             }).toList();
+    }
+
+    public MostFollowedUserDto findMostFollowedUser(){
+
+        Map<Integer, Long> followerCounts = userFollowerRepositoryImpl.findAll().stream()
+                .collect(Collectors.groupingBy(UserFollower::getUserFollowed, Collectors.counting()));
+
+        int mostFollowedUserId = followerCounts.entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElseThrow(() -> new NotFoundException("No se encontró un usuario más seguido"));
+
+        User mostFollowedUser = findUserById(mostFollowedUserId);
+        int mostFollowers = followerCounts.get(mostFollowedUserId).intValue();
+
+        List<Post> posts = postRepository.findAll().stream()
+                .filter(post -> post.getUserId() == mostFollowedUserId)
+                .toList();
+
+        List<MostFollowersPostDto> activePosts = posts.stream()
+                .filter(post -> post.getDate().isBefore(LocalDate.now()) || post.getDate().isEqual(LocalDate.now()))
+                .map(post -> new MostFollowersPostDto(
+                        post.getId(),
+                        post.getUserId(),
+                        post.getDate(),
+                        new ProductDto(post.getProduct().getId(), post.getProduct().getName(), post.getProduct().getType(), post.getProduct().getBrand(), post.getProduct().getColor(), post.getProduct().getNotes()),
+                        post.getCategory(),
+                        post.getPrice()
+                ))
+                .collect(Collectors.toList());
+
+        if (activePosts.isEmpty()) {
+            throw new NoContentException("El usuario más seguido no tiene publicaciones activas.");
+        }
+
+        return new MostFollowedUserDto(mostFollowedUser.getId(), mostFollowedUser.getName(), mostFollowers, activePosts);
     }
 
 }

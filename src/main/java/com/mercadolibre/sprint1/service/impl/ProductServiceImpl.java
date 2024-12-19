@@ -13,13 +13,13 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.mercadolibre.sprint1.dto.CreatePromoPostDto;
-import com.mercadolibre.sprint1.dto.NewPostDto;
+import com.mercadolibre.sprint1.dto.request.CreatePromoPostDto;
+import com.mercadolibre.sprint1.dto.request.NewPostDto;
 import com.mercadolibre.sprint1.dto.PostDto;
-import com.mercadolibre.sprint1.dto.PostPromoDto;
-import com.mercadolibre.sprint1.dto.PostPromoListDto;
-import com.mercadolibre.sprint1.dto.ProductsFollowedDtoResponse;
-import com.mercadolibre.sprint1.dto.UserFollowerDto;
+import com.mercadolibre.sprint1.dto.util.PostPromoDto;
+import com.mercadolibre.sprint1.dto.response.PostPromoListDto;
+import com.mercadolibre.sprint1.dto.response.ProductsFollowedDtoResponse;
+import com.mercadolibre.sprint1.dto.util.UserFollowerDto;
 import com.mercadolibre.sprint1.dto.response.CountProductsPromoDto;
 import com.mercadolibre.sprint1.entity.Post;
 import com.mercadolibre.sprint1.entity.User;
@@ -90,10 +90,11 @@ public class ProductServiceImpl implements IProductService {
         CResourceUtils.MAPPER.registerModule(new JavaTimeModule());
         CResourceUtils.MAPPER.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
-        if (postPromo != null) {
+        if(!CResourceUtils.validateRequestBody(postPromo)) throw new BadRequestException("El objeto enviado no es correcto o está incompleto");
+        try {
             postRepository.save(CResourceUtils.MAPPER.convertValue(postPromo, Post.class));
             return "Post guardado";
-        } else {
+        } catch (Exception e) {
             throw new BadRequestException("El objeto enviado no es correcto");
         }
     }
@@ -103,6 +104,7 @@ public class ProductServiceImpl implements IProductService {
         CResourceUtils.MAPPER.registerModule(new JavaTimeModule());
         CResourceUtils.MAPPER.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
+        if(!CResourceUtils.validateRequestBody(newPostDto)) throw new BadRequestException("El objeto enviado no es correcto o está incompleto");
         try {
             postRepository.save(CResourceUtils.MAPPER.convertValue(newPostDto, Post.class));
         } catch (Exception e) {
@@ -118,7 +120,7 @@ public class ProductServiceImpl implements IProductService {
         if (findSeller.isSeller()) {
             List<PostPromoDto> promoPosts = postRepository.findAll()
                     .stream()
-                    .filter(u -> u.isHasPromo() == true && u.getUserId() == userId)
+                    .filter(u -> u.isHasPromo() && u.getUserId() == userId)
                     .map(postList -> {
                         PostPromoDto postPromoDto = MAPPER.convertValue(postList, PostPromoDto.class);
                         postPromoDto.setId(postList.getId());
