@@ -49,6 +49,7 @@ public class UserFollowerRepositoryImpl implements IRepository<UserFollower> {
 	public boolean delete(UserFollower entity) {
 		return usersFollowers.remove(entity);
 	}
+
 	public Optional<UserFollower> findByFollowerIdAndFollowedId(int userId, int sellerId){
 		return usersFollowers.stream().filter(u -> u.getUserFollower() == userId && u.getUserFollowed() == sellerId).findFirst();
 	}
