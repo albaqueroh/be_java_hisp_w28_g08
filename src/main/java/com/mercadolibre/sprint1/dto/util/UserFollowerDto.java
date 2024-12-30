@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserFollowerDto {
     /* Usuario seguido */
-    private int userFollowed;
+    private Integer userFollowed;
 
     /* Usuario seguidor */
-    private int userFollower;
+    private Integer userFollower;
 }

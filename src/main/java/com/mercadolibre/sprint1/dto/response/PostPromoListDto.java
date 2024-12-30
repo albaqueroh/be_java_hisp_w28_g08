@@ -14,7 +14,7 @@ import java.util.List;
 public class PostPromoListDto {
 
     @JsonProperty("user_id")
-    private int userId;
+    private Integer userId;
 
     @JsonProperty("user_name")
     private String name;

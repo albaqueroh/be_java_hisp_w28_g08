@@ -1,6 +1,7 @@
 package com.mercadolibre.sprint1.exception;
 
-import com.mercadolibre.sprint1.dto.ExceptionDto;
+import com.mercadolibre.sprint1.dto.exception.ExceptionDto;
+import com.mercadolibre.sprint1.dto.exception.ValidateExceptionDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -49,9 +50,7 @@ public class CustomExceptionHandler {
 				})
 				.collect(Collectors.toList());
 
-		Map<String, Object> responseBody = new HashMap<>();
-		responseBody.put("errors", errors);
-		responseBody.put("status", HttpStatus.BAD_REQUEST.value());
+		ValidateExceptionDto responseBody = new ValidateExceptionDto(HttpStatus.BAD_REQUEST.value(), errors);
 
 		return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
 

@@ -14,22 +14,22 @@ import java.time.LocalDate;
 public class PostPromoDto {
 
     @JsonProperty("user_id")
-    private int userId;
+    private Integer userId;
 
     @JsonProperty("post_id")
-    private int id;
+    private Integer id;
 
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate date;
 
     private ProductDto product;
 
-    private int category;
+    private Integer category;
 
-    private double price;
+    private Double price;
 
     @JsonProperty("has_promo")
     private boolean hasPromo;
 
-    private double discount;
+    private Double discount;
 }

@@ -22,7 +22,7 @@ public class NewPostDto {
     @JsonProperty("user_id")
     @NotNull(message = "El  id no puede estar vacío.")
     @Positive(message = "El id debe ser mayor a cero")
-    private int userId;
+    private Integer userId;
 
     @JsonFormat(pattern = "dd-MM-yyyy")
     @NotNull(message = "La fecha no puede estar vacía.")
@@ -32,10 +32,10 @@ public class NewPostDto {
     private ProductDto product;
 
     @NotNull(message = "El campo no puede estar vacío.")
-    private int category;
+    private Integer category;
 
     @NotNull
     @Max(value = 10000000, message = "El precio máximo por producto es de 10.000.000")
-    private double price;
+    private Double price;
 
 }
