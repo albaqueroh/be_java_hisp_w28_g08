@@ -42,7 +42,6 @@ public class CreatePromoPostDto{
     private double price;
 
     @NotNull(message = "Debe ser una promoción")
-    @Positive(message = "La promocion debe estár activa")
     @JsonProperty("has_promo")
     private boolean hasPromo;
 
