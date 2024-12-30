@@ -44,7 +44,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("Cuándo el orden enviado es NAME_ASC, debe listar todos los seguidores ordenados por nombre de forma ascendente")
+    @DisplayName("US0003 - Cuándo el orden enviado es NAME_ASC, debe listar todos los seguidores ordenados por nombre de forma ascendente")
     public void whenOrderSendedIsNameAscShouldListFollowersSortedByNameDesc() {
         // arrange
         int userId = 2;
@@ -54,16 +54,10 @@ public class UserServiceTest {
 
         // assert
         assertNotNull(res);
-        // List<String> names = res.getFollowers()
-        //         .stream()
-        //         .map(u -> u.getName())
-        //         .toList();
-
-        // assertIterableEquals(names.stream().sorted(Comparator.naturalOrder()).toList(), names);
     }
 
     @Test
-    @DisplayName("Cuándo el orden enviado es NAME_DESC, debe listar todos los seguidores ordenados por nombre de forma descendente")
+    @DisplayName("US0003 - Cuándo el orden enviado es NAME_DESC, debe listar todos los seguidores ordenados por nombre de forma descendente")
     public void whenOrderSendedIsNameDescShouldListFollowersSortedByNameAsc() {
         // arrange
         int userId = 2;
@@ -73,16 +67,10 @@ public class UserServiceTest {
 
         // assert
         assertNotNull(res);
-        // List<String> names = res.getFollowers()
-        //         .stream()
-        //         .map(u -> u.getName())
-        //         .toList();
-
-        // assertIterableEquals(names.stream().sorted(Comparator.reverseOrder()).toList(), names);
     }
 
     @Test
-    @DisplayName("Cuándo el orden enviado no es ascendente ni descendente, debe arrojar una excepción BadRequestException")
+    @DisplayName("US0003 - Cuándo el orden enviado no es ascendente ni descendente, debe arrojar una excepción BadRequestException")
     public void whenOrderSendedIsNotAscAndIsNotDescShouldThrowsBadRequestException() {
         // arrange
         int userId = 2;
