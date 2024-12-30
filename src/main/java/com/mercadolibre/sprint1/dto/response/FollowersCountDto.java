@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 public class FollowersCountDto {
 
     @JsonProperty("user_id")
-    private int userId;
+    private Integer userId;
     @JsonProperty("user_name")
     private String userName;
     @JsonProperty("followers_count")
-    private int followersCont;
+    private Integer followersCont;
 }

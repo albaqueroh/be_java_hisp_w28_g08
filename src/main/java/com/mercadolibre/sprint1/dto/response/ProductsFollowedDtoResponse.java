@@ -13,6 +13,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @NoArgsConstructor
 public class ProductsFollowedDtoResponse {
     @JsonProperty("user_id")
-    int userId;
-    List<PostDto> posts;
+    private Integer userId;
+    private List<PostDto> posts;
 }

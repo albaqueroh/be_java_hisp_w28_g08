@@ -14,7 +14,7 @@ public class ProductDto {
 	@JsonProperty("product_id")
 	@NotNull(message = "El id no puede estar vacío.")
 	@Positive(message = "El id debe ser mayor a cero.")
-	private int id;
+	private Integer id;
 
 	@JsonProperty("product_name")
 	@NotEmpty(message = "El nombre no puede estar vacío.")
