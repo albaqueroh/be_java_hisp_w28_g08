@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
 public class UserPromosAverageDto {
 
     @JsonProperty("user_id")
-    int userID;
+    private Integer userID;
     @JsonProperty("user_name")
-    String userName;
+    private String userName;
     @JsonProperty("average_promo")
-    double promoAverage;
+    private Double promoAverage;
     @JsonIgnore
-    int cantPost;
+    private Integer cantPost;
 }
