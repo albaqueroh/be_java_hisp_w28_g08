@@ -39,6 +39,7 @@ public class ProductServiceImpl implements IProductService {
 
     @Autowired
     private IRepository<UserFollower> userFollowerRepository;
+
     @Autowired
     private IUserService userService;
 
