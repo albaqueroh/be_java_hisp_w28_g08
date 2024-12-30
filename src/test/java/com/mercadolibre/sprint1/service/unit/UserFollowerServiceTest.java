@@ -1,14 +1,27 @@
 package com.mercadolibre.sprint1.service.unit;
 
+import com.mercadolibre.sprint1.dto.response.UnfollowResponseDto;
+import com.mercadolibre.sprint1.exception.NotFoundException;
+import com.mercadolibre.sprint1.service.IUserFollowerService;
+import com.mercadolibre.sprint1.service.impl.UserFollowerServiceImpl;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.mercadolibre.sprint1.entity.User;
 import com.mercadolibre.sprint1.entity.UserFollower;
 import com.mercadolibre.sprint1.repository.IRepository;
 import com.mercadolibre.sprint1.repository.impl.UserFollowerRepositoryImpl;
+
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class UserFollowerServiceTest {
@@ -17,9 +30,36 @@ public class UserFollowerServiceTest {
     IRepository<User> userRepository;
 
     @Mock
-    IRepository<UserFollower> userFollowerRepository;
+    UserFollowerRepositoryImpl userFollowerRepository;
 
     @InjectMocks
-    UserFollowerRepositoryImpl userFollowerService;
+    UserFollowerServiceImpl userFollowerService;
+
+
+    @Test
+    void testUnfollowOK(){
+        int userId = 1;
+        int sellerId = 2;
+        UnfollowResponseDto expectedResponse = new UnfollowResponseDto("Se ha dejado de seguir al usuario "+sellerId);
+        UserFollower userFollower = new UserFollower(userId,sellerId);
+
+        when(userFollowerRepository.findByFollowerIdAndFollowedId(userId,sellerId)).thenReturn(Optional.of(userFollower));
+        when(userFollowerRepository.delete(userFollower)).thenReturn(false);
+
+        UnfollowResponseDto result = userFollowerService.unfollow(userId,sellerId);
+
+        verify(userFollowerRepository, atLeast(1)).findByFollowerIdAndFollowedId(userId,sellerId);
+        verify(userFollowerRepository, atLeast(1)).delete(userFollower);
+        assertThat(expectedResponse).isEqualTo(result);
+    }
+    @Test
+    void testUnfollowThrowsError(){
+        int userId = 1;
+        int sellerId = 100;
+
+        when(userFollowerRepository.findByFollowerIdAndFollowedId(userId,sellerId)).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, ()->{userFollowerService.unfollow(userId,sellerId);});
+    }
 
 }
