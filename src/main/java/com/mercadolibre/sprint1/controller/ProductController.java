@@ -1,5 +1,6 @@
 package com.mercadolibre.sprint1.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class ProductController {
      * @return Status Code 200 (todo OK) / Status Code 400 (Bad Request)
      */
     @PostMapping("/post")
-    public ResponseEntity<?> newPost(@RequestBody NewPostDto newPostDto) {
+    public ResponseEntity<?> newPost(@Valid @RequestBody NewPostDto newPostDto) {
         return ResponseEntity.ok(service.newPost(newPostDto));
     }
 
