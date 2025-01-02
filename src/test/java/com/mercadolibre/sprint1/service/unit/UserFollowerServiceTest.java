@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import util.TestUtilGenerator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class UserFollowerServiceTest {
@@ -37,12 +37,15 @@ public class UserFollowerServiceTest {
     public void whenUserExistsShouldReturnCount() {
         //Arrange
         int idUser = 1;
-
         when(userFollowerRepository.findAll()).thenReturn(TestUtilGenerator.generateFollowers());
         when(userRepository.findAll()).thenReturn(TestUtilGenerator.generateUsers());
+
         //act
         FollowersCountDto outputFollowerCount = userFollowerService.followersCount(idUser);
+
         //assert
+        verify(userFollowerRepository, atLeastOnce()).findAll();
+        verify(userRepository, atLeastOnce()).findAll();
         assertEquals(TestUtilGenerator.expectedResponseFollowerCount(),outputFollowerCount);
     }
 
