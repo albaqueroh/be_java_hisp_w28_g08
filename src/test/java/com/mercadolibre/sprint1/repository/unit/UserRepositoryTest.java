@@ -1,29 +1,94 @@
 package com.mercadolibre.sprint1.repository.unit;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
 import java.util.List;
 
+import com.mercadolibre.sprint1.entity.User;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.mercadolibre.sprint1.entity.User;
 import com.mercadolibre.sprint1.repository.IRepository;
 import com.mercadolibre.sprint1.repository.impl.UserRepositoryImpl;
+import util.TestUtilGenerator;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class UserRepositoryTest {
 
     IRepository<User> userRepository = new UserRepositoryImpl();
 
     @Test
-    public void test() {
+    @DisplayName("Cuando se llama findAll debe retornar todos los Users")
+    void whereFindAllShouldReturnAllUsers(){
         // arrange
-        int notSize = 0;
 
         // act
-        List<User> users = userRepository.findAll();
-        
+        List<User> user = userRepository.findAll();
+
         // assert
-        assertNotEquals(notSize, users.size());
+        assertFalse(user.isEmpty());
+    }
+
+    @Test
+    @DisplayName("Cuando se guarda debe retornar el nuevo User creado")
+    void whenSaveShouldReturnNewUser(){
+        // arrange
+        User newUser = TestUtilGenerator.generateUsers().get(0);
+        // act
+        User savedUser = userRepository.save(newUser);
+
+        // assert
+        assertNotNull(savedUser.getId());
+        assertEquals(newUser.getId(),savedUser.getId());
+        assertEquals(newUser.getName(),savedUser.getName());
+    }
+    @Test
+    @DisplayName("Cuando se elimina por un Id existente debe retornar true")
+    void whenDeleteByIdUserExistsShouldReturnTrue(){
+        // arrange
+        int id = 1;
+        // act
+        boolean result = userRepository.delete(id);
+
+        // assert
+        assertTrue(result);
+    }
+    @Test
+    @DisplayName("Cuando se elimina por un Id no existente debe retornar false")
+    void whenDeleteByIdUserNotExistsShouldReturnFalse(){
+        // arrange
+        int id = 0;
+        // act
+        boolean result = userRepository.delete(id);
+
+        // assert
+        assertFalse(result);
+    }
+    @Test
+    @DisplayName("Cuando se elimina por una entidad existente debe retornar true")
+    void whenDeleteByEntityUserExistsShouldReturnTrue(){
+        // arrange
+        User post = TestUtilGenerator.generateUsers().get(0);
+
+        // act
+        userRepository.save(post);
+        boolean result = userRepository.delete(post);
+
+        // assert
+        assertTrue(result);
+    }
+    @Test
+    @DisplayName("Cuando se elimina por una entidad no existente debe retornar false")
+    void whenDeleteByEntityUserNotExistsShouldReturnFalse(){
+        // arrange
+        User post = TestUtilGenerator.generateUsers().get(0);
+
+        // act
+        boolean result = userRepository.delete(post);
+
+        // assert
+        assertFalse(result);
     }
 
 }
