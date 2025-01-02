@@ -2,6 +2,7 @@ package com.mercadolibre.sprint1.repository.unit;
 
 import java.util.List;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.mercadolibre.sprint1.entity.Post;
@@ -16,19 +17,8 @@ public class PostRepositoryTest {
     IRepository<Post> postRepository = new PostRepositoryImpl();
 
     @Test
-    public void test() {
-        // arrange
-        int notSize = 0;
-
-        // act
-        List<Post> posts = postRepository.findAll();
-        
-        // assert
-        assertNotEquals(notSize, posts.size());
-    }
-
-    @Test
-    void testFindAll(){
+    @DisplayName("Cuando se llama findAll debe retornar todos los Posts")
+    void whereFindAllShouldReturnAllPosts(){
         // arrange
 
         // act
@@ -39,7 +29,8 @@ public class PostRepositoryTest {
     }
 
     @Test
-    void testSave(){
+    @DisplayName("Cuando se guarda debe retornar el nuevo Post creado")
+    void whenSaveShouldReturnNewPost(){
         // arrange
         Post newPost = TestUtilGenerator.generatePosts().get(0);
         // act
@@ -56,7 +47,8 @@ public class PostRepositoryTest {
         assertEquals(newPost.getProduct(),savedPost.getProduct());
     }
     @Test
-    void testDeleteByIdTrue(){
+    @DisplayName("Cuando se elimina por un Id existente debe retornar true")
+    void whenDeleteByIdPostExistsShouldReturnTrue(){
         // arrange
         int id = 1;
         // act
@@ -66,7 +58,8 @@ public class PostRepositoryTest {
         assertTrue(result);
     }
     @Test
-    void testDeleteByIdFalse(){
+    @DisplayName("Cuando se elimina por un Id no existente debe retornar false")
+    void whenDeleteByIdPostNotExistsShouldReturnFalse(){
         // arrange
         int id = 0;
         // act
@@ -76,7 +69,8 @@ public class PostRepositoryTest {
         assertFalse(result);
     }
     @Test
-    void testDeleteByEntityTrue(){
+    @DisplayName("Cuando se elimina por una entidad existente debe retornar true")
+    void whenDeleteByEntityPostExistsShouldReturnTrue(){
         // arrange
         Post post = TestUtilGenerator.generatePosts().get(0);
 
@@ -88,7 +82,8 @@ public class PostRepositoryTest {
         assertTrue(result);
     }
     @Test
-    void testDeleteByEntityFalse(){
+    @DisplayName("Cuando se elimina por una entidad no existente debe retornar false")
+    void whenDeleteByEntityPostNotExistsShouldReturnFalse(){
         // arrange
         Post post = TestUtilGenerator.generatePosts().get(0);
 
