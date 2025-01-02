@@ -1,6 +1,7 @@
 package com.mercadolibre.sprint1.service.unit;
 
 import com.mercadolibre.sprint1.dto.UserDto;
+import com.mercadolibre.sprint1.dto.response.FollowedListByUserDto;
 import com.mercadolibre.sprint1.dto.response.FollowersListByUserDto;
 import com.mercadolibre.sprint1.exception.BadRequestException;
 import com.mercadolibre.sprint1.repository.impl.PostRepositoryImpl;
@@ -142,6 +143,56 @@ public class UserServiceTest {
 
         //assert
         assertThrows(BadRequestException.class, ()->{userService.findAllFollowersByUser(userId,order);});
+    }
+
+    // ---
+    @Test
+    @DisplayName("US0008 - Cuando se consultan los seguidos por orden ascendente debe regresar todos los seguidos")
+    void whenFindAllFollowedsByUserOrderAscShouldReturnAllFollowedsInAscOrder(){
+        //arrange
+        int userId = 1;
+        String order =  "name_asc";
+        List<UserDto> expectedFolloweds = List.of(new UserDto(2,"Cristhian"),new UserDto(5,"María"));
+
+        //act
+        when(userFollowerRepository.findAll()).thenReturn(TestUtilGenerator.generateFollowers());
+        when(userRepository.findAll()).thenReturn(TestUtilGenerator.generateUsers());
+        FollowedListByUserDto result  = userService.findUsersFollowedByUser(userId,order);
+
+        //assert
+        assertThat(result.getId()).isEqualTo(userId);
+        assertThat(result.getFollowed()).isEqualTo(expectedFolloweds);
+    }
+    @Test
+    @DisplayName("US0008 - Cuando se consultan los seguidos por orden descendente debe regresar todos los seguidos")
+    void whenFindAllFollowedsByUserOrderDescShouldReturnAllFollowedsInDescOrder(){
+        //arrange
+        int userId = 1;
+        String order =  "name_desc";
+        List<UserDto> expectedFolloweds = List.of(new UserDto(5,"María"),new UserDto(2,"Cristhian"));
+
+        //act
+        when(userFollowerRepository.findAll()).thenReturn(TestUtilGenerator.generateFollowers());
+        when(userRepository.findAll()).thenReturn(TestUtilGenerator.generateUsers());
+        FollowedListByUserDto result  = userService.findUsersFollowedByUser(userId,order);
+
+        //assert
+        assertThat(result.getId()).isEqualTo(userId);
+        assertThat(result.getFollowed()).isEqualTo(expectedFolloweds);
+    }
+    @Test
+    @DisplayName("US0008 - Cuando se consultan los seguidos por un orden invalido debe arrojar excepcion BadRequestException")
+    void whenFindAllFollowedsByUserOrderInvalidShouldReturnBadRequestException(){
+        //arrange
+        int userId = 1;
+        String order =  "invalid_order";
+
+        //act
+        when(userFollowerRepository.findAll()).thenReturn(TestUtilGenerator.generateFollowers());
+        when(userRepository.findAll()).thenReturn(TestUtilGenerator.generateUsers());
+
+        //assert
+        assertThrows(BadRequestException.class, ()->{userService.findUsersFollowedByUser(userId,order);});
     }
 
 }
