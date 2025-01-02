@@ -36,7 +36,7 @@ public class ProductServiceTest {
 
     @Test
     @DisplayName("us-0010 Guardado de post con promo validos")
-    public void whenUserExistsShouldReturnCount() {
+    public void whenPostValidShouldReturnConfirmationMessage() {
         //Arrange
         when(postRepository.save(TestUtilGenerator.CreatePromoPost())).thenReturn(TestUtilGenerator.CreatePromoPost());
 
