@@ -63,7 +63,21 @@ public class UserServiceTest {
         // Assert
         assertEquals("No existe el usuario " + userIdToFollow, exception.getMessage());
     }
-    
+
+    @Test
+    @DisplayName("testExtra - US0001 - Cuándo el usuario seguidor no exite debe retornar una NotFoundException")
+    public void followUserWhenUserIdDoesNotExistShouldThrowNotFoundException(){
+        // Arrange
+        int userId = 999;
+        int userIdToFollow = 1;
+        when(userRepository.findAll()).thenReturn(TestUtilGenerator.generateUsers());
+        // Act
+        Exception exception = assertThrows(NotFoundException.class, () -> {
+            userService.followUser(userId, userIdToFollow);
+        });
+        // Assert
+        assertEquals("No existe el usuario " + userId, exception.getMessage());
+    }
 
 
 }
