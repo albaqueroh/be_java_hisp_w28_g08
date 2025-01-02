@@ -6,7 +6,6 @@ import com.mercadolibre.sprint1.entity.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.mercadolibre.sprint1.entity.User;
 import com.mercadolibre.sprint1.repository.IRepository;
 import com.mercadolibre.sprint1.repository.impl.UserRepositoryImpl;
 import util.TestUtilGenerator;
@@ -20,7 +19,7 @@ public class UserRepositoryTest {
 
     @Test
     @DisplayName("Cuando se llama findAll debe retornar todos los Users")
-    void whereFindAllShouldReturnAllUsers(){
+    void whereFindAllShouldReturnAllUsers() {
         // arrange
 
         // act
@@ -32,7 +31,7 @@ public class UserRepositoryTest {
 
     @Test
     @DisplayName("Cuando se guarda debe retornar el nuevo User creado")
-    void whenSaveShouldReturnNewUser(){
+    void whenSaveShouldReturnNewUser() {
         // arrange
         User newUser = TestUtilGenerator.generateUsers().get(0);
         // act
@@ -40,12 +39,13 @@ public class UserRepositoryTest {
 
         // assert
         assertNotNull(savedUser.getId());
-        assertEquals(newUser.getId(),savedUser.getId());
-        assertEquals(newUser.getName(),savedUser.getName());
+        assertEquals(newUser.getId(), savedUser.getId());
+        assertEquals(newUser.getName(), savedUser.getName());
     }
+
     @Test
     @DisplayName("Cuando se elimina por un Id existente debe retornar true")
-    void whenDeleteByIdUserExistsShouldReturnTrue(){
+    void whenDeleteByIdUserExistsShouldReturnTrue() {
         // arrange
         int id = 1;
         // act
@@ -54,9 +54,10 @@ public class UserRepositoryTest {
         // assert
         assertTrue(result);
     }
+
     @Test
     @DisplayName("Cuando se elimina por un Id no existente debe retornar false")
-    void whenDeleteByIdUserNotExistsShouldReturnFalse(){
+    void whenDeleteByIdUserNotExistsShouldReturnFalse() {
         // arrange
         int id = 0;
         // act
@@ -65,9 +66,10 @@ public class UserRepositoryTest {
         // assert
         assertFalse(result);
     }
+
     @Test
     @DisplayName("Cuando se elimina por una entidad existente debe retornar true")
-    void whenDeleteByEntityUserExistsShouldReturnTrue(){
+    void whenDeleteByEntityUserExistsShouldReturnTrue() {
         // arrange
         User post = TestUtilGenerator.generateUsers().get(0);
 
@@ -78,9 +80,10 @@ public class UserRepositoryTest {
         // assert
         assertTrue(result);
     }
+
     @Test
     @DisplayName("Cuando se elimina por una entidad no existente debe retornar false")
-    void whenDeleteByEntityUserNotExistsShouldReturnFalse(){
+    void whenDeleteByEntityUserNotExistsShouldReturnFalse() {
         // arrange
         User post = TestUtilGenerator.generateUsers().get(0);
 
