@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @Service
 public class UserFollowerServiceImpl implements IUserFollowerService {
+
     @Autowired
     private UserFollowerRepositoryImpl userFollowerRepository;
 
@@ -33,7 +34,6 @@ public class UserFollowerServiceImpl implements IUserFollowerService {
 
     @Override
     public FollowersCountDto followersCount(int userId) {
-
         if(userRepository.findAll().stream().filter(user -> user.getId() == userId).toList().size() != 0) {
             return new FollowersCountDto(
                     userId,
