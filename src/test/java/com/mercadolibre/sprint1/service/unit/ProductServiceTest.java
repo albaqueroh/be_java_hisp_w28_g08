@@ -153,7 +153,7 @@ public class ProductServiceTest {
         when(postRepository.findAll()).thenReturn(TestUtilGenerator.generatePosts());
 
         ProductsFollowedDtoResponse expected = new ProductsFollowedDtoResponse(1, List.of(
-                MAPPER.convertValue(TestUtilGenerator.generatePosts().get(0), PostDto.class),
+                MAPPER.convertValue(TestUtilGenerator.generatePosts().getFirst(), PostDto.class),
                 MAPPER.convertValue(TestUtilGenerator.generatePosts().get(1), PostDto.class)
         ));
 
