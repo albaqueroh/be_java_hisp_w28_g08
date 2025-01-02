@@ -1,5 +1,6 @@
 package com.mercadolibre.sprint1.service.unit;
 
+import com.mercadolibre.sprint1.dto.UserDto;
 import com.mercadolibre.sprint1.dto.response.FollowersListByUserDto;
 import com.mercadolibre.sprint1.exception.BadRequestException;
 import com.mercadolibre.sprint1.repository.impl.PostRepositoryImpl;
@@ -18,6 +19,8 @@ import com.mercadolibre.sprint1.entity.UserFollower;
 import com.mercadolibre.sprint1.repository.IRepository;
 import com.mercadolibre.sprint1.service.impl.UserServiceImpl;
 import util.TestUtilGenerator;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -44,6 +47,7 @@ public class UserServiceTest {
         //arrange
         int userId = 4;
         String order =  "name_asc";
+        List<UserDto> expectedFollowers = List.of(new UserDto(2,"Cristhian"),new UserDto(3,"Daniel"));
 
         //act
         when(userFollowerRepository.findAll()).thenReturn(TestUtilGenerator.generateFollowers());
@@ -52,6 +56,7 @@ public class UserServiceTest {
 
         //assert
         assertThat(result.getId()).isEqualTo(userId);
+        assertThat(result.getFollowers()).isEqualTo(expectedFollowers);
     }
     @Test
     @DisplayName("US0008 - Cuando se consultan los seguidores por orden descendente debe regresar todos los seguidores")
@@ -59,6 +64,7 @@ public class UserServiceTest {
         //arrange
         int userId = 4;
         String order =  "name_desc";
+        List<UserDto> expectedFollowers = List.of(new UserDto(3,"Daniel"),new UserDto(2,"Cristhian"));
 
         //act
         when(userFollowerRepository.findAll()).thenReturn(TestUtilGenerator.generateFollowers());
@@ -67,6 +73,7 @@ public class UserServiceTest {
 
         //assert
         assertThat(result.getId()).isEqualTo(userId);
+        assertThat(result.getFollowers()).isEqualTo(expectedFollowers);
     }
     @Test
     @DisplayName("US0008 - Cuando se consultan los seguidores por un orden invalido debe arrojar excepcion BadRequestException")
