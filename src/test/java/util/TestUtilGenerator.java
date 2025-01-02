@@ -25,26 +25,34 @@ public class TestUtilGenerator {
     }
 
     public static List<Post> generatePosts() {
+        LocalDate today = LocalDate.now();
+        LocalDate lastWeek = today.minusWeeks(1);
+        LocalDate twoWeeksAgo = today.minusWeeks(2);
+
         return new ArrayList<>(
                 List.of(
-                        new Post(1, LocalDate.parse("2024-12-01"), 2,
+                        new Post(1, lastWeek.plusDays(1), 2,
                                 new Product(1, "Smartphone", "Electronics", "Samsung", "Black", ""), 1, 529.0, false,
                                 0),
-                        new Post(2, LocalDate.parse("2024-12-20"), 2,
+
+                        new Post(2, twoWeeksAgo.plusDays(1), 2,
                                 new Product(2, "Laptop", "Electronics", "Samsung", "Black", ""), 2, 899.0, true,
                                 20.0),
-                        new Post(3, LocalDate.parse("2024-12-02"), 2,
+
+                        new Post(3, today.minusWeeks(3), 2,
                                 new Product(3, "TV", "Electronics", "Samsung", "Silver", ""), 3, 1199.0, true,
                                 150.0),
-                        new Post(4, LocalDate.parse("2024-12-10"), 4,
+                        new Post(4, today.minusMonths(1), 4,
                                 new Product(4, "Shoes", "Clothes", "Adidas", "Black", ""), 5, 229.0, false,
                                 0),
-                        new Post(5, LocalDate.parse("2024-12-20"), 4,
+                        new Post(5, today.minusMonths(2), 4,
                                 new Product(5, "T-Shirt", "Clothes", "Adidas", "Green", ""), 5, 59.0, true,
                                 5.0),
-                        new Post(6, LocalDate.parse("2024-12-29"), 4,
+                        new Post(6, today.minusMonths(3), 4,
                                 new Product(6, "Jean", "Clothes", "Levi's", "Dark", ""), 5, 199.0, false,
-                                0)));
+                                0)
+                )
+        );
     }
 
     public static List<UserFollower> generateFollowers() {
