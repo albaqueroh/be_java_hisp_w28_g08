@@ -100,4 +100,8 @@ public class TestUtilGenerator {
         return Optional.of(generateFollowers().get(0));
     }
 
+    public static Post generateNoPromoPost() {
+        return generatePosts().getFirst();
+    }
+
 }
