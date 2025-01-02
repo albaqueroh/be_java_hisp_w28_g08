@@ -5,6 +5,7 @@ import com.mercadolibre.sprint1.exception.NotFoundException;
 import com.mercadolibre.sprint1.service.IUserFollowerService;
 import com.mercadolibre.sprint1.service.impl.UserFollowerServiceImpl;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -37,7 +38,8 @@ public class UserFollowerServiceTest {
 
 
     @Test
-    void testUnfollowOK(){
+    @DisplayName("US0007 - Cuando se esta siguiendo al vendedor debe dejar de seguirlo")
+    void whenSellerIsFollowedShouldUnfollow(){
         int userId = 1;
         int sellerId = 2;
         UnfollowResponseDto expectedResponse = new UnfollowResponseDto("Se ha dejado de seguir al usuario "+sellerId);
@@ -53,7 +55,8 @@ public class UserFollowerServiceTest {
         assertThat(expectedResponse).isEqualTo(result);
     }
     @Test
-    void testUnfollowThrowsError(){
+    @DisplayName("US0007 - Cuando no se esta siguiendo al vendedor debe arrojar una excepcion NotFoundException")
+    void whenSellerIsNotFollowedShouldThrowsNotFoundException(){
         int userId = 1;
         int sellerId = 100;
 
