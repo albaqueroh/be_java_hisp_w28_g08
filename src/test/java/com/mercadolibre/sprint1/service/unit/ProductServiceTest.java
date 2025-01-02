@@ -1,17 +1,17 @@
 package com.mercadolibre.sprint1.service.unit;
 
 
-import com.mercadolibre.sprint1.dto.PostDto;
-import com.mercadolibre.sprint1.dto.response.ProductsFollowedDtoResponse;
-
+import static com.mercadolibre.sprint1.utils.CResourceUtils.MAPPER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.junit.jupiter.api.Assertions;
+import java.time.LocalDate;
+import java.util.List;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,8 +23,10 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.mercadolibre.sprint1.dto.PostDto;
 import com.mercadolibre.sprint1.dto.request.NewPostDto;
 import com.mercadolibre.sprint1.dto.response.CountProductsPromoDto;
+import com.mercadolibre.sprint1.dto.response.ProductsFollowedDtoResponse;
 import com.mercadolibre.sprint1.entity.Post;
 import com.mercadolibre.sprint1.entity.User;
 import com.mercadolibre.sprint1.entity.UserFollower;
@@ -33,15 +35,6 @@ import com.mercadolibre.sprint1.repository.IRepository;
 import com.mercadolibre.sprint1.repository.impl.PostRepositoryImpl;
 import com.mercadolibre.sprint1.service.IUserService;
 import com.mercadolibre.sprint1.service.impl.ProductServiceImpl;
-import util.TestUtilGenerator;
-
-import java.time.LocalDate;
-import java.util.Comparator;
-import java.util.List;
-
-import static com.mercadolibre.sprint1.utils.CResourceUtils.MAPPER;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 import util.TestUtilGenerator;
 
