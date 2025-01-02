@@ -2,7 +2,9 @@ package com.mercadolibre.sprint1.service.unit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.when;
+
+import com.mercadolibre.sprint1.dto.response.FollowersCountDto;
+import com.mercadolibre.sprint1.repository.impl.PostRepositoryImpl;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,14 +20,16 @@ import com.mercadolibre.sprint1.entity.UserFollower;
 import com.mercadolibre.sprint1.repository.IRepository;
 import com.mercadolibre.sprint1.service.IUserService;
 import com.mercadolibre.sprint1.service.impl.ProductServiceImpl;
-
 import util.TestUtilGenerator;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ProductServiceTest {
 
     @Mock
-    IRepository<Post> postRepository;
+    PostRepositoryImpl postRepository;
 
     @Mock
     IRepository<UserFollower> userFollowRepository;
@@ -37,12 +41,17 @@ public class ProductServiceTest {
     ProductServiceImpl productService;
 
     @Test
-    public void test() {
-        // arrange
+    @DisplayName("us-0010 Guardado de post con promo validos")
+    public void whenPostValidShouldReturnConfirmationMessage() {
+        //Arrange
+        when(postRepository.save(TestUtilGenerator.CreatePromoPost())).thenReturn(TestUtilGenerator.CreatePromoPost());
 
-        // act
+        //act
+        String outputPostPromoSave = productService.createPromoPost(TestUtilGenerator.createPostPromoDto());
 
-        // assert
+        //assert
+        verify(postRepository, atLeastOnce()).save(TestUtilGenerator.CreatePromoPost());
+        assertEquals("Post guardado",outputPostPromoSave);
     }
 
     @Test

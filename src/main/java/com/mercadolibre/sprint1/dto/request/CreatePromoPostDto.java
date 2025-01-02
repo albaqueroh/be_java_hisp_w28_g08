@@ -24,7 +24,7 @@ public class CreatePromoPostDto {
     @NotNull(message = "El user id no debe ser nulo")
     @Positive(message = "El id debe ser positivo")
     @JsonProperty("user_id")
-    private int userId;
+    private Integer userId;
 
     @NotNull(message = "La fecha no debe ser nula")
     @FutureOrPresent(message = "La fecha no puede ser menor a la actual")
@@ -37,12 +37,12 @@ public class CreatePromoPostDto {
 
     @NotNull(message = "La categoria no debe ser nula")
     @Positive(message = "La categoria debe ser positiva")
-    private int category;
+    private Integer category;
 
     @NotNull(message = "El precio no debe ser nulo")
     @Positive(message = "El precio debe ser mayor a cero")
     @Max(value = 10000000, message = "El precio máximo por producto es de 10.000.000")
-    private double price;
+    private Double price;
 
     @NotNull(message = "Debe ser una promoción")
     @AssertTrue(message = "Debe ser una promoción")
@@ -51,5 +51,5 @@ public class CreatePromoPostDto {
 
     @NotNull(message = "El descuento no debe ser nulo")
     @Positive(message = "El descuento debe ser mayor a 0")
-    private double discount;
+    private Double discount;
 }

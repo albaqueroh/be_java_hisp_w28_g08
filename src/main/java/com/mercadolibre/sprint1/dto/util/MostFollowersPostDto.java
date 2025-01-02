@@ -15,18 +15,18 @@ import java.time.LocalDate;
 public class MostFollowersPostDto {
 
 	@JsonProperty("post_id")
-	private int id;
+	private Integer id;
 
 	@JsonProperty("user_id")
-	private int userId;
+	private Integer userId;
 
 	@JsonFormat(pattern = "dd-MM-yyyy")
 	private LocalDate date;
 
 	private ProductDto product;
 
-	private int category;
+	private Integer category;
 
-	private double price;
+	private Double price;
 
 }

@@ -14,13 +14,13 @@ import java.util.List;
 public class MostFollowedUserDto {
 
     @JsonProperty("user_id")
-    private int userId;
+    private Integer userId;
 
     @JsonProperty("user_name")
     private String userName;
 
     @JsonProperty("number_of_followers")
-    private int numberFollowers;
+    private Integer numberFollowers;
 
     private List<MostFollowersPostDto> posts;
 }

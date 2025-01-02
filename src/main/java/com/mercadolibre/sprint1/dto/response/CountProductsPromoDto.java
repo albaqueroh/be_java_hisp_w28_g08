@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CountProductsPromoDto {
     @JsonProperty("user_id")
-	private int id;
+	private Integer id;
 
 	@JsonProperty("user_name")
 	private String name;
 
     @JsonProperty("promo_products_count")
-    private long promoProductsCount;
+    private Long promoProductsCount;
 }
