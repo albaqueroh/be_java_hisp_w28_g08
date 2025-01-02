@@ -63,11 +63,12 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public boolean followUser(int userId, int userIdToFollow) {
+        User findUser = findUserById(userId);
         User findSeller = findUserById(userIdToFollow);
         if (findSeller.isSeller()) {
             UserFollower userFollower = new UserFollower();
             userFollower.setUserFollowed(userIdToFollow);
-            userFollower.setUserFollower(userId);
+            userFollower.setUserFollower(findUser.getId());
             userFollowerRepositoryImpl.save(userFollower);
             return true;
         }
