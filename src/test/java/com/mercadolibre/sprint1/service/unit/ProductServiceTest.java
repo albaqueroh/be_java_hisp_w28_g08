@@ -10,6 +10,7 @@ import com.mercadolibre.sprint1.exception.BadRequestException;
 import com.mercadolibre.sprint1.repository.IRepository;
 import com.mercadolibre.sprint1.service.IUserService;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -43,21 +44,27 @@ public class ProductServiceTest {
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
     @Test
+    @DisplayName("us-005 Guardado de post")
     public void whenPostCreatedShouldReturnPost(){
+        //Arrange
         NewPostDto input = om.convertValue(TestUtilGenerator.generateNoPromoPost(), NewPostDto.class);
         Post inputModel = om.convertValue(input, Post.class);
         String expected = "todo OK";
 
         when(postRepository.save(inputModel)).thenReturn(inputModel);
 
+        //Act & Assert
         Assertions.assertEquals(expected, productService.newPost(input));
     }
 
     @Test
+    @DisplayName("us-005 Error al guardar un post")
     public void whenBadPostCreatedShouldReturnError(){
+        //Arrange
         NewPostDto input = om.convertValue(TestUtilGenerator.generateNoPromoPost(), NewPostDto.class);
         input.setUserId(null);
 
+        //Act & Assert
         Assertions.assertThrows(BadRequestException.class, () -> productService.newPost(input));
     }
 
