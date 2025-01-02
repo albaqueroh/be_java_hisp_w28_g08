@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.mercadolibre.sprint1.dto.response.FollowersCountDto;
 import com.mercadolibre.sprint1.entity.Post;
 import com.mercadolibre.sprint1.entity.Product;
 import com.mercadolibre.sprint1.entity.User;
@@ -55,6 +56,14 @@ public class TestUtilGenerator {
                         new UserFollower(4, 3),
                         new UserFollower(5, 3),
                         new UserFollower(4, 2)));
+    }
+
+    public static FollowersCountDto expectedResponseFollowerCount(){
+        return new FollowersCountDto(
+                1,
+                "Camilo",
+                0
+        );
     }
 
     public static User generateSeller() {
