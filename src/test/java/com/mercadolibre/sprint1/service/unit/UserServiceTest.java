@@ -65,7 +65,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("testExtra - US0001 - Cuándo el usuario seguidor no exite debe retornar una NotFoundException")
+    @DisplayName("testBonus - US0001 - Cuándo el usuario seguidor no exite debe retornar una NotFoundException")
     public void followUserWhenUserIdDoesNotExistShouldThrowNotFoundException(){
         // Arrange
         int userId = 999;
@@ -79,5 +79,21 @@ public class UserServiceTest {
         assertEquals("No existe el usuario " + userId, exception.getMessage());
     }
 
+    @Test
+    @DisplayName("testBonus - US0001 - Cuándo el usuario existe y no es vendedor debe retornar un Exception")
+    public void followUserWhenUserToFollowIsNotSellerShouldThrowBadRequestExceptions(){
+        // Arrange
+        int userId = 2;
+        int userIdToFollow = 1;
+        when(userRepository.findAll()).thenReturn(TestUtilGenerator.generateUsers());
+
+        // Act
+        Exception exception = assertThrows(BadRequestException.class, () -> {
+            userService.followUser(userId, userIdToFollow);
+        });
+
+        // Assert
+        assertEquals("El usuario " + userIdToFollow + " no es un vendedor.", exception.getMessage());
+    }
 
 }
