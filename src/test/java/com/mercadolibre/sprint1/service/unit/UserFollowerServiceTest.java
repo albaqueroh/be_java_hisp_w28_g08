@@ -40,16 +40,19 @@ public class UserFollowerServiceTest {
     @Test
     @DisplayName("US0007 - Cuando se esta siguiendo al vendedor debe dejar de seguirlo")
     void whenSellerIsFollowedShouldUnfollow(){
+        // arrange
         int userId = 1;
         int sellerId = 2;
         UnfollowResponseDto expectedResponse = new UnfollowResponseDto("Se ha dejado de seguir al usuario "+sellerId);
         UserFollower userFollower = new UserFollower(userId,sellerId);
 
+        // act
         when(userFollowerRepository.findByFollowerIdAndFollowedId(userId,sellerId)).thenReturn(Optional.of(userFollower));
-        when(userFollowerRepository.delete(userFollower)).thenReturn(false);
+        when(userFollowerRepository.delete(userFollower)).thenReturn(true);
 
         UnfollowResponseDto result = userFollowerService.unfollow(userId,sellerId);
 
+        // assert
         verify(userFollowerRepository, atLeast(1)).findByFollowerIdAndFollowedId(userId,sellerId);
         verify(userFollowerRepository, atLeast(1)).delete(userFollower);
         assertThat(expectedResponse).isEqualTo(result);
@@ -57,11 +60,14 @@ public class UserFollowerServiceTest {
     @Test
     @DisplayName("US0007 - Cuando no se esta siguiendo al vendedor debe arrojar una excepcion NotFoundException")
     void whenSellerIsNotFollowedShouldThrowsNotFoundException(){
+        // arrange
         int userId = 1;
         int sellerId = 100;
 
+        // act
         when(userFollowerRepository.findByFollowerIdAndFollowedId(userId,sellerId)).thenReturn(Optional.empty());
 
+        // assert
         assertThrows(NotFoundException.class, ()->{userFollowerService.unfollow(userId,sellerId);});
     }
 
