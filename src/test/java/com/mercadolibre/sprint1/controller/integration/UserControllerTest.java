@@ -2,16 +2,26 @@ package com.mercadolibre.sprint1.controller.integration;
 
 import static com.mercadolibre.sprint1.utils.CResourceUtils.MAPPER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.mercadolibre.sprint1.dto.response.UserPromosAverageDto;
+import com.mercadolibre.sprint1.entity.Post;
+import com.mercadolibre.sprint1.repository.IRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 
@@ -20,6 +30,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.springframework.test.web.servlet.MvcResult;
 
 import com.mercadolibre.sprint1.dto.exception.ExceptionDto;
+import util.TestUtilGenerator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -27,6 +41,14 @@ public class UserControllerTest {
 
     @Autowired
     MockMvc mockMvc;
+
+    @MockitoBean
+    private IRepository<Post> postRepository;
+
+    ObjectMapper om = new ObjectMapper()
+            .setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
+            .registerModule(new JavaTimeModule())
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
     @Test
     @DisplayName("US0001 - Cuándo se envía un id de usuario y un id de un vendedor a seguir, se debe seguir al vendedor")
@@ -111,7 +133,45 @@ public class UserControllerTest {
                 andExpect(jsonPath("$.message").value("Ha ocurrido un error")).andDo(print());
     }
 
+    @Test
+    @DisplayName("US0013 - Consultar el promedio de promociones de los vendedores, debe devolver una lista.")
+    public void whenGetUserAveragePromosShouldReturnAverage() throws Exception{
+        //Arrange
+        ResultMatcher expectedStatus = status().isOk();
+        ResultMatcher expectedContentType = content().contentType(MediaType.APPLICATION_JSON);
+        List<UserPromosAverageDto> expected = List.of(
+                new UserPromosAverageDto(2, "Jane Smith", 85.0, null),
+                new UserPromosAverageDto(4, "Bob Brown", 5.0, null)
+        );
 
+        when(postRepository.findAll()).thenReturn(TestUtilGenerator.generatePosts());
+        //Act & Assert
+        MvcResult result = mockMvc.perform(get("/users/average-promos"))
+                .andDo(print())
+                .andExpect(expectedStatus)
+                .andExpect(expectedContentType).andReturn();
+
+        String jsonResponse = result.getResponse().getContentAsString();
+        List<UserPromosAverageDto> actual = om.readValue(jsonResponse, new TypeReference<>() {});
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("US0013 - Consultar el promedio de promociones de los vendedores, debe devolver error porque no hay post")
+    public void whenGetUserAveragePromosIsEmptyShouldReturnError() throws Exception{
+        //Arrange
+        ResultMatcher expectedStatus = status().isNoContent();
+        ResultMatcher expectedContentType = content().contentType(MediaType.APPLICATION_JSON);
+
+        when(postRepository.findAll()).thenReturn(new ArrayList<>());
+
+        //Act & Assert
+        mockMvc.perform(get("/users/average-promos"))
+                .andDo(print())
+                .andExpect(expectedStatus)
+                .andExpect(expectedContentType).andReturn();
+    }
 
 }
 
