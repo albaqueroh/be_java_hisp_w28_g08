@@ -36,14 +36,9 @@ import com.mercadolibre.sprint1.service.impl.ProductServiceImpl;
 import util.TestUtilGenerator;
 
 import java.time.LocalDate;
-import java.util.Comparator;
 import java.util.List;
 
 import static com.mercadolibre.sprint1.utils.CResourceUtils.MAPPER;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
-
-import util.TestUtilGenerator;
 
 @ExtendWith(MockitoExtension.class)
 public class ProductServiceTest {
