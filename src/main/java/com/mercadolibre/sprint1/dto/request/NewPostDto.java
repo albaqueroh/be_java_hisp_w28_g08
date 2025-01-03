@@ -29,6 +29,7 @@ public class NewPostDto {
     private LocalDate date;
 
     @Valid
+    @NotNull(message = "El producto no puede ser nulo.")
     private ProductDto product;
 
     @NotNull(message = "El campo no puede estar vacío.")
