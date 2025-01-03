@@ -28,7 +28,7 @@ public class UserControllerTest {
     @Autowired
     MockMvc mockMvc;
 
-
+    @Test
     @DisplayName("US0001 - Cuándo se envía un id de usuario y un id de un vendedor a seguir, se debe seguir al vendedor")
     public void followUser() throws Exception {
         // arrange
