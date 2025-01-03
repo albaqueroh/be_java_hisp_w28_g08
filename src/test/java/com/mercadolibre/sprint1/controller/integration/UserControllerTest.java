@@ -2,8 +2,12 @@ package com.mercadolibre.sprint1.controller.integration;
 
 import static com.mercadolibre.sprint1.utils.CResourceUtils.MAPPER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,11 +16,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 import com.mercadolibre.sprint1.dto.exception.ExceptionDto;
 
@@ -82,33 +83,31 @@ public class UserControllerTest {
     @DisplayName("US0002 - Cuándo se envía un id existente se debe retornar el conteo de seguidores")
     public void whenUserExistShouldReturnCount() throws Exception {
 
-        //Arrange
+        // Arrange
         ResultMatcher expectedStatus = status().isOk();
         ResultMatcher expectedContentType = content().contentType(MediaType.APPLICATION_JSON);
         long idUser = 1;
 
-        //Act & assert
-        mockMvc.perform(get("/users/" + idUser + "/followers/count")).
-                andExpect(expectedStatus).andExpect(expectedContentType).
-                andExpect(jsonPath("$.user_id").value(idUser)).
-                andExpect(jsonPath("$.user_name").value("John Doe")).
-                andExpect(jsonPath("$.followers_count").value(2)).andDo(print());
+        // Act & assert
+        mockMvc.perform(get("/users/" + idUser + "/followers/count")).andExpect(expectedStatus)
+                .andExpect(expectedContentType).andExpect(jsonPath("$.user_id").value(idUser))
+                .andExpect(jsonPath("$.user_name").value("John Doe")).andExpect(jsonPath("$.followers_count").value(2))
+                .andDo(print());
     }
 
     @Test
     @DisplayName("US0002 - Cuándo se envía un id inexistente se debe retornar un error")
     public void whenUserNotExistShouldReturnException() throws Exception {
 
-        //Arrange
+        // Arrange
         ResultMatcher expectedStatus = status().isBadRequest();
         ResultMatcher expectedContentType = content().contentType(MediaType.APPLICATION_JSON);
         long idUser = -1;
 
-        //Act & assert
-        mockMvc.perform(get("/users/" + idUser + "/followers/count")).
-                andExpect(expectedStatus).andExpect(expectedContentType).
-                andExpect(jsonPath("$.message").value("Ha ocurrido un error")).andDo(print());
+        // Act & assert
+        mockMvc.perform(get("/users/" + idUser + "/followers/count")).andExpect(expectedStatus)
+                .andExpect(expectedContentType).andExpect(jsonPath("$.message").value("Ha ocurrido un error"))
+                .andDo(print());
     }
 
 }
-

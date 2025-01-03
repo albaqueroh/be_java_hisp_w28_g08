@@ -1,8 +1,11 @@
 package com.mercadolibre.sprint1.controller.integration;
 
-import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.mercadolibre.sprint1.dto.request.NewPostDto;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +13,16 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import util.TestUtilGenerator;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.mercadolibre.sprint1.dto.request.NewPostDto;
+
+import util.TestUtilGenerator;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -30,16 +38,16 @@ public class ProductControllerTest {
 
     @Test
     @DisplayName("US005 - Creación de usuario correctamente")
-    public void whenPostCreatedShouldReturnTodoOk() throws Exception{
+    public void whenPostCreatedShouldReturnTodoOk() throws Exception {
         NewPostDto paramPost = om.convertValue(TestUtilGenerator.generateNoPromoPost(), NewPostDto.class);
         String expected = "todo OK";
 
-        ObjectWriter writer = new ObjectMapper().registerModule(new JavaTimeModule()).
-                configure(SerializationFeature.WRAP_ROOT_VALUE, false).writer().withDefaultPrettyPrinter();
+        ObjectWriter writer = new ObjectMapper().registerModule(new JavaTimeModule())
+                .configure(SerializationFeature.WRAP_ROOT_VALUE, false).writer().withDefaultPrettyPrinter();
         String payloadJson = writer.writeValueAsString(paramPost);
 
         mockMvc.perform(post("/products/post").contentType(MediaType.APPLICATION_JSON)
-                    .content(payloadJson))
+                .content(payloadJson))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(expected));
@@ -47,17 +55,17 @@ public class ProductControllerTest {
 
     @Test
     @DisplayName("US005 - Creación de usuario incorrectamente")
-    public void whenBadPostCreatedShouldReturnError() throws Exception{
+    public void whenBadPostCreatedShouldReturnError() throws Exception {
         NewPostDto paramPost = om.convertValue(TestUtilGenerator.generateNoPromoPost(), NewPostDto.class);
         paramPost.setUserId(null);
         String expected = "El  id no puede estar vacío.";
 
-        ObjectWriter writer = new ObjectMapper().registerModule(new JavaTimeModule()).
-                configure(SerializationFeature.WRAP_ROOT_VALUE, false).writer().withDefaultPrettyPrinter();
+        ObjectWriter writer = new ObjectMapper().registerModule(new JavaTimeModule())
+                .configure(SerializationFeature.WRAP_ROOT_VALUE, false).writer().withDefaultPrettyPrinter();
         String payloadJson = writer.writeValueAsString(paramPost);
 
         mockMvc.perform(post("/products/post").contentType(MediaType.APPLICATION_JSON)
-                        .content(payloadJson))
+                .content(payloadJson))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType("application/json"))

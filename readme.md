@@ -215,18 +215,23 @@ A continuación, se presenta un detalle de las pruebas unitarias implementadas e
 
 A continuación, se presenta un detalle de las pruebas unitarias cómo bonus implementadas en los servicios, junto con su responsable correspondiente.
 
-| ID de prueba | Situaciones de entrada                                                                    | Comportamiento esperado                                                                                                                             | Responsable          |
-| ------------ | ----------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| T-0009       | Verificar que el usuario a seguir sea vendedor. (US-0001)                                 | **Se cumple:** <br> Permite continuar con normalidad. <br> **No se cumple:** <br> Notifica que el usuario no es vendedor mediante una excepción.    | Cristhian Santamaría |
-| T-0010       | Verificar que un post se guarde. (US-0005)                                                | **Se cumple:** <br> Permite continuar con normalidad. <br> **No se cumple:** <br> Notifica el error en los campos digitados mediante una excepción. | Nicolás Albarracín   |
-| T-0011       | Verificar que un post en promoción se guarde. (US-0010)                                   | Devuelve un texto indicando que el post ha sido guardado exitosamente.                                                                              | Felipe Morera        |
-| T-0012       | Verificar que la cantidad de posts en promoción de un vendedor sea la correcta. (US-0011) | **Se cumple:** <br> Permite continuar con normalidad. <br> **No tiene posts:** <br> Permite continuar con normalidad.                               | Leonardo Baquero     |
+| ID de prueba | Situaciones de entrada                                                                    | Comportamiento esperado                                                                                                                                       | Responsable          |
+| ------------ | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| T-0009       | Verificar que el usuario a seguir sea vendedor. (US-0001)                                 | **Se cumple:** <br> Permite continuar con normalidad. <br> **No se cumple:** <br> Notifica que el usuario no es vendedor mediante una excepción.              | Cristhian Santamaría |
+| T-0010       | Verificar que un post se guarde. (US-0005)                                                | **Se cumple:** <br> Permite continuar con normalidad. <br> **No se cumple:** <br> Notifica el error en los campos digitados mediante una excepción.           | Nicolás Albarracín   |
+| T-0011       | Verificar que un post en promoción se guarde. (US-0010)                                   | Devuelve un texto indicando que el post ha sido guardado exitosamente.                                                                                        | Felipe Morera        |
+| T-0012       | Verificar que la cantidad de posts en promoción de un vendedor sea la correcta. (US-0011) | **Se cumple:** <br> Permite continuar con normalidad. <br> **No tiene posts:** <br> Permite continuar con normalidad.                                         | Leonardo Baquero     |
+| T-0013       | Verificar que los posts retornados de un vendedor sean de promoción. (US-0012)            | **Se cumple:** <br> Permite continuar con normalidad. <br> **El usuario no es vendedor:** <br> Notifica que el usuario no es vendedor mediante una excepción. | Cristhian Santamaría |
 
 ### 5.4 Pruebas de integración 🧷
 
-| ID de prueba | Situaciones de entrada                                             | Comportamiento esperado                                                                                                                          | Responsable          |
-| ------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------- |
-| T-0009       | Verificar que el usuario a seguir sea vendedor. (US-0001) (T-0001) | **Se cumple:** <br> Permite continuar con normalidad. <br> **No se cumple:** <br> Notifica que el usuario no es vendedor mediante una excepción. | Cristhian Santamaría |
+A continuación, se presenta un detalle de las pruebas de integración cómo bonus implementadas en la aplicación, junto con su responsable correspondiente.
+
+| ID de prueba | Endpoint                                | Comportamiento esperado                                                                                                                                                     | Responsable        |
+| ------------ | --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| T-\*\*       | /users/{userId}/follow/{userIdToFollow} | <ul><li>Seguir al vendedor.</li><li>Lanzar una excepción 404 si el vendedor no existe.</li><li>Lanzar una excepción 400 si el usuario a seguir no es un vendedor.</li></ul> | Leonardo Baquero   |
+| T-\*\*       | /users/{userId}/followers/count         | <ul><li>Retornar la cantidad de seguidores de un vendedor.</li><li>Lanzar una excepción 404 si el vendedor no existe.</li></ul>                                             | Felipe Morera      |
+| T-\*\*       | /products/post                          | <ul><li>Crear un post.</li><li>Lanzar una excepción 400 si los campos digitados por el usuario contienen errores de validación.</li></ul>                                   | Nicolás Albarracín |
 
 ## 6. Integrantes 🥇
 
