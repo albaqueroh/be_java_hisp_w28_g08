@@ -3,18 +3,19 @@ package com.mercadolibre.sprint1.controller.integration;
 import static com.mercadolibre.sprint1.utils.CResourceUtils.MAPPER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mercadolibre.sprint1.dto.response.UserPromosAverageDto;
 import com.mercadolibre.sprint1.entity.Post;
-import com.mercadolibre.sprint1.repository.IRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +26,13 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import org.springframework.test.web.servlet.MvcResult;
-
 import com.mercadolibre.sprint1.dto.exception.ExceptionDto;
 import util.TestUtilGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -51,8 +50,8 @@ public class UserControllerTest {
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
     @Test
-    @DisplayName("US0001 - Cuándo se envía un id de usuario y un id de un vendedor a seguir, se debe seguir al vendedor")
-    public void followUser() throws Exception {
+    @DisplayName("T-0016 - Cuándo se envía un id de usuario y un id de un vendedor a seguir, se debe seguir al vendedor")
+    public void whenSentFollowerUserIdAndFollowedUserIdShouldFollowSeller() throws Exception {
         // arrange
         int userId = 2;
         int userIdToFollow = 3;
@@ -66,8 +65,8 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("US0001 - Cuándo se envía un id de usuario y un id de un vendedor que no existe, debe lanzar una excepción 404")
-    public void followUserWithError() throws Exception {
+    @DisplayName("T-0016 - Cuándo se envía un id de usuario y un id de un vendedor que no existe, debe lanzar una excepción 404")
+    public void whenSentFollowerUserIdAndFollowedUserIdAndIsNotExistsShouldThrows404() throws Exception {
         // arrange
         int userId = 2;
         int userIdToFollow = 100;
@@ -84,8 +83,8 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("US0001 - Cuándo se envía un id de usuario y un id de un usuario que no es vendedor, debe lanzar una excepción 400")
-    public void followUserNotExists() throws Exception {
+    @DisplayName("T-0016 - Cuándo se envía un id de usuario y un id de un usuario que no es vendedor, debe lanzar una excepción 400")
+    public void whenSentFollowerUserIdAndFollowedUserIdAndIsNotSellerShouldThrows400() throws Exception {
         // arrange
         int userId = 3;
         int userIdToFollow = 2;
@@ -102,35 +101,34 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("US0002 - Cuándo se envía un id existente se debe retornar el conteo de seguidores")
+    @DisplayName("T-0017 - Cuándo se envía un id existente se debe retornar el conteo de seguidores")
     public void whenUserExistShouldReturnCount() throws Exception {
 
-        //Arrange
+        // Arrange
         ResultMatcher expectedStatus = status().isOk();
         ResultMatcher expectedContentType = content().contentType(MediaType.APPLICATION_JSON);
         long idUser = 1;
 
-        //Act & assert
-        mockMvc.perform(get("/users/" + idUser + "/followers/count")).
-                andExpect(expectedStatus).andExpect(expectedContentType).
-                andExpect(jsonPath("$.user_id").value(idUser)).
-                andExpect(jsonPath("$.user_name").value("John Doe")).
-                andExpect(jsonPath("$.followers_count").value(2)).andDo(print());
+        // Act & assert
+        mockMvc.perform(get("/users/" + idUser + "/followers/count")).andExpect(expectedStatus)
+                .andExpect(expectedContentType).andExpect(jsonPath("$.user_id").value(idUser))
+                .andExpect(jsonPath("$.user_name").value("John Doe")).andExpect(jsonPath("$.followers_count").value(2))
+                .andDo(print());
     }
 
     @Test
-    @DisplayName("US0002 - Cuándo se envía un id inexistente se debe retornar un error")
+    @DisplayName("T-0017 - Cuándo se envía un id inexistente se debe retornar un error")
     public void whenUserNotExistShouldReturnException() throws Exception {
 
-        //Arrange
+        // Arrange
         ResultMatcher expectedStatus = status().isBadRequest();
         ResultMatcher expectedContentType = content().contentType(MediaType.APPLICATION_JSON);
         long idUser = -1;
 
-        //Act & assert
-        mockMvc.perform(get("/users/" + idUser + "/followers/count")).
-                andExpect(expectedStatus).andExpect(expectedContentType).
-                andExpect(jsonPath("$.message").value("Ha ocurrido un error")).andDo(print());
+        // Act & assert
+        mockMvc.perform(get("/users/" + idUser + "/followers/count")).andExpect(expectedStatus)
+                .andExpect(expectedContentType).andExpect(jsonPath("$.message").value("Ha ocurrido un error"))
+                .andDo(print());
     }
 
     @Test
@@ -174,4 +172,3 @@ public class UserControllerTest {
     }
 
 }
-

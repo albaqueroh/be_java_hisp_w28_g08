@@ -8,7 +8,6 @@ import com.mercadolibre.sprint1.dto.ProductDto;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.AssertTrue;
-import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -27,7 +26,6 @@ public class CreatePromoPostDto {
     private Integer userId;
 
     @NotNull(message = "La fecha no debe ser nula")
-    @FutureOrPresent(message = "La fecha no puede ser menor a la actual")
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate date;
 

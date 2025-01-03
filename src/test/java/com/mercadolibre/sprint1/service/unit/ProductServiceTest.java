@@ -3,14 +3,14 @@ package com.mercadolibre.sprint1.service.unit;
 import static com.mercadolibre.sprint1.utils.CResourceUtils.MAPPER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
 
-import com.mercadolibre.sprint1.dto.PostDto;
-import com.mercadolibre.sprint1.dto.response.ProductsFollowedDtoResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,12 +23,16 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.mercadolibre.sprint1.dto.PostDto;
 import com.mercadolibre.sprint1.dto.request.NewPostDto;
 import com.mercadolibre.sprint1.dto.response.CountProductsPromoDto;
+import com.mercadolibre.sprint1.dto.response.PostPromoListDto;
+import com.mercadolibre.sprint1.dto.response.ProductsFollowedDtoResponse;
 import com.mercadolibre.sprint1.entity.Post;
 import com.mercadolibre.sprint1.entity.User;
 import com.mercadolibre.sprint1.entity.UserFollower;
 import com.mercadolibre.sprint1.exception.BadRequestException;
+import com.mercadolibre.sprint1.exception.NotFoundException;
 import com.mercadolibre.sprint1.repository.IRepository;
 import com.mercadolibre.sprint1.repository.impl.PostRepositoryImpl;
 import com.mercadolibre.sprint1.service.IUserService;
@@ -217,6 +221,42 @@ public class ProductServiceTest {
         // assert
         assertNotNull(res);
         assertEquals(quantityProductsExpected, res.getPromoProductsCount());
+    }
+
+    @Test
+    @DisplayName("T-0013 - Cuando el usuario es vendedor debe retornar los productos en promoción")
+    public void whenUserIsSellerShouldReturnPromoProducts() {
+        // Arrange
+        User user = TestUtilGenerator.generateSeller();
+        int numberProducts = 2;
+        when(userService.findUserById(user.getId())).thenReturn(user);
+        when(postRepository.findAll()).thenReturn(TestUtilGenerator.generatePosts());
+
+        // Act
+        PostPromoListDto res = productService.listProductsPromo(user.getId());
+
+        // Assert
+        assertNotNull(res);
+        assertEquals(numberProducts, user.getId());
+        assertEquals("Cristhian", user.getName());
+        assertEquals(2, res.getPosts().size());
+        assertTrue(res.getPosts().get(0).isHasPromo());
+    }
+
+    @Test
+    @DisplayName("T-0013 - Cuando el usuario no es vendedor debe arrojar una excepción NotFoundException")
+    public void whenUserIsNotSellerShouldThrowNotFoundException() {
+        // Arrange
+        User user = TestUtilGenerator.generateUser();
+        when(userService.findUserById(user.getId())).thenReturn(user);
+
+        // Act
+        Exception exception = assertThrows(NotFoundException.class, () -> {
+            productService.listProductsPromo(user.getId());
+        });
+
+        // Assert
+        assertEquals("El usuario no es un vendedor", exception.getMessage());
     }
 
 }
