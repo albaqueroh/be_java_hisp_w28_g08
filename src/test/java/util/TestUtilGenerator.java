@@ -53,9 +53,7 @@ public class TestUtilGenerator {
                                 5.0),
                         new Post(6, today.minusMonths(3), 4,
                                 new Product(6, "Jean", "Clothes", "Levi's", "Dark", ""), 5, 199.0, false,
-                                0)
-                )
-        );
+                                0)));
     }
 
     public static List<UserFollower> generateFollowers() {
@@ -68,21 +66,20 @@ public class TestUtilGenerator {
                         new UserFollower(4, 2)));
     }
 
-    public static FollowersCountDto expectedResponseFollowerCount(){
+    public static FollowersCountDto expectedResponseFollowerCount() {
         return new FollowersCountDto(
                 1,
                 "Camilo",
-                0
-        );
+                0);
     }
 
-    public static Post CreatePromoPost(){
+    public static Post CreatePromoPost() {
         return new Post(0, LocalDate.parse("2024-12-20"), 4,
                 new Product(5, "T-Shirt", "Clothes", "Adidas", "Green", ""), 5, 59.0, true,
                 5.0);
     }
 
-    public static CreatePromoPostDto createPostPromoDto(){
+    public static CreatePromoPostDto createPostPromoDto() {
         return new CreatePromoPostDto(4, LocalDate.parse("2024-12-20"),
                 new ProductDto(5, "T-Shirt", "Clothes", "Adidas", "Green", ""), 5, 59.0, true,
                 5.0);
@@ -111,5 +108,4 @@ public class TestUtilGenerator {
     public static Post generateNoPromoPost() {
         return generatePosts().getFirst();
     }
-
 }
