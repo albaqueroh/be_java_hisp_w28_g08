@@ -50,6 +50,8 @@ public class ProductServiceImpl implements IProductService {
         Comparator<Post> orden = Comparator.comparing(Post::getDate);
         if (order != null && order.equalsIgnoreCase("date_desc")) {
             orden = Comparator.comparing(Post::getDate).reversed();
+        } else if (order != null && !order.equalsIgnoreCase("date_asc")) {
+            throw new BadRequestException("El orden enviado no es válido, debe ser date_asc o date_desc.");
         }
 
         LocalDate fechaActual = LocalDate.now();
