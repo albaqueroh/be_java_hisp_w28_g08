@@ -26,7 +26,7 @@ Para ejecutar la API, se recomienda seguir los siguientes pasos:
 Para cargar la colección de Postman con todos los endpoints de los requerimientos implementados, se recomiendoa seguir los siguientes pasos:
 
 1. Abrir Postman
-2. Importar la colección que se encuentra en la ruta `src/main/resources/postmanCollection-V2.json`
+2. Importar la colección que se encuentra en la ruta `src/main/resources/postmanCollection-V3.json`
 3. Enviar alguna solicitud al aplicativo y revisar su respuesta
 
 ### 2.4 Realizar pruebas funcionales a la API
