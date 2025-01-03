@@ -6,19 +6,19 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.mercadolibre.sprint1.entity.UserFollower;
-import com.mercadolibre.sprint1.repository.IRepository;
 import com.mercadolibre.sprint1.repository.impl.UserFollowerRepositoryImpl;
 
 import util.TestUtilGenerator;
 
 public class UserFollowerRepositoryTest {
 
-    IRepository<UserFollower> userFollowerRepository = new UserFollowerRepositoryImpl();
+    UserFollowerRepositoryImpl userFollowerRepository = new UserFollowerRepositoryImpl();
 
     @Test
     @DisplayName("Cuando se llama findAll debe retornar todos los UserFollowers")
@@ -96,6 +96,20 @@ public class UserFollowerRepositoryTest {
 
         // assert
         assertFalse(result);
+    }
+
+    @Test
+    @DisplayName("Cuando se busca si un usuario sigue a otro deberia regresar un Optional de UserFollower")
+    void whenFindByFollowerIdAndFollowedIdShouldReturnUserFollowerOptional() {
+        // arrange
+        int userId = 2;
+        int sellerId = 1;
+        UserFollower userFollower = new UserFollower(sellerId, userId);
+        // act
+        Optional<UserFollower> result = userFollowerRepository.findByFollowerIdAndFollowedId(userId, sellerId);
+
+        // assert
+        assertEquals(Optional.of(userFollower), result);
     }
 
 }

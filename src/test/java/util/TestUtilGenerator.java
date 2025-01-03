@@ -108,5 +108,4 @@ public class TestUtilGenerator {
     public static Post generateNoPromoPost() {
         return generatePosts().getFirst();
     }
-
 }

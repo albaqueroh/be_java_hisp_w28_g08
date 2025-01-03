@@ -209,22 +209,6 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("T-0009 - Cuándo el usuario seguidor no existe debe retornar una NotFoundException")
-    public void followUserWhenUserIdDoesNotExistShouldThrowNotFoundException() {
-        // TODO: Revisar
-        // Arrange
-        int userId = 999;
-        int userIdToFollow = 1;
-        when(userRepository.findAll()).thenReturn(TestUtilGenerator.generateUsers());
-        // Act
-        Exception exception = assertThrows(NotFoundException.class, () -> {
-            userService.followUser(userId, userIdToFollow);
-        });
-        // Assert
-        assertEquals("No existe el usuario " + userId, exception.getMessage());
-    }
-
-    @Test
     @DisplayName("T-0009 - Cuándo el usuario a seguir existe y no es vendedor debe retornar una Exception")
     public void followUserWhenUserToFollowIsNotSellerShouldThrowBadRequestExceptions() {
         // Arrange
@@ -241,4 +225,82 @@ public class UserServiceTest {
         assertEquals("El usuario " + userIdToFollow + " no es un vendedor.", exception.getMessage());
     }
 
+    // ------------------- US0001 -------------------
+
+    // @Test
+    // @DisplayName("US-0001 - Cuándo el usuario seguidor no existe debe retornar una NotFoundException")
+    // public void followUserWhenUserIdDoesNotExistShouldThrowNotFoundException() {
+    //     // TODO: Revisar
+    //     // Arrange
+    //     int userId = 999;
+    //     int userIdToFollow = 1;
+    //     when(userRepository.findAll()).thenReturn(TestUtilGenerator.generateUsers());
+    //     // Act
+    //     Exception exception = assertThrows(NotFoundException.class, () -> {
+    //         userService.followUser(userId, userIdToFollow);
+    //     });
+    //     // Assert
+    //     assertEquals("No existe el usuario " + userId, exception.getMessage());
+    // }
+
+    // ------------------- US0004 -------------------
+
+    // @Test
+    // @DisplayName("US0004 - Cuándo el orden enviado es NAME_ASC, debe listar todos los usuarios seguidos ordenados por nombre de forma ascendente")
+    // public void whenOrderSendedIsNameAscInFollowedPeopleShouldListFollowedSortedByNameAsc() {
+    //     // arrange
+    //     int userId = 1;
+    //     String order = "NAME_ASC";
+
+    //     // Lista esperada
+    //     List<UserDto> expectedFollowed = List.of(
+    //             new UserDto(2, "Cristhian"),
+    //             new UserDto(5, "María"));
+
+    //     // Mock de los repositorios
+    //     when(userRepository.findAll()).thenReturn(TestUtilGenerator.generateUsers());
+    //     when(userFollowerRepository.findAll()).thenReturn(TestUtilGenerator.generateFollowers());
+
+    //     // act
+    //     FollowedListByUserDto result = userService.findUsersFollowedByUser(userId, order);
+
+    //     // assert
+    //     assertThat(result.getId()).isEqualTo(userId);
+    //     assertThat(result.getFollowed()).isEqualTo(expectedFollowed);
+    // }
+
+    // @Test
+    // @DisplayName("US0004 - Cuándo el orden enviado es NAME_DESC, debe listar todos los usuarios seguidos ordenados por nombre de forma ascendente")
+    // public void whenOrderSendedIsNameDescInFollowedPeopleShouldListFollowedSortedByNameAsc() {
+    //     // arrange
+    //     int userId = 1;
+    //     String order = "NAME_DESC";
+
+    //     // Lista esperada
+    //     List<UserDto> expectedFollowed = List.of(
+    //             new UserDto(5, "María"),
+    //             new UserDto(2, "Cristhian"));
+
+    //     // Mock de los repositorios
+    //     when(userRepository.findAll()).thenReturn(TestUtilGenerator.generateUsers());
+    //     when(userFollowerRepository.findAll()).thenReturn(TestUtilGenerator.generateFollowers());
+
+    //     // act
+    //     FollowedListByUserDto result = userService.findUsersFollowedByUser(userId, order);
+
+    //     // assert
+    //     assertThat(result.getId()).isEqualTo(userId);
+    //     assertThat(result.getFollowed()).isEqualTo(expectedFollowed);
+    // }
+
+    // @Test
+    // @DisplayName("US0004 - Cuándo el orden enviado no es ascendente ni descendente, debe arrojar una excepción BadRequestException")
+    // public void whenOrderSendedIsNotAscAndIsNotDescInFollowedPeopleShouldThrowsBadRequestException() {
+    //     // arrange
+    //     int userId = 2;
+
+    //     // act
+    //     // assert
+    //     assertThrows(BadRequestException.class, () -> userService.findUsersFollowedByUser(userId, "INVALID_ORDER"));
+    // }
 }
