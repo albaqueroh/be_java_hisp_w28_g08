@@ -1,11 +1,24 @@
 package com.mercadolibre.sprint1.service.unit;
 
+
+import com.mercadolibre.sprint1.dto.PostDto;
+import com.mercadolibre.sprint1.dto.ProductDto;
+import com.mercadolibre.sprint1.dto.response.PostPromoListDto;
+import com.mercadolibre.sprint1.dto.response.ProductsFollowedDtoResponse;
+
+
 import static com.mercadolibre.sprint1.utils.CResourceUtils.MAPPER;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+
+import com.mercadolibre.sprint1.dto.util.PostPromoDto;
+import com.mercadolibre.sprint1.exception.NotFoundException;
+import org.junit.jupiter.api.Assertions;
 
 import java.util.List;
 
@@ -33,6 +46,18 @@ import com.mercadolibre.sprint1.repository.IRepository;
 import com.mercadolibre.sprint1.repository.impl.PostRepositoryImpl;
 import com.mercadolibre.sprint1.service.IUserService;
 import com.mercadolibre.sprint1.service.impl.ProductServiceImpl;
+
+import util.TestUtilGenerator;
+
+import java.time.LocalDate;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+
+import static com.mercadolibre.sprint1.utils.CResourceUtils.MAPPER;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+
 
 import util.TestUtilGenerator;
 
@@ -217,6 +242,72 @@ public class ProductServiceTest {
         // assert
         assertNotNull(res);
         assertEquals(quantityProductsExpected, res.getPromoProductsCount());
+    }
+
+    @Test
+    @DisplayName("US0006 - Devuelve publicaciones seguidas en las últimas dos semanas ordenadas correctamente")
+    public void whenUserSendedShouldListPostOfFollowedPeopleOfTheLastTwoWeeks() {
+        // arrange
+        int userId = 1;
+        String order = "date_desc"; // Orden descendente
+
+        LocalDate currentDate = LocalDate.now();
+        LocalDate twoWeeksAgo = currentDate.minusWeeks(2);
+
+        // Mock de datos
+        when(userFollowRepository.findAll()).thenReturn(TestUtilGenerator.generateFollowers());
+        when(postRepository.findAll()).thenReturn(TestUtilGenerator.generatePosts());
+
+        ProductsFollowedDtoResponse expected = new ProductsFollowedDtoResponse(1, List.of(
+                MAPPER.convertValue(TestUtilGenerator.generatePosts().getFirst(), PostDto.class),
+                MAPPER.convertValue(TestUtilGenerator.generatePosts().get(1), PostDto.class)
+        ));
+
+        // act
+        ProductsFollowedDtoResponse response = productService.productsOfPeopleFollowed(userId, order);
+
+        // assert
+        assertNotNull(response, "La respuesta no debe ser nula.");
+        assertEquals(expected.getUserId(), response.getUserId(), "El userId de la respuesta no coincide.");
+        assertEquals(expected.getPosts().size(), response.getPosts().size(), "El número de publicaciones devueltas no es correcto.");
+        assertEquals(expected, response);
+    }
+
+    @Test
+    @DisplayName("US0012 - Cuando el usuario es vendedor debe retornar los productos en promoción")
+    public void whenUserIsSellerShouldReturnPromoProducts(){
+        // Arrange
+        User user = TestUtilGenerator.generateSeller();
+        int numberProducts = 2;
+        when(userService.findUserById(user.getId())).thenReturn(user);
+        when(postRepository.findAll()).thenReturn(TestUtilGenerator.generatePosts());
+
+        // Act
+        PostPromoListDto res = productService.listProductsPromo(user.getId());
+
+        // Assert
+        assertNotNull(res);
+        assertEquals(numberProducts, user.getId());
+        assertEquals("Cristhian", user.getName());
+        assertEquals(2, res.getPosts().size());
+        assertTrue(res.getPosts().get(0).isHasPromo());
+
+    }
+
+    @Test
+    @DisplayName("US0012 - Cuando el usuario no es vendedor debe arrojar una excepción NotFoundException")
+    public void whenUserIsNotSellerShouldThrowNotFoundException(){
+        // Arrange
+        User user = TestUtilGenerator.generateUser();
+        when(userService.findUserById(user.getId())).thenReturn(user);
+
+        // Act
+        Exception exception = assertThrows(NotFoundException.class, () -> {
+            productService.listProductsPromo(user.getId());
+        });
+
+        // Assert
+        assertEquals("El usuario no es un vendedor", exception.getMessage());
     }
 
 }
