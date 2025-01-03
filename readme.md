@@ -233,6 +233,7 @@ A continuación, se presenta un detalle de las pruebas de integración cómo bon
 | T-0015       | /products/promo-post                    | <ul><li>Crear un post en promoción.</li><li>Lanzar una excepción 400 si los campos digitados por el usuario contienen errores de validación.</li></ul>                      | Felipe Morera      |
 | T-0016       | /users/{userId}/follow/{userIdToFollow} | <ul><li>Seguir al vendedor.</li><li>Lanzar una excepción 404 si el vendedor no existe.</li><li>Lanzar una excepción 400 si el usuario a seguir no es un vendedor.</li></ul> | Leonardo Baquero   |
 | T-0017       | /users/{userId}/followers/count         | <ul><li>Retornar la cantidad de seguidores de un vendedor.</li><li>Lanzar una excepción 404 si el vendedor no existe.</li></ul>                                             | Felipe Morera      |
+| T-0018       | /products/followed/{userId}/list        | <ul><li>Listar publicaciones sin parámetro de ordenamiento.</li><li>Listar publicaciones con parámetro de ordenamiento.</li></ul>                                           | Felipe Morera      |
 
 ### 5.5 Cobertura de código 🔒
 
