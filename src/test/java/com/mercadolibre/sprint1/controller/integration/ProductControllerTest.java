@@ -70,8 +70,10 @@ public class ProductControllerTest {
     @Test
     @DisplayName("US006 - Obtener publicaciones de usuarios seguidos sin parámetro de ordenamiento")
     public void whenGetProductsOfFollowedUsersWithoutOrderShouldReturnOk() throws Exception {
+        //assert
         int userId = 1;
 
+        //act - arrange
         mockMvc.perform(get("/products/followed/{userId}/list", userId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -80,12 +82,13 @@ public class ProductControllerTest {
     }
 
     @Test
-    @DisplayName("US006/US009 - Obtener publicaciones de usuarios seguidos con parámetro de ordenamiento")
+    @DisplayName("US006 - Obtener publicaciones de usuarios seguidos con parámetro de ordenamiento")
     public void whenGetProductsOfFollowedUsersWithOrderShouldReturnOk() throws Exception {
+        //assert
         int userId = 1;
         String order = "date_desc";
 
-        // Realizar la solicitud simulada con el parámetro de ordenamiento
+        //Act - arrange
         mockMvc.perform(get("/products/followed/{userId}/list", userId)
                         .param("order", order)
                         .contentType(MediaType.APPLICATION_JSON))
