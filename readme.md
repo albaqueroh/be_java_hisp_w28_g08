@@ -163,7 +163,72 @@ Respuesta esperada:
 }
 ```
 
-## 5. Integrantes 🥇
+## 5. Validaciones y testing 🧪
+
+### 5.1 Validaciones 🏹
+
+A continuación, se presenta la tabla la cuál describe las validaciones realizadas en los requerimientos **US-0005** y **US-0010**, ya que en estos requerimientos se recibe cómo entrada datos digitados por el usuario.
+
+| Dato/Parámetro | ¿Obligatorio? | Validación                                                                                                                                                           | Mensaje de error                                                                                                                                                 |
+| -------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| user_id        | Si            | <ul><li>Que el campo no esté vacío.</li><li>Mayor a 0.</li></ul>                                                                                                     | <ul><li>El id no puede estar vacío.</li><li>El id debe ser mayor a 0.</li></ul>                                                                                  |
+| date           | Si            | <ul><li>Que el campo no esté vacío.</li></ul>                                                                                                                        | <ul><li>La fecha no puede estar vacía.</li></ul>                                                                                                                 |
+| product_id     | Si            | <ul><li>Que el campo no esté vacío.</li><li>Mayor a 0.</li></ul>                                                                                                     | <ul><li>El id no puede estar vacío.</li><li>El id debe ser mayor a 0.</li></ul>                                                                                  |
+| product_name   | Si            | <ul><li>Que el campo no esté vacío.</li><li>Longitud máxima de 40 caracteres.</li><li>Que no posea caracteres especiales (%, &, $, etc), permite espacios.</li></ul> | <ul><li>El campo no puede estar vacío.</li><li>La longitud no puede superar los 40 caracteres.</li><li>El campo no puede poseer caracteres especiales.</li></ul> |
+| type           | Si            | <ul><li>Que el campo no esté vacío.</li><li>Longitud máxima de 15 caracteres.</li><li>Que no posea caracteres especiales (%, &, $, etc)</li></ul>                    | <ul><li>El campo no puede estar vacío.</li><li>La longitud no puede superar los 15 caracteres.</li><li>El campo no puede poseer caracteres especiales.</li></ul> |
+| brand          | Si            | <ul><li>Que el campo no esté vacío.</li><li>Longitud máxima de 25 caracteres.</li><li>Que no posea caracteres especiales (%, &, $, etc)</li></ul>                    | <ul><li>El campo no puede estar vacío.</li><li>La longitud no puede superar los 25 caracteres.</li><li>El campo no puede poseer caracteres especiales.</li></ul> |
+| color          | Si            | <ul><li>Que el campo no esté vacío.</li><li>Longitud máxima de 15 caracteres.</li><li>Que no posea caracteres especiales (%, &, $, etc)</li></ul>                    | <ul><li>El campo no puede estar vacío.</li><li>La longitud no puede superar los 15 caracteres.</li><li>El campo no puede poseer caracteres especiales.</li></ul> |
+| notes          | No            | <ul><li>Longitud máxima de 80 caracteres.</li><li>Que no posea caracteres especiales (%, &, $, etc)</li></ul>                                                        | <ul><li>La longitud no puede superar los 80 caracteres.</li><li>El campo no puede poseer caracteres especiales.</li></ul>                                        |
+| category       | Si            | <ul><li>Que el campo no esté vacío.</li></ul>                                                                                                                        | <ul><li>El campo no puede estar vacío.</li></ul>                                                                                                                 |
+| price          | Si            | <ul><li>Que el campo no esté vacío.</li><li>El precio máximo puede ser de 10.000.000.</li></ul>                                                                      | <ul><li>El id no puede estar vacío.</li><li>El precio máximo por producto es de 10.000.000.</li></ul>                                                            |
+
+### 5.2 Definición de pruebas unitarias y responsables
+
+A continuación, se presenta un detalle de las pruebas unitarias implementadas en los servicios, junto con su responsable correspondiente.
+
+| ID de prueba | Situaciones de entrada                                                                                                                                               | Comportamiento esperado                                                                                                                            | Responsable          |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| T-0001 ✅    | Verificar que el usuario a seguir exista (US-0001)                                                                                                                   | **Se cumple:** <br> Permite continuar con normalidad. <br> **No se cumple:** <br> Notifica la no existencia mediante una excepción.                | Cristhian Santamaría |
+| T-0002 ✅    | Verificar que el usuario a dejar de seguir exista (US-0007)                                                                                                          | **Se cumple:** <br> Permite continuar con normalidad. <br> **No se cumple:** <br> Notifica la no existencia mediante una excepción.                | Camilo Suarique      |
+| T-0003 ✅    | Verificar que el tipo de ordenamiento alfabético exista (US-0008)                                                                                                    | **Se cumple:** <br> Permite continuar con normalidad. <br> **No se cumple:** <br> Notifica la no existencia mediante una excepción.                | Leonardo Baquero     |
+| T-0004 ✅    | Verificar el correcto ordenamiento ascendente y descendente por nombre (US-0008)                                                                                     | Devuelve la lista ordenada según el criterio solicitado.                                                                                           | Camilo Suarique      |
+| T-0005       | Verificar que el tipo de ordenamiento por fecha exista (US-0009)                                                                                                     | **Se cumple:** <br> Permite continuar con normalidad. <br> **No se cumple:** <br> Notifica la no existencia mediante una excepción.                | Nicolás Albarracín   |
+| T-0006       | Verificar el correcto ordenamiento ascendente y descendente por fecha. (US-0009)                                                                                     | Verificar el correcto ordenamiento ascendente y descendente por fecha.                                                                             | Nicolás Albarracín   |
+| T-0007 ✅    | Verificar que la cantidad de seguidores de un determinado usuario sea correcta. (US-0002)                                                                            | Devuelve el cálculo correcto del total de la cantidad de seguidores que posee un usuario.                                                          | Felipe Morera        |
+| T-0008 ✅    | Verificar que la consulta de publicaciones realizadas en las últimas dos semanas de un determinado vendedor sean efectivamente de las últimas dos semanas. (US-0006) | Devuelve únicamente los datos de las publicaciones que tengan fecha de publicación dentro de las últimas dos semanas a partir del día de la fecha. | Daniel Franco        |
+
+A continuación, se presenta un detalle de las pruebas unitarias implementadas en los repositorios, junto con su responsable correspondiente.
+
+| Situaciones de entrada                     | Comportamiento esperado                                                        | Responsable     |
+| ------------------------------------------ | ------------------------------------------------------------------------------ | --------------- |
+| Listar todos los posts                     | Devuelve todos los posts guardados.                                            | Camilo Suarique |
+| Crear un post                              | Devuelve el post guardado.                                                     | Camilo Suarique |
+| Eliminar un post por id o entidad          | **Se cumple:** <br> Devuelve true. <br> **No se cumple:** <br> Devuelve false. | Camilo Suarique |
+| Listar todos los usuarios                  | Devuelve todos los usuarios guardados.                                         | Camilo Suarique |
+| Crear un usuario                           | Devuelve el usuario guardado.                                                  | Camilo Suarique |
+| Eliminar un usuario por id o entidad       | **Se cumple:** <br> Devuelve true. <br> **No se cumple:** <br> Devuelve false. | Camilo Suarique |
+| Listar todos los users followers           | Devuelve todos los users followers guardados.                                  | Camilo Suarique |
+| Crear un user follower                     | Devuelve el user follower guardado.                                            | Camilo Suarique |
+| Eliminar un user follower por id o entidad | **Se cumple:** <br> Devuelve true. <br> **No se cumple:** <br> Devuelve false. | Camilo Suarique |
+
+### 5.3 Definición de pruebas unitarias bonus 🧑‍🔬
+
+A continuación, se presenta un detalle de las pruebas unitarias cómo bonus implementadas en los servicios, junto con su responsable correspondiente.
+
+| ID de prueba | Situaciones de entrada                                                                    | Comportamiento esperado                                                                                                                             | Responsable          |
+| ------------ | ----------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| T-0009       | Verificar que el usuario a seguir sea vendedor. (US-0001)                                 | **Se cumple:** <br> Permite continuar con normalidad. <br> **No se cumple:** <br> Notifica que el usuario no es vendedor mediante una excepción.    | Cristhian Santamaría |
+| T-0010       | Verificar que un post se guarde. (US-0005)                                                | **Se cumple:** <br> Permite continuar con normalidad. <br> **No se cumple:** <br> Notifica el error en los campos digitados mediante una excepción. | Nicolás Albarracín   |
+| T-0011       | Verificar que un post en promoción se guarde. (US-0010)                                   | Devuelve un texto indicando que el post ha sido guardado exitosamente.                                                                              | Felipe Morera        |
+| T-0012       | Verificar que la cantidad de posts en promoción de un vendedor sea la correcta. (US-0011) | **Se cumple:** <br> Permite continuar con normalidad. <br> **No tiene posts:** <br> Permite continuar con normalidad.                               | Leonardo Baquero     |
+
+### 5.4 Pruebas de integración 🧷
+
+| ID de prueba | Situaciones de entrada                                             | Comportamiento esperado                                                                                                                          | Responsable          |
+| ------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------- |
+| T-0009       | Verificar que el usuario a seguir sea vendedor. (US-0001) (T-0001) | **Se cumple:** <br> Permite continuar con normalidad. <br> **No se cumple:** <br> Notifica que el usuario no es vendedor mediante una excepción. | Cristhian Santamaría |
+
+## 6. Integrantes 🥇
 
 - Andrés Camilo Suarique Méndez
 - Andrés Felipe Morera Díaz
@@ -172,6 +237,6 @@ Respuesta esperada:
 - Daniel Alberto Franco Cabrera
 - Nicolás Albarracín Piñeros
 
-## 6. Cierre y agradecimientos
+## 7. Cierre y agradecimientos
 
-Para cerrar este sprint 1, el equipo 8 agradece a los mentores por compartir su conocimiento y experiencia de manera profesional y dinámica, permitiendo el aprendizaje continuo en lo que relata a Java y Spring Framework. Además, entre compañeros nos agradecemos por la colaboración y entusiasmo que hubo en el desarrollo de este sprint, dónde se siguieron fortaleciendo los conocimientos y lazos sociales.
+Para cerrar este sprint 2, el equipo 8 agradece a los mentores por compartir su conocimiento y experiencia de manera profesional y dinámica, permitiendo el aprendizaje continuo en lo que relata a Java y Spring Framework. Además, entre compañeros nos agradecemos por la colaboración y entusiasmo que hubo en el desarrollo de este sprint, dónde se siguieron fortaleciendo los conocimientos y lazos sociales.

@@ -40,7 +40,7 @@ public class UserFollowerServiceTest {
     UserFollowerServiceImpl userFollowerService;
 
     @Test
-    @DisplayName("US0007 - Cuando se esta siguiendo al vendedor debe dejar de seguirlo")
+    @DisplayName("T-0002 - Cuándo se está siguiendo al vendedor debe dejar de seguirlo")
     void whenSellerIsFollowedShouldUnfollow() {
         // arrange
         int userId = 1;
@@ -62,7 +62,7 @@ public class UserFollowerServiceTest {
     }
 
     @Test
-    @DisplayName("US0007 - Cuando no se esta siguiendo al vendedor debe arrojar una excepcion NotFoundException")
+    @DisplayName("T-0002 - Cuándo no se está siguiendo al vendedor debe arrojar una NotFoundException")
     void whenSellerIsNotFollowedShouldThrowsNotFoundException() {
         // arrange
         int userId = 1;
@@ -78,7 +78,7 @@ public class UserFollowerServiceTest {
     }
 
     @Test
-    @DisplayName("us-0002 Devuelve el cálculo correcto del total de la cantidad de seguidores que posee un usuario.")
+    @DisplayName("T-0007 Devuelve el cálculo correcto del total de la cantidad de seguidores que posee un usuario.")
     public void whenUserExistsShouldReturnCount() {
         // Arrange
         int idUser = 1;
