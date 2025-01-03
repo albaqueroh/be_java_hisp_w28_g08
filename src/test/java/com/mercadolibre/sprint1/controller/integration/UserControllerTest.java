@@ -11,9 +11,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultMatcher;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import org.springframework.test.web.servlet.MvcResult;
 
 import com.mercadolibre.sprint1.dto.exception.ExceptionDto;
 
@@ -75,4 +79,39 @@ public class UserControllerTest {
         assertEquals("El usuario " + userIdToFollow + " no es un vendedor.", exception.getMessage());
     }
 
+    @Test
+    @DisplayName("US0002 - Cuándo se envía un id existente se debe retornar el conteo de seguidores")
+    public void whenUserExistShouldReturnCount() throws Exception {
+
+        //Arrange
+        ResultMatcher expectedStatus = status().isOk();
+        ResultMatcher expectedContentType = content().contentType(MediaType.APPLICATION_JSON);
+        long idUser = 1;
+
+        //Act & assert
+        mockMvc.perform(get("/users/" + idUser + "/followers/count")).
+                andExpect(expectedStatus).andExpect(expectedContentType).
+                andExpect(jsonPath("$.user_id").value(idUser)).
+                andExpect(jsonPath("$.user_name").value("John Doe")).
+                andExpect(jsonPath("$.followers_count").value(2)).andDo(print());
+    }
+
+    @Test
+    @DisplayName("US0002 - Cuándo se envía un id inexistente se debe retornar un error")
+    public void whenUserNotExistShouldReturnException() throws Exception {
+
+        //Arrange
+        ResultMatcher expectedStatus = status().isBadRequest();
+        ResultMatcher expectedContentType = content().contentType(MediaType.APPLICATION_JSON);
+        long idUser = -1;
+
+        //Act & assert
+        mockMvc.perform(get("/users/" + idUser + "/followers/count")).
+                andExpect(expectedStatus).andExpect(expectedContentType).
+                andExpect(jsonPath("$.message").value("Ha ocurrido un error")).andDo(print());
+    }
+
+
+
 }
+
