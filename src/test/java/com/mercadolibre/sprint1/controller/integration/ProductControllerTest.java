@@ -1,5 +1,9 @@
 package com.mercadolibre.sprint1.controller.integration;
 
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.mercadolibre.sprint1.dto.request.NewPostDto;
+import com.mercadolibre.sprint1.dto.response.ProductsFollowedDtoResponse;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -14,6 +18,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -24,6 +32,7 @@ import com.mercadolibre.sprint1.dto.request.CreatePromoPostDto;
 import com.mercadolibre.sprint1.dto.request.NewPostDto;
 
 import util.TestUtilGenerator;
+
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -117,6 +126,36 @@ public class ProductControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errors[0].message").value(expected));
+    }
+    
+    @Test
+    @DisplayName("T0018 - Obtener publicaciones de usuarios seguidos sin parámetro de ordenamiento")
+    public void whenGetProductsOfFollowedUsersWithoutOrderShouldReturnOk() throws Exception {
+        //assert
+        int userId = 1;
+
+        //act - arrange
+        mockMvc.perform(get("/products/followed/{userId}/list", userId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    @DisplayName("T0018 - Obtener publicaciones de usuarios seguidos con parámetro de ordenamiento")
+    public void whenGetProductsOfFollowedUsersWithOrderShouldReturnOk() throws Exception {
+        //assert
+        int userId = 1;
+        String order = "date_desc";
+
+        //Act - arrange
+        mockMvc.perform(get("/products/followed/{userId}/list", userId)
+                        .param("order", order)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
 }
