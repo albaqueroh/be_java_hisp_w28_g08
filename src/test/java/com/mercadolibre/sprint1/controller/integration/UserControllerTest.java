@@ -4,7 +4,6 @@ import static com.mercadolibre.sprint1.utils.CResourceUtils.MAPPER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,7 +29,7 @@ public class UserControllerTest {
 
     @Test
     @DisplayName("US0001 - Cuándo se envía un id de usuario y un id de un vendedor a seguir, se debe seguir al vendedor")
-    public void followUser() throws Exception {
+    public void whenSentFollowerUserIdAndFollowedUserIdShouldFollowSeller() throws Exception {
         // arrange
         int userId = 2;
         int userIdToFollow = 3;
@@ -45,7 +44,7 @@ public class UserControllerTest {
 
     @Test
     @DisplayName("US0001 - Cuándo se envía un id de usuario y un id de un vendedor que no existe, debe lanzar una excepción 404")
-    public void followUserWithError() throws Exception {
+    public void whenSentFollowerUserIdAndFollowedUserIdAndIsNotExistsShouldThrows404() throws Exception {
         // arrange
         int userId = 2;
         int userIdToFollow = 100;
@@ -63,7 +62,7 @@ public class UserControllerTest {
 
     @Test
     @DisplayName("US0001 - Cuándo se envía un id de usuario y un id de un usuario que no es vendedor, debe lanzar una excepción 400")
-    public void followUserNotExists() throws Exception {
+    public void whenSentFollowerUserIdAndFollowedUserIdAndIsNotSellerShouldThrows400() throws Exception {
         // arrange
         int userId = 3;
         int userIdToFollow = 2;
@@ -110,8 +109,6 @@ public class UserControllerTest {
                 andExpect(expectedStatus).andExpect(expectedContentType).
                 andExpect(jsonPath("$.message").value("Ha ocurrido un error")).andDo(print());
     }
-
-
 
 }
 
