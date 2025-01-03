@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "post_id": 1,
     "date": "01-12-2024",
     "user_id": 1,
     "product": {
@@ -17,7 +17,7 @@
     "discount": 10.0
   },
   {
-    "id": 2,
+    "post_id": 2,
     "date": "02-12-2024",
     "user_id": 2,
     "product": {
@@ -34,7 +34,7 @@
     "discount": 0.0
   },
   {
-    "id": 3,
+    "post_id": 3,
     "date": "03-12-2024",
     "user_id": 1,
     "product": {
@@ -51,7 +51,7 @@
     "discount": 15.0
   },
   {
-    "id": 4,
+    "post_id": 4,
     "date": "04-12-2024",
     "user_id": 4,
     "product": {
@@ -68,7 +68,7 @@
     "discount": 0.0
   },
   {
-    "id": 5,
+    "post_id": 5,
     "date": "05-12-2024",
     "user_id": 5,
     "product": {
@@ -85,7 +85,7 @@
     "discount": 5.0
   },
   {
-    "id": 6,
+    "post_id": 6,
     "date": "06-12-2024",
     "user_id": 6,
     "product": {
@@ -102,7 +102,7 @@
     "discount": 20.0
   },
   {
-    "id": 7,
+    "post_id": 7,
     "date": "07-12-2024",
     "user_id": 7,
     "product": {
@@ -119,7 +119,7 @@
     "discount": 0.0
   },
   {
-    "id": 8,
+    "post_id": 8,
     "date": "08-12-2024",
     "user_id": 8,
     "product": {
@@ -136,7 +136,7 @@
     "discount": 10.0
   },
   {
-    "id": 9,
+    "post_id": 9,
     "date": "09-12-2024",
     "user_id": 9,
     "product": {
@@ -153,7 +153,7 @@
     "discount": 0.0
   },
   {
-    "id": 10,
+    "post_id": 10,
     "date": "10-12-2024",
     "user_id": 10,
     "product": {

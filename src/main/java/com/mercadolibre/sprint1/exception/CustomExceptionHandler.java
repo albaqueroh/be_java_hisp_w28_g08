@@ -27,18 +27,13 @@ public class CustomExceptionHandler {
 		return new ResponseEntity<>(new ExceptionDto((e.getMessage())), HttpStatus.NOT_FOUND);
 	}
 
-	@ExceptionHandler(PromoSellersNotFoundException.class)
-	public ResponseEntity<?> promoSellersNotFound(PromoSellersNotFoundException e) {
-		return new ResponseEntity<>(new ExceptionDto((e.getMessage())), HttpStatus.NO_CONTENT);
-	}
-
-	@ExceptionHandler(NoContentException.class)
-	public ResponseEntity<?> handleNoContentException(NoContentException e) {
+	@ExceptionHandler({ PromoSellersNotFoundException.class, NoContentException.class })
+	public ResponseEntity<?> promoSellersNotFound(Exception e) {
 		return new ResponseEntity<>(new ExceptionDto((e.getMessage())), HttpStatus.NO_CONTENT);
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<?> handleValidationException(MethodArgumentNotValidException ex){
+	public ResponseEntity<?> handleValidationException(MethodArgumentNotValidException ex) {
 		List<Map<String, String>> errors = ex.getBindingResult()
 				.getFieldErrors()
 				.stream()
