@@ -27,7 +27,6 @@ public class CreatePromoPostDto {
     private Integer userId;
 
     @NotNull(message = "La fecha no debe ser nula")
-    @FutureOrPresent(message = "La fecha no puede ser menor a la actual")
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate date;
 
