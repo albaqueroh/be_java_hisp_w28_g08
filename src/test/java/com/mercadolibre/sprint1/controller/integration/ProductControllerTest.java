@@ -3,6 +3,7 @@ package com.mercadolibre.sprint1.controller.integration;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mercadolibre.sprint1.dto.request.NewPostDto;
+import com.mercadolibre.sprint1.dto.response.ProductsFollowedDtoResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import util.TestUtilGenerator;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -64,5 +66,33 @@ public class ProductControllerTest {
                 .andExpect(content().contentType("application/json"))
                 .andExpect(jsonPath("$.errors[0].message").value(expected));
     }
+
+    @Test
+    @DisplayName("US006 - Obtener publicaciones de usuarios seguidos sin parámetro de ordenamiento")
+    public void whenGetProductsOfFollowedUsersWithoutOrderShouldReturnOk() throws Exception {
+        int userId = 1;
+
+        mockMvc.perform(get("/products/followed/{userId}/list", userId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    @DisplayName("US006/US009 - Obtener publicaciones de usuarios seguidos con parámetro de ordenamiento")
+    public void whenGetProductsOfFollowedUsersWithOrderShouldReturnOk() throws Exception {
+        int userId = 1;
+        String order = "date_desc";
+
+        // Realizar la solicitud simulada con el parámetro de ordenamiento
+        mockMvc.perform(get("/products/followed/{userId}/list", userId)
+                        .param("order", order)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
 
 }
