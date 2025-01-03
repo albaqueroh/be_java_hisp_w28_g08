@@ -38,7 +38,7 @@ public class ProductControllerTest {
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
     @Test
-    @DisplayName("US005 - Creación de post correctamente")
+    @DisplayName("T-0014 - Creación de post correctamente")
     public void whenPostCreatedShouldReturnTodoOk() throws Exception {
         // Arrange
 
@@ -58,8 +58,7 @@ public class ProductControllerTest {
     }
 
     @Test
-
-    @DisplayName("US005 - Creación de post incorrectamente")
+    @DisplayName("T-0014 - Creación de post incorrectamente")
     public void whenBadPostCreatedShouldReturnError() throws Exception {
         // Arrange
         NewPostDto paramPost = om.convertValue(TestUtilGenerator.generateNoPromoPost(), NewPostDto.class);
@@ -80,7 +79,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    @DisplayName("US0010 - Creación de post promo correctamente")
+    @DisplayName("T-0015 - Creación de post promo correctamente")
     public void whenPostPromoCreatedShouldReturnOk() throws Exception {
 
         // Arrange
@@ -100,7 +99,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    @DisplayName("US0010 - Creación de post promo incorrectamente")
+    @DisplayName("T-0015 - Creación de post promo incorrectamente")
     public void whenBadPostPromoCreatedShouldReturnError() throws Exception {
 
         // Arrange

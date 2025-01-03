@@ -29,7 +29,7 @@ public class UserControllerTest {
     MockMvc mockMvc;
 
     @Test
-    @DisplayName("US0001 - Cuándo se envía un id de usuario y un id de un vendedor a seguir, se debe seguir al vendedor")
+    @DisplayName("T-0016 - Cuándo se envía un id de usuario y un id de un vendedor a seguir, se debe seguir al vendedor")
     public void whenSentFollowerUserIdAndFollowedUserIdShouldFollowSeller() throws Exception {
         // arrange
         int userId = 2;
@@ -44,7 +44,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("US0001 - Cuándo se envía un id de usuario y un id de un vendedor que no existe, debe lanzar una excepción 404")
+    @DisplayName("T-0016 - Cuándo se envía un id de usuario y un id de un vendedor que no existe, debe lanzar una excepción 404")
     public void whenSentFollowerUserIdAndFollowedUserIdAndIsNotExistsShouldThrows404() throws Exception {
         // arrange
         int userId = 2;
@@ -62,7 +62,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("US0001 - Cuándo se envía un id de usuario y un id de un usuario que no es vendedor, debe lanzar una excepción 400")
+    @DisplayName("T-0016 - Cuándo se envía un id de usuario y un id de un usuario que no es vendedor, debe lanzar una excepción 400")
     public void whenSentFollowerUserIdAndFollowedUserIdAndIsNotSellerShouldThrows400() throws Exception {
         // arrange
         int userId = 3;
@@ -80,7 +80,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("US0002 - Cuándo se envía un id existente se debe retornar el conteo de seguidores")
+    @DisplayName("T-0017 - Cuándo se envía un id existente se debe retornar el conteo de seguidores")
     public void whenUserExistShouldReturnCount() throws Exception {
 
         // Arrange
@@ -96,7 +96,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("US0002 - Cuándo se envía un id inexistente se debe retornar un error")
+    @DisplayName("T-0017 - Cuándo se envía un id inexistente se debe retornar un error")
     public void whenUserNotExistShouldReturnException() throws Exception {
 
         // Arrange
