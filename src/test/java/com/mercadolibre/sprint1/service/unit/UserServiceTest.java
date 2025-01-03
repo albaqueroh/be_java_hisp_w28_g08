@@ -36,6 +36,7 @@ import com.mercadolibre.sprint1.repository.impl.UserRepositoryImpl;
 import com.mercadolibre.sprint1.service.impl.UserServiceImpl;
 import util.TestUtilGenerator;
 
+import java.util.Comparator;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -263,6 +264,67 @@ public class UserServiceTest {
 
         //assert
         assertThrows(BadRequestException.class, ()->{userService.findUsersFollowedByUser(userId,order);});
+    }
+
+    @Test
+    @DisplayName("US0004 - Cuándo el orden enviado es NAME_ASC, debe listar todos los usuarios seguidos ordenados por nombre de forma ascendente")
+    public void whenOrderSendedIsNameAscInFollowedPeopleShouldListFollowedSortedByNameAsc() {
+        // arrange
+        int userId = 1;
+        String order = "NAME_ASC";
+
+        // Lista esperada
+        List<UserDto> expectedFollowed = List.of(
+                new UserDto(2, "Cristhian"),
+                new UserDto(5, "María")
+        );
+
+        // Mock de los repositorios
+        when(userRepository.findAll()).thenReturn(TestUtilGenerator.generateUsers());
+        when(userFollowerRepository.findAll()).thenReturn(TestUtilGenerator.generateFollowers());
+
+        // act
+        FollowedListByUserDto result = userService.findUsersFollowedByUser(userId, order);
+
+        // assert
+        assertThat(result.getId()).isEqualTo(userId);
+        assertThat(result.getFollowed()).isEqualTo(expectedFollowed);
+    }
+
+    @Test
+    @DisplayName("US0004 - Cuándo el orden enviado es NAME_DESC, debe listar todos los usuarios seguidos ordenados por nombre de forma ascendente")
+    public void whenOrderSendedIsNameDescInFollowedPeopleShouldListFollowedSortedByNameAsc() {
+        // arrange
+        int userId = 1;
+        String order = "NAME_DESC";
+
+        // Lista esperada
+        List<UserDto> expectedFollowed = List.of(
+                new UserDto(5, "María"),
+                new UserDto(2, "Cristhian")
+        );
+
+        // Mock de los repositorios
+        when(userRepository.findAll()).thenReturn(TestUtilGenerator.generateUsers());
+        when(userFollowerRepository.findAll()).thenReturn(TestUtilGenerator.generateFollowers());
+
+        // act
+        FollowedListByUserDto result = userService.findUsersFollowedByUser(userId, order);
+
+        // assert
+        assertThat(result.getId()).isEqualTo(userId);
+        assertThat(result.getFollowed()).isEqualTo(expectedFollowed);
+    }
+
+    @Test
+    @DisplayName("US0004 - Cuándo el orden enviado no es ascendente ni descendente, debe arrojar una excepción BadRequestException")
+    public void whenOrderSendedIsNotAscAndIsNotDescInFollowedPeopleShouldThrowsBadRequestException() {
+        // arrange
+        int userId = 2;
+
+        // act
+        // assert
+        assertThrows(BadRequestException.class, () -> userService.findUsersFollowedByUser(userId, "INVALID_ORDER"));
     }
 
 }
