@@ -75,13 +75,13 @@ public class TestUtilGenerator {
 
     public static Post CreatePromoPost() {
         return new Post(0, LocalDate.parse("2024-12-20"), 4,
-                new Product(5, "T-Shirt", "Clothes", "Adidas", "Green", ""), 5, 59.0, true,
+                new Product(5, "TShirt", "Clothes", "Adidas", "Green", ""), 5, 59.0, true,
                 5.0);
     }
 
     public static CreatePromoPostDto createPostPromoDto() {
         return new CreatePromoPostDto(4, LocalDate.parse("2024-12-20"),
-                new ProductDto(5, "T-Shirt", "Clothes", "Adidas", "Green", ""), 5, 59.0, true,
+                new ProductDto(5, "TShirt", "Clothes", "Adidas", "Green", ""), 5, 59.0, true,
                 5.0);
     }
 
