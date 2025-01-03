@@ -9,6 +9,8 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 
+import com.mercadolibre.sprint1.dto.PostDto;
+import com.mercadolibre.sprint1.dto.response.ProductsFollowedDtoResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,10 +23,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.mercadolibre.sprint1.dto.PostDto;
 import com.mercadolibre.sprint1.dto.request.NewPostDto;
 import com.mercadolibre.sprint1.dto.response.CountProductsPromoDto;
-import com.mercadolibre.sprint1.dto.response.ProductsFollowedDtoResponse;
 import com.mercadolibre.sprint1.entity.Post;
 import com.mercadolibre.sprint1.entity.User;
 import com.mercadolibre.sprint1.entity.UserFollower;
