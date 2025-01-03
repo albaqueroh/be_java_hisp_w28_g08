@@ -28,17 +28,7 @@ public class UserControllerTest {
     @Autowired
     MockMvc mockMvc;
 
-    @Test
-    public void whenUserExistShouldReturnCount() throws Exception {
-        ResultMatcher expectedStatus = status().isOk();
-        ResultMatcher expectedContentType = content().contentType(MediaType.APPLICATION_JSON);
-        long idUser = 1;
 
-        mockMvc.perform(get("/users/" + idUser + "/followers/count")).
-                andExpect(expectedStatus).andExpect(expectedContentType).
-                andExpect(jsonPath("$.id").value(idUser)).andDo(print());
-    }
-        
     @DisplayName("US0001 - Cuándo se envía un id de usuario y un id de un vendedor a seguir, se debe seguir al vendedor")
     public void followUser() throws Exception {
         // arrange
@@ -88,6 +78,40 @@ public class UserControllerTest {
         ExceptionDto exception = MAPPER.readValue(result.getResponse().getContentAsString(), ExceptionDto.class);
         assertEquals("El usuario " + userIdToFollow + " no es un vendedor.", exception.getMessage());
     }
+
+    @Test
+    @DisplayName("US0002 - Cuándo se envía un id existente se debe retornar el conteo de seguidores")
+    public void whenUserExistShouldReturnCount() throws Exception {
+
+        //Arrange
+        ResultMatcher expectedStatus = status().isOk();
+        ResultMatcher expectedContentType = content().contentType(MediaType.APPLICATION_JSON);
+        long idUser = 1;
+
+        //Act & assert
+        mockMvc.perform(get("/users/" + idUser + "/followers/count")).
+                andExpect(expectedStatus).andExpect(expectedContentType).
+                andExpect(jsonPath("$.user_id").value(idUser)).
+                andExpect(jsonPath("$.user_name").value("John Doe")).
+                andExpect(jsonPath("$.followers_count").value(2)).andDo(print());
+    }
+
+    @Test
+    @DisplayName("US0002 - Cuándo se envía un id inexistente se debe retornar un error")
+    public void whenUserNotExistShouldReturnException() throws Exception {
+
+        //Arrange
+        ResultMatcher expectedStatus = status().isBadRequest();
+        ResultMatcher expectedContentType = content().contentType(MediaType.APPLICATION_JSON);
+        long idUser = -1;
+
+        //Act & assert
+        mockMvc.perform(get("/users/" + idUser + "/followers/count")).
+                andExpect(expectedStatus).andExpect(expectedContentType).
+                andExpect(jsonPath("$.message").value("Ha ocurrido un error")).andDo(print());
+    }
+
+
 
 }
 
