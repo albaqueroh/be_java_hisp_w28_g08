@@ -1,17 +1,20 @@
 package com.mercadolibre.sprint1.repository.unit;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.List;
 
-import com.mercadolibre.sprint1.entity.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.mercadolibre.sprint1.entity.User;
 import com.mercadolibre.sprint1.repository.IRepository;
 import com.mercadolibre.sprint1.repository.impl.UserRepositoryImpl;
-import util.TestUtilGenerator;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import util.TestUtilGenerator;
 
 public class UserRepositoryTest {
 
