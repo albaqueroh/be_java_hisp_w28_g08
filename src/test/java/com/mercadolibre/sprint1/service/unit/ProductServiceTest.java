@@ -58,7 +58,6 @@ public class ProductServiceTest {
     @DisplayName("us-005 Guardado de post")
     public void whenPostCreatedShouldReturnPost() {
         // Arrange
-        Object TestUtilGenerator;
         NewPostDto input = om.convertValue(TestUtilGenerator.generateNoPromoPost(), NewPostDto.class);
         Post inputModel = om.convertValue(input, Post.class);
         String expected = "todo OK";
@@ -81,16 +80,96 @@ public class ProductServiceTest {
     }
 
     @Test
+    @DisplayName("US0006 - Devuelve publicaciones seguidas en las últimas dos semanas ordenadas correctamente")
+    public void whenUserSendedShouldListPostOfFollowedPeopleOfTheLastTwoWeeks() {
+        // arrange
+        int userId = 1;
+        String order = "date_desc"; // Orden descendente
+
+        LocalDate currentDate = LocalDate.now();
+        LocalDate twoWeeksAgo = currentDate.minusWeeks(2);
+
+        // Mock de datos
+        when(userFollowRepository.findAll()).thenReturn(TestUtilGenerator.generateFollowers());
+        when(postRepository.findAll()).thenReturn(TestUtilGenerator.generatePosts());
+
+        ProductsFollowedDtoResponse expected = new ProductsFollowedDtoResponse(1, List.of(
+                MAPPER.convertValue(TestUtilGenerator.generatePosts().getFirst(), PostDto.class),
+                MAPPER.convertValue(TestUtilGenerator.generatePosts().get(1), PostDto.class)
+        ));
+
+        // act
+        ProductsFollowedDtoResponse response = productService.productsOfPeopleFollowed(userId, order);
+
+        // assert
+        assertNotNull(response, "La respuesta no debe ser nula.");
+        assertEquals(expected.getUserId(), response.getUserId(), "El userId de la respuesta no coincide.");
+        assertEquals(expected.getPosts().size(), response.getPosts().size(), "El número de publicaciones devueltas no es correcto.");
+        assertEquals(expected, response);
+    }
+
+    @Test
+    @DisplayName("US0006 - Devuelve publicaciones seguidas en las últimas dos semanas ordenadas ascendentemente")
     public void whenListProductsFollowedAscShouldReturnOrderedList(){
+        //Arrange
         int inputId = 1;
         String inputOrder = "date_asc";
         ProductsFollowedDtoResponse expected = new ProductsFollowedDtoResponse(1, List.of(
-                om.convertValue(List.of(TestUtilGenerator.generatePosts().getFirst()), PostDto.class),
-                om.convertValue(List.of(TestUtilGenerator.generatePosts().get(1)), PostDto.class)));
+                om.convertValue(TestUtilGenerator.generatePosts().get(1), PostDto.class),
+                om.convertValue(TestUtilGenerator.generatePosts().getFirst(), PostDto.class)));
 
-        when(postRepository)
+        when(userFollowRepository.findAll()).thenReturn(TestUtilGenerator.generateFollowers());
+        when(postRepository.findAll()).thenReturn(TestUtilGenerator.generatePosts());
+
+        //Act
+        ProductsFollowedDtoResponse response = productService.productsOfPeopleFollowed(inputId, inputOrder);
+
+        // assert
+        assertNotNull(response, "La respuesta no debe ser nula.");
+        assertEquals(expected.getUserId(), response.getUserId(), "El userId de la respuesta no coincide.");
+        assertEquals(expected.getPosts().size(), response.getPosts().size(), "El número de publicaciones devueltas no es correcto.");
+        assertEquals(expected, response);
     }
-    
+
+    @Test
+    @DisplayName("US0006 - Devuelve publicaciones seguidas en las últimas dos semanas ordenadas descendentemente")
+    public void whenListProductsFollowedDescShouldReturnOrderedList(){
+        //Arrange
+        int inputId = 1;
+        String inputOrder = "date_desc";
+        ProductsFollowedDtoResponse expected = new ProductsFollowedDtoResponse(1, List.of(
+                om.convertValue(TestUtilGenerator.generatePosts().getFirst(), PostDto.class),
+                om.convertValue(TestUtilGenerator.generatePosts().get(1), PostDto.class)));
+
+        when(userFollowRepository.findAll()).thenReturn(TestUtilGenerator.generateFollowers());
+        when(postRepository.findAll()).thenReturn(TestUtilGenerator.generatePosts());
+
+        //Act
+        ProductsFollowedDtoResponse response = productService.productsOfPeopleFollowed(inputId, inputOrder);
+
+        // assert
+        assertNotNull(response, "La respuesta no debe ser nula.");
+        assertEquals(expected.getUserId(), response.getUserId(), "El userId de la respuesta no coincide.");
+        assertEquals(expected.getPosts().size(), response.getPosts().size(), "El número de publicaciones devueltas no es correcto.");
+        assertEquals(expected, response);
+    }
+
+    @Test
+    @DisplayName("US0006 - Devuelve un BadRequest si se envía un orden inválido")
+    public void whenListProductsFollowedOrderInvalidShouldReturnError(){
+        //Arrange
+        int inputId = 1;
+        String inputOrder = "invalid_order";
+        String expectedMessage = "El orden enviado no es válido, debe ser date_asc o date_desc.";
+
+        //Act
+        BadRequestException expected = Assertions.assertThrows(BadRequestException.class,
+                () -> productService.productsOfPeopleFollowed(inputId, inputOrder));
+
+        // Assert
+        Assertions.assertEquals(expectedMessage, expected.getMessage());
+    }
+
     @Test
     @DisplayName("us-0010 Guardado de post con promo validos")
     public void whenPostValidShouldReturnConfirmationMessage() {
@@ -137,35 +216,6 @@ public class ProductServiceTest {
         // assert
         assertNotNull(res);
         assertEquals(quantityProductsExpected, res.getPromoProductsCount());
-    }
-
-    @Test
-    @DisplayName("US0006 - Devuelve publicaciones seguidas en las últimas dos semanas ordenadas correctamente")
-    public void whenUserSendedShouldListPostOfFollowedPeopleOfTheLastTwoWeeks() {
-        // arrange
-        int userId = 1;
-        String order = "date_desc"; // Orden descendente
-
-        LocalDate currentDate = LocalDate.now();
-        LocalDate twoWeeksAgo = currentDate.minusWeeks(2);
-
-        // Mock de datos
-        when(userFollowRepository.findAll()).thenReturn(TestUtilGenerator.generateFollowers());
-        when(postRepository.findAll()).thenReturn(TestUtilGenerator.generatePosts());
-
-        ProductsFollowedDtoResponse expected = new ProductsFollowedDtoResponse(1, List.of(
-                MAPPER.convertValue(TestUtilGenerator.generatePosts().getFirst(), PostDto.class),
-                MAPPER.convertValue(TestUtilGenerator.generatePosts().get(1), PostDto.class)
-        ));
-
-        // act
-        ProductsFollowedDtoResponse response = productService.productsOfPeopleFollowed(userId, order);
-
-        // assert
-        assertNotNull(response, "La respuesta no debe ser nula.");
-        assertEquals(expected.getUserId(), response.getUserId(), "El userId de la respuesta no coincide.");
-        assertEquals(expected.getPosts().size(), response.getPosts().size(), "El número de publicaciones devueltas no es correcto.");
-        assertEquals(expected, response);
     }
 
 }
